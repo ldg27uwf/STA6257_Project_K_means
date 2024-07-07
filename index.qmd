@@ -19,7 +19,7 @@ editor:
 
 ## Introduction
 
-### K-MEANS 2024 SUMMER
+### K-MEANS 2024 SUMMER 
 
 This is an introduction to LASSO regression, which is a non-parametric
 estimator that estimates the conditional expectation of two variables
