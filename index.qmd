@@ -1,5 +1,5 @@
 ---
-title: "Sample Report - Data Science Capstone"
+title: "Rough Draft Literature Review - Data Science Capstone"
 author: "Lindsay Guyette"
 date: '`r Sys.Date()`'
 format:
@@ -17,34 +17,163 @@ editor:
     wrap: 72
 ---
 
+## Objectives
+
+The objectives of this review are threefold: to provide a comprehensive
+overview of K-means clustering, to discuss its methodology,
+applications, and advancements, and to identify the challenges and
+future research directions. In this literature review, we aim to give an
+in-depth analysis of K-means clustering, examine its various aspects and
+practical uses, and highlight the current challenges along with
+potential areas for future research.
+
 ## Introduction
 
-### K-MEANS 2024 SUMMER 
+[@zelasky_identifying_2023]
 
-TRULY DON'T KNOW WHY THIS WON'T UPDATE IN THE PAGE
+#### *K-means Clustering*
 
-This is an introduction to LASSO regression, which is a non-parametric
-estimator that estimates the conditional expectation of two variables
-which is random. The goal of a kernel regression is to discover the
-non-linear relationship between two random variables. To discover the
-non-linear relationship, kernel estimator or kernel smoothing is the
-main method to estimate the curve for non-parametric statistics. In
-kernel estimator, weight function is known as kernel function
-[@efr2008]. Cite this paper This is an introduction to LASSO regression, which is a non-parametric
-estimator that estimates the conditional expectation of two variables
-which is random. The goal of a kernel regression is to discover the
-non-linear relationship between two random variables. To discover the
-non-linear relationship, kernel estimator or kernel smoothing is the
-main method to estimate the curve for non-parametric statistics. In
-kernel estimator, weight function is known as kernel function
-[@efr2008]. Cite this paper [@bro2014principal]. The GEE [@wang2014].
-The PCA [@daffertshofer2004pca]
+*Definition of Clustering*
 
-This is my work and I want to add more work...
+Clustering is the process of grouping similar objects or data points
+together based on their characteristics or attributes. Clustering is an
+unsupervised learning technique employed in data mining and machine
+learning to categorize a collection of items based on their similarity.
+The goal is to create groupings, or clusters, where objects within the
+same cluster are more alike to each other than to objects in other
+clusters. Clustering aims to identify inherent clusters in a dataset
+where the data points within each cluster exhibit a strong resemblance,
+yet the clusters themselves are clearly dissimilar from one another.
 
-### Related work
+The similarity of data points is commonly assessed using a distance
+metric, such as Euclidean distance, Manhattan distance, or cosine
+similarity. The choice of metric depends on the characteristics of the
+data and the specific clustering technique employed.
 
-This section is going to cover the literature review...
+#### ***Definition of k-Means Clustering***
+
+The term "k-Means Clustering" refers to a method used in data analysis
+and machine learning to partition a set of data points into k distinct
+clusters. k-Means clustering is a highly popular and extensively
+utilized approach for clustering. The objective is to divide a dataset
+into k clusters, where k is a predetermined number of clusters. The
+method operates in an iterative manner, assigning each data point to one
+of k clusters based on the given attributes. The main concept is to
+establish k centroids, representing each cluster, and allocate each data
+point to the centroid that is closest to it. This allocation is done in
+a way that minimizes the total squared distances between the data points
+and their respective centroids.
+
+#### ***Key Concepts of k-Means Clustering***
+
+-   **Centroid**: The centroid of a cluster represents the average
+    position of all the points within that cluster. Every cluster in the
+    k-means algorithm is associated with a centroid, which serves as a
+    central point that represents the cluster.
+
+-   **Inertia:** Referred to as within-cluster sum of squares,
+    quantifies the effectiveness of cluster formation. Smaller inertia
+    values suggest superior clustering performance.
+
+-   **Convergence:** The k-means method continues to iterate until it
+    reaches convergence, which is when the centroids stop changing
+    considerably. This indicates that the clusters have become stable.
+
+-   **Distance Metric:** Choice of distance measure, such as Euclidean
+    distance, impacts the formation of clusters. Euclidean distance is
+    the typical metric employed in k-means.
+
+#### ***Key Parameters of k-Means Clustering***
+
+-   **Cluster Count (k):** The desired number of clusters and centroids
+    to be generated. Optimal cluster selection is of utmost importance
+    and can be facilitated by techniques such as the elbow approach or
+    silhouette analysis.
+
+-   **Initial Centroids:** The initial positions of the centroids, which
+    can be selected randomly or using more sophisticated initialization
+    methods such as k-means++ to enhance the speed of convergence and
+    the quality of the solution.
+
+-   **Maximum Iterations:** The highest number of iterations that the
+    algorithm will execute if it has not achieved convergence before
+    reaching this limit.
+
+-   **Tolerance:** A criterion used to establish when convergence has
+    been achieved. The algorithm terminates if the difference between
+    the centroids is below the specified tolerance.
+
+#### ***Algorithmic Steps*** 
+
+The k-means clustering algorithm is an iterative procedure that involves
+two steps: allocating data points to clusters and updating the cluster
+centroids. Below is a comprehensive breakdown of the sequential steps in
+the algorithm:
+
+1.  **Initialization of centroids.**
+
+Random initialization selects 𝑘 initial centroids at random from the
+dataset. Every centroid corresponds to the original center of a cluster.
+The algorithm being referred to is called "k-means++" is a refined
+technique that distributes the initial centroids in order to enhance the
+performance of the algorithm. The initial centroid is selected at
+random, whereas the following centroids are chosen according to a
+probability that is directly proportionate to their distance from the
+nearest existing centroid.
+
+2.  **Assignment of data points to nearest centroids.**
+
+Compute the distance from each data point to every centroid. Popular
+distance measurements include Euclidean distance, Manhattan distance,
+and cosine similarity. Allocate each data point to the cluster that has
+the closest centroid to it. This results in the formation of 𝑘 clusters,
+where each data point is assigned to a single cluster.
+
+3.  **Update of centroids.**
+
+Determine the updated centroid of each cluster by computing the average
+of all data points assigned to that cluster. The updated centroid is
+calculated as the average position of the data points within the
+cluster. This update step recalibrates the position of the centroids to
+more accurately reflect the clusters produced in the assignment stage.
+
+4.  **Iteration until convergence.**
+
+Iterate the assignment and update processes until the centroids exhibit
+minimal variation between iterations. Convergence is usually assessed by
+verifying if the positions of the centroids have reached a stable state
+within a predetermined tolerance threshold. Alternatively, the process
+can be halted after reaching a predetermined number of iterations if
+convergence is not attained prior to that.
+
+## Real World Applications
+
+**Bioinformatics** refers to the usage of analytical techniques to
+interpret different types of biological data. These datasets can be
+large or small, containing information about genomic sequences, gene
+expression, and protein expression, among other biological
+characteristics. This information can then be used to draw conclusions
+about basic biological processes, disease states, and gene therapies,
+among other applications \[bayat_bioinformatics_2002\]. K-means
+clustering is one type of data analysis technique that can be used to
+group differential gene/protein expression according to specific
+phenotypes, or physical presentations of biological traits. For
+instance, this can be used to assign cells to specific types based on
+single-cell RNA sequencing data, which measures the total gene
+expression for thousands of genes within a single cell. Yang et al.,
+2017 utilized k-means clustering to analyze the scRNA sequencing data of
+hundreds of cell types to develop a novel algorithm that identifies the
+optimal sets of genes to cluster single cells into distinct biological
+groups.
+
+Additionally, k-means clustering can be applied to population-level data
+to determine significant groupings related to **socioeconomic
+outcomes**. The factors related to socioeconomic mobility were evaluated
+in a 2023 study using longitudinal data from the Opportunity Atlas
+project. Here, k-means clustering revealed differences in socioeconomic
+mobility related to geographic location, income, and neighborhood
+factors such as poverty rate and incarceration rates
+\[zelasky_identifying_2023\].
 
 ## Methods
 
@@ -74,7 +203,6 @@ $$
 ### Data and Visualization
 
 A study was conducted to determine how...
-
 
 ```{r, warning=FALSE, echo=T, message=FALSE}
 # loading packages 
