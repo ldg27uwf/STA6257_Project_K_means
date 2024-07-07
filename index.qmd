@@ -154,7 +154,7 @@ large or small, containing information about genomic sequences, gene
 expression, and protein expression, among other biological
 characteristics. This information can then be used to draw conclusions
 about basic biological processes, disease states, and gene therapies,
-among other applications \[bayat_bioinformatics_2002\]. K-means
+among other applications [@bayat_bioinformatics_2002]. K-means
 clustering is one type of data analysis technique that can be used to
 group differential gene/protein expression according to specific
 phenotypes, or physical presentations of biological traits. For
@@ -173,7 +173,7 @@ in a 2023 study using longitudinal data from the Opportunity Atlas
 project. Here, k-means clustering revealed differences in socioeconomic
 mobility related to geographic location, income, and neighborhood
 factors such as poverty rate and incarceration rates
-\[zelasky_identifying_2023\].
+[@zelasky_identifying_2023].
 
 ## Methods
 
