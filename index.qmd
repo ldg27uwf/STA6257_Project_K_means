@@ -21,6 +21,8 @@ editor:
 
 ### K-MEANS 2024 SUMMER 
 
+TRULY DON'T KNOW WHY THIS WON'T UPDATE IN THE PAGE
+
 This is an introduction to LASSO regression, which is a non-parametric
 estimator that estimates the conditional expectation of two variables
 which is random. The goal of a kernel regression is to discover the
