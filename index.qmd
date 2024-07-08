@@ -288,4 +288,24 @@ inputs, ensuring reliability and robustness of the algorithm.
 
 ## Data Description
 
+Edgar Anderson, an American botanist, collected data to study the
+morphological differences in iris flowers. He collected 50 samples each
+from three different species: Setosa, Versicolor, and Virginica. The
+dataset consists of measurements of these three species, with four
+attributes for each sample: sepal length, sepal width, petal length, and
+petal width. The dataset was first introduced into the stats field by
+British biologist and statistician Ronald A. Fisher in his research
+paper \"The use of multiple measurements in taxonomic problems\". He
+used this dataset to demonstrate linear discriminant analysis. Since
+then, this dataset has become a classic dataset in the field of machine
+learning and stats.
+
+The Iris dataset is preloaded in R and is often used for predictive
+modeling. In our project, we aim to use the Iris dataset to understand
+how the K-means algorithm groups the flowers based on their features
+(sepal and petal dimensions). We will also provide a visual
+representation of the clusters, which will help in visualizing the
+effectiveness of the K-means clustering in identifying natural groupings
+within the data.
+
 ## References
