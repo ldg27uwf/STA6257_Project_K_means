@@ -3057,15 +3057,15 @@ vertical-align: -.125em;
 <h4 class="anchored" data-anchor-id="k-means-clustering"><em>K-means Clustering</em></h4>
 <p><em>Definition of Clustering</em></p>
 <p>Clustering is the process of grouping similar objects or data points together based on their characteristics or attributes. Clustering is an unsupervised learning technique employed in data mining and machine learning to categorize a collection of items based on their similarity. The goal is to create groupings, or clusters, where objects within the same cluster are more alike to each other than to objects in other clusters. Clustering aims to identify inherent clusters in a dataset where the data points within each cluster exhibit a strong resemblance, yet the clusters themselves are clearly dissimilar from one another.</p>
-<p>The similarity of data points is commonly assessed using a distance metric, such as Euclidean distance, Manhattan distance, or cosine similarity. The choice of metric depends on the characteristics of the data and the specific clustering technique employed <span class="citation" data-cites="Berkhin2006">(<a href="#ref-Berkhin2006" role="doc-biblioref">Berkhin 2006</a>)</span>.</p>
+<p>The similarity of data points is commonly assessed using a distance metric, such as Euclidean distance, Manhattan distance, or cosine similarity. The choice of metric depends on the characteristics of the data and the specific clustering technique employed <span class="citation" data-cites="Berkhin2006">(<a href="#ref-Berkhin2006" role="doc-biblioref"><strong>Berkhin2006?</strong></a>)</span>.</p>
 </section>
 <section id="definition-of-k-means-clustering" class="level4">
 <h4 class="anchored" data-anchor-id="definition-of-k-means-clustering"><strong><em>Definition of k-Means Clustering</em></strong></h4>
 <p>The term “k-Means Clustering” refers to a method used in data analysis and machine learning to partition a set of data points into k distinct clusters. k-Means clustering is a highly popular and extensively utilized approach for clustering. The objective is to divide a dataset into k clusters, where k is a predetermined number of clusters. The method operates in an iterative manner, assigning each data point to one of k clusters based on the given attributes. The main concept is to establish k centroids, representing each cluster, and allocate each data point to the centroid that is closest to it. This allocation is done in a way that minimizes the total squared distances between the data points and their respective centroids.</p>
 <table class="table">
 <colgroup>
+<col style="width: 38%">
 <col style="width: 40%">
-<col style="width: 41%">
 </colgroup>
 <thead>
 <tr class="header">
@@ -3121,9 +3121,16 @@ vertical-align: -.125em;
 <p><strong>A Comparison of Latent Class, K-Means, and K-Median Methods for Clustering Dichotomous Data.</strong></p>
 <p>This study compares three clustering methods on dichotomous data. The study compares the performance each method on 2 different experiments (with best k known and best k unknown). They found that while the three methods can be used, k-median produced the best results, closely followed by Latent Class and then K-means. They also mention other specific situations in which the methods perform better/worse <span class="citation" data-cites="brusco_comparison_2017">(<a href="#ref-brusco_comparison_2017" role="doc-biblioref">Brusco, Shireman, and Steinley 2017</a>)</span>.</p>
 <p><strong>Review on determining number of clusters in k-means clustering</strong></p>
-<p>In this review, researcher Kodinariya explains how to estimate the number of clusters. Fields across the board use clustering so there is no one answer on how many clusters to use. Kodinariya explores six different ways on how to determine the best number of clusters. The six methods are: rule of thumb, elbow method, information criterion approach, information theoretic approach, Silhouette, and cross validation. Kodinariya explains how no size fits all and will depend on the context of the data. The elbow method is the oldest and most used method but information theoretic approach is more rigorous. It is best to use more than one method to estimate the best number of clusters <span class="citation" data-cites="Kodinariya2013ReviewOD">(<a href="#ref-Kodinariya2013ReviewOD" role="doc-biblioref">Kodinariya and Makwana 2013</a>)</span>.</p>
+<p>In this review, researcher Kodinariya explains how to estimate the number of clusters. Fields across the board use clustering so there is no one answer on how many clusters to use. Kodinariya explores six different ways on how to determine the best number of clusters. The six methods are: rule of thumb, elbow method, information criterion approach, information theoretic approach, Silhouette, and cross validation. Kodinariya explains how no size fits all and will depend on the context of the data. The elbow method is the oldest and most used method but information theoretic approach is more rigorous. It is best to use more than one method to estimate the best number of clusters <span class="citation" data-cites="kodinariya_review_2013">(<a href="#ref-kodinariya_review_2013" role="doc-biblioref">Kodinariya and Makwana 2013</a>)</span>.</p>
 <p><strong>Outlier detection: How to Select k for k-nearest-neighbors-based outlier detectors</strong></p>
 <p>Yang et al propose a new method on selecting the optimal k value by addressing both application-specific and detector-specific factors. The authors proposed the KFC method which offers a parameter free solution with linear time complexity. Yang et al made the KFC method available at www.outliernet.com to an external site to facilitate reproducibility and provide opportunities for others to expand their research. Their research showed that the KFC method outperforms traditional methods and is much more versatile making it useful across many fields <span class="citation" data-cites="yang_outlier_2023">(<a href="#ref-yang_outlier_2023" role="doc-biblioref">Yang, Tan, and Rahardja 2023</a>)</span>.</p>
+<p><strong>k-means clustering with outlier removal</strong></p>
+<p>The article “K-means clustering with outlier removal” by Guojun Gan and Michael Kwok-Po Ng proposes to improve the k-means clustering algorithm by including outlier detection. The KMOR (k-means with outlier removal) algorithm broadens the classic k-means algorithm by proposing an additional cluster for outliers. The methodology comprises initialization, objective function optimization, iterative process updates, convergence, and parameter control. The KMOR algorithm was tested on synthetic and real datasets. It showed remarkable performance in overall clustering accuracy and outlier detection. Moreover, compared to other established algorithms such as ODC (Outlier Detection and clustering), k-means, and NEO-k-means algorithms, results have confirmed that KMOR algorithms not only outperformed them but also consistently cluster data and detect outliers with precision simultaneously.</p>
+<p>The KMOR algorithm&#39;s ability to seamlessly integrate clustering and outlier detection for both synthetic and real datasets showcased its dominance over current methods in terms of accuracy and efficiency. Futuristically, the goals are to investigate diverse ways to control outliers by refining parameter selection and broadening the algorithm for subspace clustering <span class="citation" data-cites="gan_k-means_2017">(<a href="#ref-gan_k-means_2017" role="doc-biblioref">Gan and Ng 2017</a>)</span>.</p>
+<p><strong><em>k-</em>means: A revisit</strong></p>
+<p>The article “K-means: A Revisit,” written by Zhao and Deng, seeks to improve the performance of the k-means clustering algorithm. This is done by introducing a new variant. This variant simplifies the classic procedure, making handling large-scale data more effectively easier. The new method introduces fundamental changes to the classic k-means algorithm by incorporating a new objective function, incremental clustering, simplified iteration, and hierarchical bisecting. The new k-means variant was tested across different scenarios. The results have shown improved clustering quality, higher efficiency, and superior scalability. However, the method has its limitations when it comes to initial assignment and parameter sensitivity. The article uses various datasets to evaluate the new k-means variant. These are synthetic datasets, real datasets, document clustering, and Flickr10M. The new k-means variant significantly improves over classic k-means in both clustering quality and computational efficiency. Thus making it a valuable tool for various data mining and machine learning applications <span class="citation" data-cites="zhao_k-means_2018">(<a href="#ref-zhao_k-means_2018" role="doc-biblioref">Zhao, Deng, and Ngo 2018</a>)</span>.</p>
+<p><strong>A Clustering Method Based on K-Means Algorithm</strong></p>
+<p>The article “A Clustering Method Based on K-Means Algorithm” by Youguo Li and Haiyan Wu provides an improvement to the classical K-means clustering algorithm. The goal is to overcome its disadvantages; mainly dependency on preliminary focal points and tendency to get trapped in local minimums. The enhanced K-means algorithm integrates the traditional K-means with the maximized minimum distance for k elements. Consequently, algorithm benefits include; improved accuracy, consistency, higher dimensionality, and fewer cluster criterion values. Nevertheless, the initial step requires random selection which may impact the final clustering disposition. The study used synthetic data and comparison metrics to test the algorithm. The improved K-means algorithm amplifies precision, stability, and convergence speed. The improvement helps to make the algorithm successful for clustering large-scale, randomly distributed data <span class="citation" data-cites="LI20121104">(<a href="#ref-LI20121104" role="doc-biblioref">Li and Wu 2012</a>)</span>.</p>
 <!-- ## Initialization Methods -->
 <!-- Initialization methods are crucial for the performance of k-means -->
 <!-- clustering. Random initialization involves starting with randomly chosen -->
@@ -3177,24 +3184,8 @@ vertical-align: -.125em;
 </section>
 <section id="data-description" class="level2">
 <h2 class="anchored" data-anchor-id="data-description">Data Description</h2>
-<p>Edgar Anderson, an American botanist, collected data to study the</p>
-<p>morphological differences in iris flowers. He collected 50 samples each</p>
-<p>from three different species: Setosa, Versicolor, and Virginica. The</p>
-<p>dataset consists of measurements of these three species, with four</p>
-<p>attributes for each sample: sepal length, sepal width, petal length, and</p>
-<p>petal width. The dataset was first introduced into the stats field by</p>
-<p>British biologist and statistician Ronald A. Fisher in his research</p>
-<p>paper “The use of multiple measurements in taxonomic problems”. He used</p>
-<p>this dataset to demonstrate linear discriminant analysis. Since then,</p>
-<p>this dataset has become a classic dataset in the field of machine</p>
-<p>learning and stats <span class="citation" data-cites="fisher_use_1936">(<a href="#ref-fisher_use_1936" role="doc-biblioref">Fisher 1936</a>)</span>.</p>
-<p>The Iris dataset is preloaded in R and is often used for predictive</p>
-<p>modeling. In our project, we aim to use the Iris dataset to understand</p>
-<p>how the K-means algorithm groups the flowers based on their features</p>
-<p>(sepal and petal dimensions). We will also provide a visual</p>
-<p>representation of the clusters, which will help in visualizing the</p>
-<p>effectiveness of the K-means clustering in identifying natural groupings</p>
-<p>within the data.</p>
+<p>Edgar Anderson, an American botanist, collected data to study the morphological differences in iris flowers. He collected 50 samples each from three different species: Setosa, Versicolor, and Virginica. The dataset consists of measurements of these three species, with four attributes for each sample: sepal length, sepal width, petal length, and petal width. The dataset was first introduced into the stats field by British biologist and statistician Ronald A. Fisher in his research paper “The use of multiple measurements in taxonomic problems”. He used this dataset to demonstrate linear discriminant analysis. Since then, this dataset has become a classic dataset in the field of machine learning and stats <span class="citation" data-cites="fisher_use_1936">(<a href="#ref-fisher_use_1936" role="doc-biblioref">Fisher 1936</a>)</span>.</p>
+<p>The Iris dataset is preloaded in R and is often used for predictive modeling. In our project, we aim to use the Iris dataset to understand how the K-means algorithm groups the flowers based on their features (sepal and petal dimensions). We will also provide a visual representation of the clusters, which will help in visualizing the effectiveness of the K-means clustering in identifying natural groupings within the data.</p>
 </section>
 <section id="references" class="level2 unnumbered">
 
@@ -3205,9 +3196,6 @@ vertical-align: -.125em;
 <div id="ref-bayat_bioinformatics_2002" class="csl-entry" role="listitem">
 Bayat, Ardeshir. 2002. <span>“Bioinformatics.”</span> <em><span>BMJ</span> : British Medical Journal</em> 324 (7344): 1018–22. <a href="https://www.ncbi.nlm.nih.gov/pmc/articles/PMC1122955/">https://www.ncbi.nlm.nih.gov/pmc/articles/PMC1122955/</a>.
 </div>
-<div id="ref-Berkhin2006" class="csl-entry" role="listitem">
-Berkhin, P. 2006. <span>“A Survey of Clustering Data Mining Techniques.”</span> In <em>Grouping Multidimensional Data: Recent Advances in Clustering</em>, edited by Jacob Kogan, Charles Nicholas, and Marc Teboulle, 25–71. Berlin, Heidelberg: Springer Berlin Heidelberg. <a href="https://doi.org/10.1007/3-540-28349-8_2">https://doi.org/10.1007/3-540-28349-8_2</a>.
-</div>
 <div id="ref-brusco_comparison_2017" class="csl-entry" role="listitem">
 Brusco, Michael J., Emilie Shireman, and Douglas Steinley. 2017. <span>“A Comparison of Latent Class, k-Means, and k-Median Methods for Clustering Dichotomous Data.”</span> <em>Psychological Methods</em> 22 (3): 563–80. <a href="https://doi.org/10.1037/met0000095">https://doi.org/10.1037/met0000095</a>.
 </div>
@@ -3217,14 +3205,20 @@ Facendola, Rosalia, Giovanni Ottomano Palmisano, Annalisa De Boni, Claudio Accia
 <div id="ref-fisher_use_1936" class="csl-entry" role="listitem">
 Fisher, R. A. 1936. <span>“The Use of Multiple Measurements in Taxonomic Problems.”</span> <em>Annals of Eugenics</em> 7 (2): 179–88. <a href="https://doi.org/10.1111/j.1469-1809.1936.tb02137.x">https://doi.org/10.1111/j.1469-1809.1936.tb02137.x</a>.
 </div>
+<div id="ref-gan_k-means_2017" class="csl-entry" role="listitem">
+Gan, Guojun, and Michael Kwok-Po Ng. 2017. <span>“<em>K</em>-Means Clustering with Outlier Removal.”</span> <em>Pattern Recognition Letters</em> 90 (April): 8–14. <a href="https://doi.org/10.1016/j.patrec.2017.03.008">https://doi.org/10.1016/j.patrec.2017.03.008</a>.
+</div>
 <div id="ref-hastie_elements_2009" class="csl-entry" role="listitem">
 Hastie, Trevor, Robert Tibshirani, and Jerome Friedman. 2009. <em>The Elements of Statistical Learning, Second Edition : Data Mining, Inference, and Prediction</em>. 2nd ed. Springer. <a href="https://hastie.su.domains/Papers/ESLII.pdf">https://hastie.su.domains/Papers/ESLII.pdf</a>.
 </div>
 <div id="ref-ikotun_k-means_2023" class="csl-entry" role="listitem">
 Ikotun, Abiodun M., Absalom E. Ezugwu, Laith Abualigah, Belal Abuhaija, and Jia Heming. 2023. <span>“K-Means Clustering Algorithms: A Comprehensive Review, Variants Analysis, and Advances in the Era of Big Data.”</span> <em>Information Sciences</em> 622 (April): 178–210. <a href="https://doi.org/10.1016/j.ins.2022.11.139">https://doi.org/10.1016/j.ins.2022.11.139</a>.
 </div>
-<div id="ref-Kodinariya2013ReviewOD" class="csl-entry" role="listitem">
-Kodinariya, Trupti M., and Prashant R. Makwana. 2013. <span>“Review on Determining Number of Cluster in k-Means Clustering.”</span> In. <a href="https://api.semanticscholar.org/CorpusID:10090179">https://api.semanticscholar.org/CorpusID:10090179</a>.
+<div id="ref-kodinariya_review_2013" class="csl-entry" role="listitem">
+Kodinariya, Trupti M., and Prashant R. Makwana. 2013. <span>“Review on Determining Number of Cluster in k-Means Clustering.”</span> In. <a href="https://www.semanticscholar.org/paper/Review-on-determining-number-of-Cluster-in-K-Means-Kodinariya-Makwana/1a34936bffe558a380168b790dc37956813514ba">https://www.semanticscholar.org/paper/Review-on-determining-number-of-Cluster-in-K-Means-Kodinariya-Makwana/1a34936bffe558a380168b790dc37956813514ba</a>.
+</div>
+<div id="ref-LI20121104" class="csl-entry" role="listitem">
+Li, Youguo, and Haiyan Wu. 2012. <span>“A Clustering Method Based on k-Means Algorithm.”</span> <em>Physics Procedia</em> 25: 1104–9. https://doi.org/<a href="https://doi.org/10.1016/j.phpro.2012.03.206">https://doi.org/10.1016/j.phpro.2012.03.206</a>.
 </div>
 <div id="ref-lund_review_2021" class="csl-entry" role="listitem">
 Lund, Brady, and Jinxuan Ma. 2021. <span>“A Review of Cluster Analysis Techniques and Their Uses in Library and Information Science Research: K-Means and k-Medoids Clustering.”</span> <em>Performance Measurement and Metrics</em> 22 (3): 161–73. <a href="https://doi.org/10.1108/PMM-05-2021-0026">https://doi.org/10.1108/PMM-05-2021-0026</a>.
@@ -3237,6 +3231,9 @@ Yang, Jiawei, Xu Tan, and Sylwan Rahardja. 2023. <span>“Outlier Detection: How
 </div>
 <div id="ref-zelasky_identifying_2023" class="csl-entry" role="listitem">
 Zelasky, Sarah, Chantel L. Martin, Christopher Weaver, Lisa K. Baxter, and Kristen M. Rappazzo. 2023. <span>“Identifying Groups of Children’s Social Mobility Opportunity for Public Health Applications Using k-Means Clustering.”</span> <em>Heliyon</em> 9 (9): e20250. <a href="https://doi.org/10.1016/j.heliyon.2023.e20250">https://doi.org/10.1016/j.heliyon.2023.e20250</a>.
+</div>
+<div id="ref-zhao_k-means_2018" class="csl-entry" role="listitem">
+Zhao, Wan-Lei, Cheng-Hao Deng, and Chong-Wah Ngo. 2018. <span>“<em>K</em>-Means: A Revisit.”</span> <em>Neurocomputing</em> 291 (May): 195–206. <a href="https://doi.org/10.1016/j.neucom.2018.02.072">https://doi.org/10.1016/j.neucom.2018.02.072</a>.
 </div>
 </div></section></div></main>
 <!-- /main column -->

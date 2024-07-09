@@ -62,56 +62,56 @@ point to the centroid that is closest to it. This allocation is done in
 a way that minimizes the total squared distances between the data points
 and their respective centroids.
 
-+----------------------------+-----------------------------+
-| #### Concepts              | #### Parameters             |
-+============================+=============================+
-| -   **Centroid**: The      | -   **Cluster Count (k):**  |
-|     centroid of a cluster  |     The desired number of   |
-|     represents the average |     clusters and centroids  |
-|     position of all the    |     to be generated.        |
-|     points within that     |     Optimal cluster         |
-|     cluster. Every cluster |     selection is of utmost  |
-|     in the k-means         |     importance and can be   |
-|     algorithm is           |     facilitated by          |
-|     associated with a      |     techniques such as the  |
-|     centroid, which serves |     elbow approach or       |
-|     as a central point     |     silhouette analysis.    |
-|     that represents the    |                             |
-|     cluster.               | -   **Initial Centroids:**  |
-|                            |     The initial positions   |
-| -   **Inertia:** Referred  |     of the centroids, which |
-|     to as within-cluster   |     can be selected         |
-|     sum of squares,        |     randomly or using more  |
-|     quantifies the         |     sophisticated           |
-|     effectiveness of       |     initialization methods  |
-|     cluster formation.     |     such as k-means++ to    |
-|     Smaller inertia values |     enhance the speed of    |
-|     suggest superior       |     convergence and the     |
-|     clustering             |     quality of the solution |
-|     performance.           |                             |
-|                            | -   **Maximum Iterations:** |
-| -   **Convergence:** The   |     The highest number of   |
-|     k-means method         |     iterations that the     |
-|     continues to iterate   |     algorithm will execute  |
-|     until it reaches       |     if it has not achieved  |
-|     convergence, which is  |     convergence before      |
-|     when the centroids     |     reaching this limit.    |
-|     stop changing          |                             |
-|     considerably. This     | -   **Tolerance:** A        |
-|     indicates that the     |     criterion used to       |
-|     clusters have become   |     establish when          |
-|     stable.                |     convergence has been    |
-|                            |     achieved. The algorithm |
-| -   **Distance Metric:**   |     terminates if the       |
-|     Choice of distance     |     difference between the  |
-|     measure, such as       |     centroids is below the  |
-|     Euclidean distance,    |     specified tolerance.    |
-|     impacts the formation  |                             |
-|     of clusters. Euclidean |                             |
-|     distance is the        |                             |
-|     typical metric         |                             |
-|     employed in k-means.   |                             |
-+----------------------------+-----------------------------+
++---------------------------+----------------------------+
+| #### Concepts             | #### Parameters            |
++===========================+============================+
+| -   **Centroid**: The     | -   **Cluster Count (k):** |
+|     centroid of a cluster |     The desired number of  |
+|     represents the        |     clusters and centroids |
+|     average position of   |     to be generated.       |
+|     all the points within |     Optimal cluster        |
+|     that cluster. Every   |     selection is of utmost |
+|     cluster in the        |     importance and can be  |
+|     k-means algorithm is  |     facilitated by         |
+|     associated with a     |     techniques such as the |
+|     centroid, which       |     elbow approach or      |
+|     serves as a central   |     silhouette analysis.   |
+|     point that represents |                            |
+|     the cluster.          | -   **Initial Centroids:** |
+|                           |     The initial positions  |
+| -   **Inertia:** Referred |     of the centroids,      |
+|     to as within-cluster  |     which can be selected  |
+|     sum of squares,       |     randomly or using more |
+|     quantifies the        |     sophisticated          |
+|     effectiveness of      |     initialization methods |
+|     cluster formation.    |     such as k-means++ to   |
+|     Smaller inertia       |     enhance the speed of   |
+|     values suggest        |     convergence and the    |
+|     superior clustering   |     quality of the         |
+|     performance.          |     solution               |
+|                           |                            |
+| -   **Convergence:** The  | -   **Maximum              |
+|     k-means method        |     Iterations:** The      |
+|     continues to iterate  |     highest number of      |
+|     until it reaches      |     iterations that the    |
+|     convergence, which is |     algorithm will execute |
+|     when the centroids    |     if it has not achieved |
+|     stop changing         |     convergence before     |
+|     considerably. This    |     reaching this limit.   |
+|     indicates that the    |                            |
+|     clusters have become  | -   **Tolerance:** A       |
+|     stable.               |     criterion used to      |
+|                           |     establish when         |
+| -   **Distance Metric:**  |     convergence has been   |
+|     Choice of distance    |     achieved. The          |
+|     measure, such as      |     algorithm terminates   |
+|     Euclidean distance,   |     if the difference      |
+|     impacts the formation |     between the centroids  |
+|     of clusters.          |     is below the specified |
+|     Euclidean distance is |     tolerance.             |
+|     the typical metric    |                            |
+|     employed in k-means.  |                            |
++---------------------------+----------------------------+
 
 ## Mathematical Formulation
 
@@ -265,7 +265,7 @@ validation. Kodinariya explains how no size fits all and will depend on
 the context of the data. The elbow method is the oldest and most used
 method but information theoretic approach is more rigorous. It is best
 to use more than one method to estimate the best number of clusters
-[@Kodinariya2013ReviewOD].
+[@kodinariya_review_2013].
 
 **Outlier detection: How to Select k for k-nearest-neighbors-based
 outlier detectors**
@@ -279,6 +279,66 @@ provide opportunities for others to expand their research. Their
 research showed that the KFC method outperforms traditional methods and
 is much more versatile making it useful across many fields
 [@yang_outlier_2023].
+
+**k-means clustering with outlier removal**
+
+The article "K-means clustering with outlier removal" by Guojun Gan and
+Michael Kwok-Po Ng proposes to improve the k-means clustering algorithm
+by including outlier detection. The KMOR (k-means with outlier removal)
+algorithm broadens the classic k-means algorithm by proposing an
+additional cluster for outliers. The methodology comprises
+initialization, objective function optimization, iterative process
+updates, convergence, and parameter control. The KMOR algorithm was
+tested on synthetic and real datasets. It showed remarkable performance
+in overall clustering accuracy and outlier detection. Moreover, compared
+to other established algorithms such as ODC (Outlier Detection and
+clustering), k-means, and NEO-k-means algorithms, results have confirmed
+that KMOR algorithms not only outperformed them but also consistently
+cluster data and detect outliers with precision simultaneously.
+
+The KMOR algorithm\'s ability to seamlessly integrate clustering and
+outlier detection for both synthetic and real datasets showcased its
+dominance over current methods in terms of accuracy and efficiency.
+Futuristically, the goals are to investigate diverse ways to control
+outliers by refining parameter selection and broadening the algorithm
+for subspace clustering [@gan_k-means_2017].
+
+***k-*****means: A revisit**
+
+The article "K-means: A Revisit," written by Zhao and Deng, seeks to
+improve the performance of the k-means clustering algorithm. This is
+done by introducing a new variant. This variant simplifies the classic
+procedure, making handling large-scale data more effectively easier. The
+new method introduces fundamental changes to the classic k-means
+algorithm by incorporating a new objective function, incremental
+clustering, simplified iteration, and hierarchical bisecting. The new
+k-means variant was tested across different scenarios. The results have
+shown improved clustering quality, higher efficiency, and superior
+scalability. However, the method has its limitations when it comes to
+initial assignment and parameter sensitivity. The article uses various
+datasets to evaluate the new k-means variant. These are synthetic
+datasets, real datasets, document clustering, and Flickr10M. The new
+k-means variant significantly improves over classic k-means in both
+clustering quality and computational efficiency. Thus making it a
+valuable tool for various data mining and machine learning applications
+[@zhao_k-means_2018].
+
+**A Clustering Method Based on K-Means Algorithm**
+
+The article "A Clustering Method Based on K-Means Algorithm" by Youguo
+Li and Haiyan Wu provides an improvement to the classical K-means
+clustering algorithm. The goal is to overcome its disadvantages; mainly
+dependency on preliminary focal points and tendency to get trapped in
+local minimums. The enhanced K-means algorithm integrates the
+traditional K-means with the maximized minimum distance for k elements.
+Consequently, algorithm benefits include; improved accuracy,
+consistency, higher dimensionality, and fewer cluster criterion values.
+Nevertheless, the initial step requires random selection which may
+impact the final clustering disposition. The study used synthetic data
+and comparison metrics to test the algorithm. The improved K-means
+algorithm amplifies precision, stability, and convergence speed. The
+improvement helps to make the algorithm successful for clustering
+large-scale, randomly distributed data [@LI20121104].
 
 <!-- ## Initialization Methods -->
 
@@ -381,39 +441,23 @@ is much more versatile making it useful across many fields
 ## Data Description
 
 Edgar Anderson, an American botanist, collected data to study the
-
 morphological differences in iris flowers. He collected 50 samples each
-
 from three different species: Setosa, Versicolor, and Virginica. The
-
 dataset consists of measurements of these three species, with four
-
 attributes for each sample: sepal length, sepal width, petal length, and
-
 petal width. The dataset was first introduced into the stats field by
-
 British biologist and statistician Ronald A. Fisher in his research
-
 paper "The use of multiple measurements in taxonomic problems". He used
-
 this dataset to demonstrate linear discriminant analysis. Since then,
-
 this dataset has become a classic dataset in the field of machine
-
 learning and stats [@fisher_use_1936].
 
 The Iris dataset is preloaded in R and is often used for predictive
-
 modeling. In our project, we aim to use the Iris dataset to understand
-
 how the K-means algorithm groups the flowers based on their features
-
 (sepal and petal dimensions). We will also provide a visual
-
 representation of the clusters, which will help in visualizing the
-
 effectiveness of the K-means clustering in identifying natural groupings
-
 within the data.
 
 ## References
