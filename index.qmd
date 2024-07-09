@@ -1,6 +1,6 @@
 ---
 title: "Rough Draft Literature Review - Data Science Capstone"
-author: "Lindsay Guyette"
+author: "Lindsay Guyette, Alondra Nunez, Chantal, Jonathan Broada"
 date: '`r Sys.Date()`'
 format:
   html:
