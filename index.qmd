@@ -29,8 +29,6 @@ potential areas for future research.
 
 ## Introduction
 
-[@zelasky_identifying_2023]
-
 #### *K-means Clustering*
 
 *Definition of Clustering*
@@ -48,7 +46,7 @@ yet the clusters themselves are clearly dissimilar from one another.
 The similarity of data points is commonly assessed using a distance
 metric, such as Euclidean distance, Manhattan distance, or cosine
 similarity. The choice of metric depends on the characteristics of the
-data and the specific clustering technique employed.
+data and the specific clustering technique employed [@Berkhin2006].
 
 #### ***Definition of k-Means Clustering***
 
@@ -64,97 +62,69 @@ point to the centroid that is closest to it. This allocation is done in
 a way that minimizes the total squared distances between the data points
 and their respective centroids.
 
-#### ***Key Concepts of k-Means Clustering***
++----------------------------+-----------------------------+
+| #### Concepts              | #### Parameters             |
++============================+=============================+
+| -   **Centroid**: The      | -   **Cluster Count (k):**  |
+|     centroid of a cluster  |     The desired number of   |
+|     represents the average |     clusters and centroids  |
+|     position of all the    |     to be generated.        |
+|     points within that     |     Optimal cluster         |
+|     cluster. Every cluster |     selection is of utmost  |
+|     in the k-means         |     importance and can be   |
+|     algorithm is           |     facilitated by          |
+|     associated with a      |     techniques such as the  |
+|     centroid, which serves |     elbow approach or       |
+|     as a central point     |     silhouette analysis.    |
+|     that represents the    |                             |
+|     cluster.               | -   **Initial Centroids:**  |
+|                            |     The initial positions   |
+| -   **Inertia:** Referred  |     of the centroids, which |
+|     to as within-cluster   |     can be selected         |
+|     sum of squares,        |     randomly or using more  |
+|     quantifies the         |     sophisticated           |
+|     effectiveness of       |     initialization methods  |
+|     cluster formation.     |     such as k-means++ to    |
+|     Smaller inertia values |     enhance the speed of    |
+|     suggest superior       |     convergence and the     |
+|     clustering             |     quality of the solution |
+|     performance.           |                             |
+|                            | -   **Maximum Iterations:** |
+| -   **Convergence:** The   |     The highest number of   |
+|     k-means method         |     iterations that the     |
+|     continues to iterate   |     algorithm will execute  |
+|     until it reaches       |     if it has not achieved  |
+|     convergence, which is  |     convergence before      |
+|     when the centroids     |     reaching this limit.    |
+|     stop changing          |                             |
+|     considerably. This     | -   **Tolerance:** A        |
+|     indicates that the     |     criterion used to       |
+|     clusters have become   |     establish when          |
+|     stable.                |     convergence has been    |
+|                            |     achieved. The algorithm |
+| -   **Distance Metric:**   |     terminates if the       |
+|     Choice of distance     |     difference between the  |
+|     measure, such as       |     centroids is below the  |
+|     Euclidean distance,    |     specified tolerance.    |
+|     impacts the formation  |                             |
+|     of clusters. Euclidean |                             |
+|     distance is the        |                             |
+|     typical metric         |                             |
+|     employed in k-means.   |                             |
++----------------------------+-----------------------------+
 
--   **Centroid**: The centroid of a cluster represents the average
-    position of all the points within that cluster. Every cluster in the
-    k-means algorithm is associated with a centroid, which serves as a
-    central point that represents the cluster.
+## Mathematical Formulation
 
--   **Inertia:** Referred to as within-cluster sum of squares,
-    quantifies the effectiveness of cluster formation. Smaller inertia
-    values suggest superior clustering performance.
+The k-means clustering algorithm can be analytically defined as an
+optimization problem. The objective is to divide a collection of n data
+points into k clusters in a manner that minimizes the sum of squares
+inside each cluster (WCSS). The process entails the following steps:
+Objective function (minimization of within-cluster variance). The goal
+of k-means is to minimize the total sum of squared distances between
+each data point and its corresponding cluster centroid. The
+within-cluster sum of squares (WCSS) represents this.
 
--   **Convergence:** The k-means method continues to iterate until it
-    reaches convergence, which is when the centroids stop changing
-    considerably. This indicates that the clusters have become stable.
-
--   **Distance Metric:** Choice of distance measure, such as Euclidean
-    distance, impacts the formation of clusters. Euclidean distance is
-    the typical metric employed in k-means.
-
-#### ***Key Parameters of k-Means Clustering***
-
--   **Cluster Count (k):** The desired number of clusters and centroids
-    to be generated. Optimal cluster selection is of utmost importance
-    and can be facilitated by techniques such as the elbow approach or
-    silhouette analysis.
-
--   **Initial Centroids:** The initial positions of the centroids, which
-    can be selected randomly or using more sophisticated initialization
-    methods such as k-means++ to enhance the speed of convergence and
-    the quality of the solution.
-
--   **Maximum Iterations:** The highest number of iterations that the
-    algorithm will execute if it has not achieved convergence before
-    reaching this limit.
-
--   **Tolerance:** A criterion used to establish when convergence has
-    been achieved. The algorithm terminates if the difference between
-    the centroids is below the specified tolerance.
-
-#### ***Algorithmic Steps***
-
-The k-means clustering algorithm is an iterative procedure that involves
-two steps: allocating data points to clusters and updating the cluster
-centroids. Below is a comprehensive breakdown of the sequential steps in
-the algorithm:
-
-1.  **Initialization of centroids.**
-
-Random initialization selects 𝑘 initial centroids at random from the
-dataset. Every centroid corresponds to the original center of a cluster.
-The algorithm being referred to is called "k-means++" is a refined
-technique that distributes the initial centroids in order to enhance the
-performance of the algorithm. The initial centroid is selected at
-random, whereas the following centroids are chosen according to a
-probability that is directly proportionate to their distance from the
-nearest existing centroid.
-
-2.  **Assignment of data points to nearest centroids.**
-
-Compute the distance from each data point to every centroid. Popular
-distance measurements include Euclidean distance, Manhattan distance,
-and cosine similarity. Allocate each data point to the cluster that has
-the closest centroid to it. This results in the formation of 𝑘 clusters,
-where each data point is assigned to a single cluster.
-
-3.  **Update of centroids.**
-
-Determine the updated centroid of each cluster by computing the average
-of all data points assigned to that cluster. The updated centroid is
-calculated as the average position of the data points within the
-cluster. This update step recalibrates the position of the centroids to
-more accurately reflect the clusters produced in the assignment stage.
-
-4.  **Iteration until convergence.**
-
-Iterate the assignment and update processes until the centroids exhibit
-minimal variation between iterations. Convergence is usually assessed by
-verifying if the positions of the centroids have reached a stable state
-within a predetermined tolerance threshold. Alternatively, the process
-can be halted after reaching a predetermined number of iterations if
-convergence is not attained prior to that.
-
-Mathematical Formulation The k-means clustering algorithm can be
-analytically defined as an optimization problem. The objective is to
-divide a collection of n data points into k clusters in a manner that
-minimizes the sum of squares inside each cluster (WCSS). The process
-entails the following steps: Objective function (minimization of
-within-cluster variance). The goal of k-means is to minimize the total
-sum of squared distances between each data point and its corresponding
-cluster centroid. The within-cluster sum of squares (WCSS) represents
-this.
+$$\text{WCSS} = \sum_{j=1}^{k}\sum_{xi\in Cj}^{} \left\| x_{i} - \mu_{j} \right\|^2$$
 
 where: C~j~ is the set of data points assigned to cluster j, x~i~ is a
 data point, μ~j​~ is the centroid of cluster j, ∥x~i~−μ~j~∥ is the
@@ -165,7 +135,7 @@ Mathematical Terms Initialization Randomly choose k initial centroids
 Step Assign each data point x~i​~ to the nearest centroid μ~j~​. This can
 be mathematically expressed as: C~j~ = {x~i~ : ∥x~i~−μ~j~∥2 ≤
 ∥x~i~−μ~l~∥2 for all l, 1 ≤ l ≤ k} Here, C~j​~ denotes the set of points
-assigned to centroid μ~j~​.
+assigned to centroid μ~j~​ [@hastie_elements_2009].
 
 ## Real World Applications
 
@@ -225,87 +195,225 @@ control data. These applications enhance the ability to detect
 irregularities and recognize patterns, improving decision-making and
 operational efficiency.
 
-# **Variations and Enhancements of k-Means**
+**Food Markets**
 
-## **Initialization Methods**
+In 2017, researchers used k-means clustering to segment the organic food
+market in Lebanon. By starting with 13 variables, they applied Principal
+Component Analysis (PCA) to reduce the number while retaining the
+explanatory power. The k-means algorithm was then employed, resulting in
+four distinct clusters of consumer opinions on organic food. Each
+cluster was labeled appropriately to facilitate understanding and
+application in research. The outcomes present relevant groups that can
+guide policy and initiatives in the organic food market in Lebanon
+[@tleis_segmenting_2017].
 
-Initialization methods are crucial for the performance of k-means
-clustering. Random initialization involves starting with randomly chosen
-cluster centers, which can sometimes lead to poor clustering outcomes or
-slow convergence. The k-means++ initialization method enhances this by
-choosing initial cluster centers more strategically, greatly improving
-clustering quality and convergence speed. Other advanced initialization
-techniques include things like PCA-based initialization, which uses
-principal component analysis to select starting centers, or
-density-based methods that consider data distribution for better initial
-placement.
+In another study, the authors utilized k-means clustering to profile
+citizens based on their perceptions of key factors related to food
+security. After beginning with numerous variables, Principal Component
+Analysis (PCA) was applied to condense the data while preserving its
+explanatory power. The k-means algorithm was then used to identify four
+clusters of opinions on food security, each of which was suitably
+labeled for their study. The derived clusters offer valuable groups of
+people categorized by their views on food security, which can aid in
+guiding policy decisions and initiatives [@facendola_profiling_2023].
 
-## **Distance Metrics**
+## Variations and Enhancements of k-Means
 
-The choice of distance metric significantly impacts the clustering
-results of k-means. Euclidean distance is the most commonly used metric
-and works well for many applications. However, for certain datasets,
-other metrics like Manhattan distance, which measures distance along
-axes at right angles, may be more appropriate. Additionally, various
-other metrics can be employed to fit specific data types and problem
-requirements, enhancing the flexibility and applicability of k-means to
-diverse datasets.
+**K-means clustering algorithms: A comprehensive review, variants
+analysis, and advances in the era of big data.**
 
-## **Scalability and Efficiency Improvements**
+This research provides an in depth exploration of k-means, it's history,
+variants, trends and challenges. The k-means algorithm was originally
+proposed in in the 1950s and due to its computational simplicity,
+however it has many challenges (like having to select the number of
+clusters, or minimal local convergence because of the random initial
+centroids) many variants of k-means have been created to tackle those
+challenges and broaden the applicability of k-means. This research is a
+literature review of k-means and its variants [@ikotun_k-means_2023].
 
-As datasets grow larger, the efficiency of k-means becomes increasingly
-important. Accelerated k-means algorithms have been developed to speed
-up the standard process, typically by optimizing the computational steps
-involved. Approximate k-means offers faster, albeit less precise,
-clustering suitable for extremely large datasets where exact precision
-is less critical. Furthermore, parallel and distributed k-means
-techniques allow the algorithm to run on multiple machines
-simultaneously, significantly improving scalability and reducing
-computation time.
+**A review of cluster analysis techniques and their uses in library and
+information science research: k-means and k-medoids clustering.**
 
-## **Handling Different Data Types**
+This research focuses on the use of clustering k-means and k-medoids for
+Library and Information Science (LIS) research. They found that LIS
+research has benefitted a lot from those clustering techniques since the
+number of papers using k-means on LIS research skyrocketed in the 2000's
+decade. This research also serves as an introduction to LIS
+professionals who want to begin using clustering in their research/work
+[@lund_review_2021].
 
-K-means can be adapted to handle various data types beyond purely
-numeric data. For mixed numeric and categorical data, specialized
-algorithms can process both types simultaneously, maintaining clustering
-effectiveness. Text and document clustering represent another
-application where k-means can be adapted, often using techniques such as
-TF-IDF to convert text into numeric form that the algorithm can process.
-These adaptations make k-means a versatile tool for a broad range of
-data types.
+**A Comparison of Latent Class, K-Means, and K-Median Methods for
+Clustering Dichotomous Data.**
 
-## **Clustering Quality and Validation**
+This study compares three clustering methods on dichotomous data. The
+study compares the performance each method on 2 different experiments
+(with best k known and best k unknown). They found that while the three
+methods can be used, k-median produced the best results, closely
+followed by Latent Class and then K-means. They also mention other
+specific situations in which the methods perform better/worse
+[@brusco_comparison_2017].
 
-Assessing the quality of clustering is essential for ensuring good
-outcomes. Internal validation indices, such as the silhouette score,
-evaluate clustering quality based on the data alone, providing insight
-into how well the clusters are formed. External validation indices, like
-the adjusted Rand index, compare the clustering results to external or
-known classifications, offering a benchmark for performance. Stability
-and robustness measures are also important, as they assess how
-consistent the clustering results are under different conditions or
-inputs, ensuring reliability and robustness of the algorithm.
+**Review on determining number of clusters in k-means clustering**
 
-## Data Description
+In this review, researcher Kodinariya explains how to estimate the
+number of clusters. Fields across the board use clustering so there is
+no one answer on how many clusters to use. Kodinariya explores six
+different ways on how to determine the best number of clusters. The six
+methods are: rule of thumb, elbow method, information criterion
+approach, information theoretic approach, Silhouette, and cross
+validation. Kodinariya explains how no size fits all and will depend on
+the context of the data. The elbow method is the oldest and most used
+method but information theoretic approach is more rigorous. It is best
+to use more than one method to estimate the best number of clusters
+[@Kodinariya2013ReviewOD].
 
-Edgar Anderson, an American botanist, collected data to study the
-morphological differences in iris flowers. He collected 50 samples each
-from three different species: Setosa, Versicolor, and Virginica. The
-dataset consists of measurements of these three species, with four
-attributes for each sample: sepal length, sepal width, petal length, and
-petal width. The dataset was first introduced into the stats field by
-British biologist and statistician Ronald A. Fisher in his research
-paper \"The use of multiple measurements in taxonomic problems\". He
-used this dataset to demonstrate linear discriminant analysis. Since
-then, this dataset has become a classic dataset in the field of machine
-learning and stats.
+**Outlier detection: How to Select k for k-nearest-neighbors-based
+outlier detectors**
 
-The Iris dataset is preloaded in R and is often used for predictive
-modeling. In our project, we aim to use the Iris dataset to understand
-how the K-means algorithm groups the flowers based on their features
-(sepal and petal dimensions). We will also provide a visual
-representation of the clusters, which will help in visualizing the
-effectiveness of the K-means clustering in identifying natural groupings
-within the data.
+Yang et al propose a new method on selecting the optimal k value by
+addressing both application-specific and detector-specific factors. The
+authors proposed the KFC method which offers a parameter free solution
+with linear time complexity. Yang et al made the KFC method available at
+www.outliernet.com to an external site to facilitate reproducibility and
+provide opportunities for others to expand their research. Their
+research showed that the KFC method outperforms traditional methods and
+is much more versatile making it useful across many fields
+[@yang_outlier_2023].
+
+<!-- ## Initialization Methods -->
+
+<!-- Initialization methods are crucial for the performance of k-means -->
+
+<!-- clustering. Random initialization involves starting with randomly chosen -->
+
+<!-- cluster centers, which can sometimes lead to poor clustering outcomes or -->
+
+<!-- slow convergence. The k-means++ initialization method enhances this by -->
+
+<!-- choosing initial cluster centers more strategically, greatly improving -->
+
+<!-- clustering quality and convergence speed. Other advanced initialization -->
+
+<!-- techniques include things like PCA-based initialization, which uses -->
+
+<!-- principal component analysis to select starting centers, or -->
+
+<!-- density-based methods that consider data distribution for better initial -->
+
+<!-- placement. -->
+
+<!-- ## Distance Metrics -->
+
+<!-- The choice of distance metric significantly impacts the clustering -->
+
+<!-- results of k-means. Euclidean distance is the most commonly used metric -->
+
+<!-- and works well for many applications. However, for certain datasets, -->
+
+<!-- other metrics like Manhattan distance, which measures distance along -->
+
+<!-- axes at right angles, may be more appropriate. Additionally, various -->
+
+<!-- other metrics can be employed to fit specific data types and problem -->
+
+<!-- requirements, enhancing the flexibility and applicability of k-means to -->
+
+<!-- diverse datasets. -->
+
+<!-- ## Scalability and Efficiency Improvements -->
+
+<!-- As datasets grow larger, the efficiency of k-means becomes increasingly -->
+
+<!-- important. Accelerated k-means algorithms have been developed to speed -->
+
+<!-- up the standard process, typically by optimizing the computational steps -->
+
+<!-- involved. Approximate k-means offers faster, albeit less precise, -->
+
+<!-- clustering suitable for extremely large datasets where exact precision -->
+
+<!-- is less critical. Furthermore, parallel and distributed k-means -->
+
+<!-- techniques allow the algorithm to run on multiple machines -->
+
+<!-- simultaneously, significantly improving scalability and reducing -->
+
+<!-- computation time. -->
+
+<!-- ## Handling Different Data Types -->
+
+<!-- K-means can be adapted to handle various data types beyond purely -->
+
+<!-- numeric data. For mixed numeric and categorical data, specialized -->
+
+<!-- algorithms can process both types simultaneously, maintaining clustering -->
+
+<!-- effectiveness. Text and document clustering represent another -->
+
+<!-- application where k-means can be adapted, often using techniques such as -->
+
+<!-- TF-IDF to convert text into numeric form that the algorithm can process. -->
+
+<!-- These adaptations make k-means a versatile tool for a broad range of -->
+
+<!-- data types. -->
+
+<!-- ## Clustering Quality and Validation -->
+
+<!-- Assessing the quality of clustering is essential for ensuring good -->
+
+<!-- outcomes. Internal validation indices, such as the silhouette score, -->
+
+<!-- evaluate clustering quality based on the data alone, providing insight -->
+
+<!-- into how well the clusters are formed. External validation indices, like -->
+
+<!-- the adjusted Rand index, compare the clustering results to external or -->
+
+<!-- known classifications, offering a benchmark for performance. Stability -->
+
+<!-- and robustness measures are also important, as they assess how -->
+
+<!-- consistent the clustering results are under different conditions or -->
+
+<!-- inputs, ensuring reliability and robustness of the algorithm. -->
+
+<!-- ## Data Description -->
+
+<!-- Edgar Anderson, an American botanist, collected data to study the -->
+
+<!-- morphological differences in iris flowers. He collected 50 samples each -->
+
+<!-- from three different species: Setosa, Versicolor, and Virginica. The -->
+
+<!-- dataset consists of measurements of these three species, with four -->
+
+<!-- attributes for each sample: sepal length, sepal width, petal length, and -->
+
+<!-- petal width. The dataset was first introduced into the stats field by -->
+
+<!-- British biologist and statistician Ronald A. Fisher in his research -->
+
+<!-- paper "The use of multiple measurements in taxonomic problems". He used -->
+
+<!-- this dataset to demonstrate linear discriminant analysis. Since then, -->
+
+<!-- this dataset has become a classic dataset in the field of machine -->
+
+<!-- learning and stats [@fisher_use_1936]. -->
+
+<!-- The Iris dataset is preloaded in R and is often used for predictive -->
+
+<!-- modeling. In our project, we aim to use the Iris dataset to understand -->
+
+<!-- how the K-means algorithm groups the flowers based on their features -->
+
+<!-- (sepal and petal dimensions). We will also provide a visual -->
+
+<!-- representation of the clusters, which will help in visualizing the -->
+
+<!-- effectiveness of the K-means clustering in identifying natural groupings -->
+
+<!-- within the data. -->
 
 ## References
