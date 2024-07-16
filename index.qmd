@@ -62,56 +62,66 @@ point to the centroid that is closest to it. This allocation is done in
 a way that minimizes the total squared distances between the data points
 and their respective centroids.
 
-+---------------------------+----------------------------+
-| #### Concepts             | #### Parameters            |
-+===========================+============================+
-| -   **Centroid**: The     | -   **Cluster Count (k):** |
-|     centroid of a cluster |     The desired number of  |
-|     represents the        |     clusters and centroids |
-|     average position of   |     to be generated.       |
-|     all the points within |     Optimal cluster        |
-|     that cluster. Every   |     selection is of utmost |
-|     cluster in the        |     importance and can be  |
-|     k-means algorithm is  |     facilitated by         |
-|     associated with a     |     techniques such as the |
-|     centroid, which       |     elbow approach or      |
-|     serves as a central   |     silhouette analysis.   |
-|     point that represents |                            |
-|     the cluster.          | -   **Initial Centroids:** |
-|                           |     The initial positions  |
-| -   **Inertia:** Referred |     of the centroids,      |
-|     to as within-cluster  |     which can be selected  |
-|     sum of squares,       |     randomly or using more |
-|     quantifies the        |     sophisticated          |
-|     effectiveness of      |     initialization methods |
-|     cluster formation.    |     such as k-means++ to   |
-|     Smaller inertia       |     enhance the speed of   |
-|     values suggest        |     convergence and the    |
-|     superior clustering   |     quality of the         |
-|     performance.          |     solution               |
-|                           |                            |
-| -   **Convergence:** The  | -   **Maximum              |
-|     k-means method        |     Iterations:** The      |
-|     continues to iterate  |     highest number of      |
-|     until it reaches      |     iterations that the    |
-|     convergence, which is |     algorithm will execute |
-|     when the centroids    |     if it has not achieved |
-|     stop changing         |     convergence before     |
-|     considerably. This    |     reaching this limit.   |
-|     indicates that the    |                            |
-|     clusters have become  | -   **Tolerance:** A       |
-|     stable.               |     criterion used to      |
-|                           |     establish when         |
-| -   **Distance Metric:**  |     convergence has been   |
-|     Choice of distance    |     achieved. The          |
-|     measure, such as      |     algorithm terminates   |
-|     Euclidean distance,   |     if the difference      |
-|     impacts the formation |     between the centroids  |
-|     of clusters.          |     is below the specified |
-|     Euclidean distance is |     tolerance.             |
-|     the typical metric    |                            |
-|     employed in k-means.  |                            |
-+---------------------------+----------------------------+
++------------------------+-------------------------+
+| #### Concepts          | #### Parameters         |
++========================+=========================+
+| -   **Centroid**: The  | -   **Cluster Count     |
+|     centroid of a      |     (k):** The desired  |
+|     cluster represents |     number of clusters  |
+|     the average        |     and centroids to be |
+|     position of all    |     generated. Optimal  |
+|     the points within  |     cluster selection   |
+|     that cluster.      |     is of utmost        |
+|     Every cluster in   |     importance and can  |
+|     the k-means        |     be facilitated by   |
+|     algorithm is       |     techniques such as  |
+|     associated with a  |     the elbow approach  |
+|     centroid, which    |     or silhouette       |
+|     serves as a        |     analysis.           |
+|     central point that |                         |
+|     represents the     | -   **Initial           |
+|     cluster.           |     Centroids:** The    |
+|                        |     initial positions   |
+| -   **Inertia:**       |     of the centroids,   |
+|     Referred to as     |     which can be        |
+|     within-cluster sum |     selected randomly   |
+|     of squares,        |     or using more       |
+|     quantifies the     |     sophisticated       |
+|     effectiveness of   |     initialization      |
+|     cluster formation. |     methods such as     |
+|     Smaller inertia    |     k-means++ to        |
+|     values suggest     |     enhance the speed   |
+|     superior           |     of convergence and  |
+|     clustering         |     the quality of the  |
+|     performance.       |     solution            |
+|                        |                         |
+| -   **Convergence:**   | -   **Maximum           |
+|     The k-means method |     Iterations:** The   |
+|     continues to       |     highest number of   |
+|     iterate until it   |     iterations that the |
+|     reaches            |     algorithm will      |
+|     convergence, which |     execute if it has   |
+|     is when the        |     not achieved        |
+|     centroids stop     |     convergence before  |
+|     changing           |     reaching this       |
+|     considerably. This |     limit.              |
+|     indicates that the |                         |
+|     clusters have      | -   **Tolerance:** A    |
+|     become stable.     |     criterion used to   |
+|                        |     establish when      |
+| -   **Distance         |     convergence has     |
+|     Metric:** Choice   |     been achieved. The  |
+|     of distance        |     algorithm           |
+|     measure, such as   |     terminates if the   |
+|     Euclidean          |     difference between  |
+|     distance, impacts  |     the centroids is    |
+|     the formation of   |     below the specified |
+|     clusters.          |     tolerance.          |
+|     Euclidean distance |                         |
+|     is the typical     |                         |
+|     metric employed in |                         |
+|     k-means.           |                         |
++------------------------+-------------------------+
 
 ## Mathematical Formulation
 
@@ -296,7 +306,7 @@ clustering), k-means, and NEO-k-means algorithms, results have confirmed
 that KMOR algorithms not only outperformed them but also consistently
 cluster data and detect outliers with precision simultaneously.
 
-The KMOR algorithm\'s ability to seamlessly integrate clustering and
+The KMOR algorithm's ability to seamlessly integrate clustering and
 outlier detection for both synthetic and real datasets showcased its
 dominance over current methods in terms of accuracy and efficiency.
 Futuristically, the goals are to investigate diverse ways to control
@@ -340,103 +350,65 @@ algorithm amplifies precision, stability, and convergence speed. The
 improvement helps to make the algorithm successful for clustering
 large-scale, randomly distributed data [@LI20121104].
 
-<!-- ## Initialization Methods -->
+## Initialization Methods
 
-<!-- Initialization methods are crucial for the performance of k-means -->
+Initialization methods are crucial for the performance of k-means
 
-<!-- clustering. Random initialization involves starting with randomly chosen -->
+clustering. Random initialization involves starting with randomly chosen
+cluster centers, which can sometimes lead to poor clustering outcomes or
+slow convergence. The k-means++ initialization method enhances this by
+choosing initial cluster centers more strategically, greatly improving
+clustering quality and convergence speed. Other advanced initialization
+techniques include things like PCA-based initialization, which uses
+principal component analysis to select starting centers, or
+density-based methods that consider data distribution for better initial
+placement.
 
-<!-- cluster centers, which can sometimes lead to poor clustering outcomes or -->
+## Distance Metrics
 
-<!-- slow convergence. The k-means++ initialization method enhances this by -->
+The choice of distance metric significantly impacts the clustering
+results of k-means. Euclidean distance is the most commonly used metric
+and works well for many applications. However, for certain datasets,
+other metrics like Manhattan distance, which measures distance along
+axes at right angles, may be more appropriate. Additionally, various
+other metrics can be employed to fit specific data types and problem
+requirements, enhancing the flexibility and applicability of k-means to
+diverse datasets.
 
-<!-- choosing initial cluster centers more strategically, greatly improving -->
+## Scalability and Efficiency Improvements
 
-<!-- clustering quality and convergence speed. Other advanced initialization -->
+As datasets grow larger, the efficiency of k-means becomes increasingly
+important. Accelerated k-means algorithms have been developed to speed
+up the standard process, typically by optimizing the computational steps
+involved. Approximate k-means offers faster, albeit less precise,
+clustering suitable for extremely large datasets where exact precision
+is less critical. Furthermore, parallel and distributed k-means
+techniques allow the algorithm to run on multiple machines
+simultaneously, significantly improving scalability and reducing
+computation time.
 
-<!-- techniques include things like PCA-based initialization, which uses -->
+## Handling Different Data Types
 
-<!-- principal component analysis to select starting centers, or -->
+K-means can be adapted to handle various data types beyond purely
+numeric data. For mixed numeric and categorical data, specialized
+algorithms can process both types simultaneously, maintaining clustering
+effectiveness. Text and document clustering represent another
+application where k-means can be adapted, often using techniques such as
+TF-IDF to convert text into numeric form that the algorithm can process.
+These adaptations make k-means a versatile tool for a broad range of
+data types.
 
-<!-- density-based methods that consider data distribution for better initial -->
+## Clustering Quality and Validation
 
-<!-- placement. -->
-
-<!-- ## Distance Metrics -->
-
-<!-- The choice of distance metric significantly impacts the clustering -->
-
-<!-- results of k-means. Euclidean distance is the most commonly used metric -->
-
-<!-- and works well for many applications. However, for certain datasets, -->
-
-<!-- other metrics like Manhattan distance, which measures distance along -->
-
-<!-- axes at right angles, may be more appropriate. Additionally, various -->
-
-<!-- other metrics can be employed to fit specific data types and problem -->
-
-<!-- requirements, enhancing the flexibility and applicability of k-means to -->
-
-<!-- diverse datasets. -->
-
-<!-- ## Scalability and Efficiency Improvements -->
-
-<!-- As datasets grow larger, the efficiency of k-means becomes increasingly -->
-
-<!-- important. Accelerated k-means algorithms have been developed to speed -->
-
-<!-- up the standard process, typically by optimizing the computational steps -->
-
-<!-- involved. Approximate k-means offers faster, albeit less precise, -->
-
-<!-- clustering suitable for extremely large datasets where exact precision -->
-
-<!-- is less critical. Furthermore, parallel and distributed k-means -->
-
-<!-- techniques allow the algorithm to run on multiple machines -->
-
-<!-- simultaneously, significantly improving scalability and reducing -->
-
-<!-- computation time. -->
-
-<!-- ## Handling Different Data Types -->
-
-<!-- K-means can be adapted to handle various data types beyond purely -->
-
-<!-- numeric data. For mixed numeric and categorical data, specialized -->
-
-<!-- algorithms can process both types simultaneously, maintaining clustering -->
-
-<!-- effectiveness. Text and document clustering represent another -->
-
-<!-- application where k-means can be adapted, often using techniques such as -->
-
-<!-- TF-IDF to convert text into numeric form that the algorithm can process. -->
-
-<!-- These adaptations make k-means a versatile tool for a broad range of -->
-
-<!-- data types. -->
-
-<!-- ## Clustering Quality and Validation -->
-
-<!-- Assessing the quality of clustering is essential for ensuring good -->
-
-<!-- outcomes. Internal validation indices, such as the silhouette score, -->
-
-<!-- evaluate clustering quality based on the data alone, providing insight -->
-
-<!-- into how well the clusters are formed. External validation indices, like -->
-
-<!-- the adjusted Rand index, compare the clustering results to external or -->
-
-<!-- known classifications, offering a benchmark for performance. Stability -->
-
-<!-- and robustness measures are also important, as they assess how -->
-
-<!-- consistent the clustering results are under different conditions or -->
-
-<!-- inputs, ensuring reliability and robustness of the algorithm. -->
+Assessing the quality of clustering is essential for ensuring good
+outcomes. Internal validation indices, such as the silhouette score,
+evaluate clustering quality based on the data alone, providing insight
+into how well the clusters are formed. External validation indices, like
+the adjusted Rand index, compare the clustering results to external or
+known classifications, offering a benchmark for performance. Stability
+and robustness measures are also important, as they assess how
+consistent the clustering results are under different conditions or
+inputs, ensuring reliability and robustness of the algorithm.
 
 ## Data Description
 
@@ -459,5 +431,191 @@ how the K-means algorithm groups the flowers based on their features
 representation of the clusters, which will help in visualizing the
 effectiveness of the K-means clustering in identifying natural groupings
 within the data.
+
+This dataset is a simulated expansion of the Iris dataset created by SAMY BALADRAM for Kaggle. It introduces additional features expanding the dataset to 1200 rows.
+
+## Data Analysis
+
+## 
+
+```{r}
+# Load necessary libraries
+library(ggplot2)
+library(dplyr)
+library(purrr)
+
+# Load the dataset
+iris_extended <- read.csv("iris_extended.csv")
+```
+
+# Summary data
+
+```{r}
+num_rows <- nrow(iris_extended)
+cat("Number of rows:", num_rows, "\n")
+```
+
+```{r}
+num_columns <- ncol(iris_extended)
+cat("Number of columns:", num_columns, "\n")
+```
+
+```{r}
+# Display the structure of the dataset
+str(iris_extended)
+```
+
+```{r}
+# Summary of the dataset
+summary_stats <- summary(iris_extended)
+cat("Summary Statistics:\n")
+print(summary_stats)
+```
+
+```{r}
+# Count the number of rows of each species
+species_counts <- iris_extended %>% group_by(species) %>% tally()
+cat("\nNumber of rows for each species:\n")
+print(species_counts)
+```
+
+# Pairs plot for a subset of variables
+
+```{r}
+# Load necessary package
+library(grDevices)
+
+# Convert species column to a factor
+iris_extended$species <- as.factor(iris_extended$species)
+
+# Define a vector of colors (e.g., "setosa" -> red, "versicolor" -> green, "virginica" -> blue)
+species_colors <- c("setosa" = "red", "versicolor" = "green", "virginica" = "blue")
+
+# Adjust colors to include transparency (alpha level 0.5)
+transparency_level <- 0.075
+color_vector <- adjustcolor(species_colors[iris_extended$species], alpha.f = transparency_level)
+
+# Create the pairs plot with custom transparent colors
+pairs_plot <- pairs(iris_extended %>%
+                      select(sepal_length, sepal_width, petal_length, petal_width),
+                    col = color_vector,
+                    pch = 19,
+                    main = "Pairs Plot: Sepal Length, Sepal Width, Petal Length, Petal Width")
+```
+
+# Boxplots for all variables by specie
+
+```{r}
+# Identify numeric columns
+numeric_cols <- iris_extended %>%
+  select(where(is.numeric)) %>%
+  names()
+
+# Function to create boxplot for a given numeric variable
+create_boxplot <- function(variable) {
+  ggplot(iris_extended, aes_string(x = "species", y = variable, fill = "species")) +
+    geom_boxplot() +
+    labs(title = paste("Boxplot of", variable, "by Species"), x = "Species", y = variable) +
+    theme_minimal()
+}
+
+# Create and display boxplots for all numeric variables
+boxplots <- map(numeric_cols, create_boxplot)
+
+# Print all boxplots
+print(boxplots)
+```
+
+```{R}
+# Load necessary libraries
+library(tidyverse)
+library(patchwork)
+
+# Identify numeric columns
+numeric_cols <- iris_extended %>%
+  select(where(is.numeric)) %>%
+  names()
+
+# Function to create boxplot for a given numeric variable without legends, labels, and axis, but with borders and titles
+create_boxplot <- function(variable) {
+  ggplot(iris_extended, aes_string(x = "species", y = variable, fill = "species")) +
+    geom_boxplot(outlier.size = 0.1) +  # Set outlier size to 1
+    labs(title = variable) +  # Set the title as the variable name
+    theme_minimal() +
+    theme(
+      legend.position = "none",
+      axis.title.x = element_blank(),
+      axis.title.y = element_blank(),
+      axis.text.x = element_blank(),
+      axis.text.y = element_blank(),
+      axis.ticks.x = element_blank(),
+      axis.ticks.y = element_blank(),
+      panel.border = element_rect(colour = "black", fill = NA, size = 1),  # Add border
+      plot.title = element_text(hjust = 0.5, size = 5)  # Center align the title and set text size to 5
+    )
+}
+
+# Create boxplots for all numeric variables
+boxplots <- map(numeric_cols, create_boxplot)
+
+# Combine all boxplots into a single visual
+combined_boxplot <- wrap_plots(boxplots) + plot_layout(ncol = 7)  # Adjust the number of columns as needed
+
+# Print the combined plot
+print(combined_boxplot)
+```
+
+# Boxplots for all variables by specie and soil type
+
+```{r}
+# Function to create boxplot for a given numeric variable by species and soil type
+create_boxplot2 <- function(variable) {
+  ggplot(iris_extended, aes_string(x = "soil_type", y = variable, fill = "species")) +
+    geom_boxplot() +
+    labs(title = paste("Boxplot of", variable, "by Species and Soil Type"), x = "Soil Type", y = variable) +
+    theme_minimal() +
+    facet_wrap(~ species)
+}
+
+# Create and display boxplots for all numeric variables
+boxplots2 <- map(numeric_cols, create_boxplot2)
+
+# Print all boxplots
+print(boxplots2)
+```
+
+# Correlation map
+
+```{r}
+# Load necessary libraries
+library(tidyverse)
+library(reshape2)
+
+# Load the dataset
+# Assuming 'iris_extended.csv' is the name of your dataset file
+iris_extended <- read.csv("iris_extended.csv")
+
+# Calculate the correlation matrix for numeric columns
+numeric_cols <- iris_extended %>%
+  select(where(is.numeric))
+
+cor_matrix <- cor(numeric_cols, use = "complete.obs")
+
+# Create a correlation heatmap
+heatmap_plot <- ggplot(data = as.data.frame(as.table(cor_matrix)), aes(Var1, Var2, fill = Freq)) +
+  geom_tile(color = "white") +
+  scale_fill_gradient2(low = "blue", high = "red", mid = "white", 
+                      midpoint = 0, limit = c(-1,1), space = "Lab", 
+                      name="Correlation") +
+  theme_minimal() +
+  theme(axis.text.x = element_text(angle = 90, vjust = 1, 
+                                    hjust = 1)) +
+  coord_fixed() +
+  labs(title = "Correlation Heatmap", x = "Variables", y = "Variables")
+
+# Print the heatmap plot
+print(heatmap_plot)
+```
+
 
 ## References
