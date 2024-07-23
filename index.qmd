@@ -19,41 +19,277 @@ editor:
 
 ## Introduction
 
-The objectives of this review are threefold: to provide a comprehensive overview of K-means clustering, to discuss its methodology, applications, and advancements, and to identify the challenges and future research directions. In this literature review, we aim to give an in-depth analysis of K-means clustering, examine its various aspects and practical uses, and highlight the current challenges along with potential areas for future research.
+The objectives of this review are threefold: to provide a comprehensive
+overview of K-means clustering, to discuss its methodology,
+applications, and advancements, and to identify the challenges and
+future research directions. In this literature review, we aim to give an
+in-depth analysis of K-means clustering, examine its various aspects and
+practical uses, and highlight the current challenges along with
+potential areas for future research.
 
-Clustering is the process of grouping similar objects or data points together based on their characteristics or attributes. Clustering is an unsupervised learning technique employed in data mining and machine learning to categorize a collection of items based on their similarity. The goal is to create groupings, or clusters, where objects within the same cluster are more alike to each other than to objects in other clusters. Clustering aims to identify inherent clusters in a dataset where the data points within each cluster exhibit a strong resemblance, yet the clusters themselves are clearly dissimilar from one another.
+Clustering is the process of grouping similar objects or data points
+together based on their characteristics or attributes. Clustering is an
+unsupervised learning technique employed in data mining and machine
+learning to categorize a collection of items based on their similarity.
+The goal is to create groupings, or clusters, where objects within the
+same cluster are more alike to each other than to objects in other
+clusters. Clustering aims to identify inherent clusters in a dataset
+where the data points within each cluster exhibit a strong resemblance,
+yet the clusters themselves are clearly dissimilar from one another.
 
-The similarity of data points is commonly assessed using a distance metric, such as Euclidean distance, Manhattan distance, or cosine similarity. The choice of metric depends on the characteristics of the data and the specific clustering technique employed [@Berkhin2006].
+The similarity of data points is commonly assessed using a distance
+metric, such as Euclidean distance, Manhattan distance, or cosine
+similarity. The choice of metric depends on the characteristics of the
+data and the specific clustering technique employed [@Berkhin2006].
 
-The term "k-Means Clustering" refers to a method used in data analysis and machine learning to partition a set of data points into k distinct clusters. k-Means clustering is a highly popular and extensively utilized approach for clustering. The objective is to divide a dataset into k clusters, where k is a predetermined number of clusters. The method operates in an iterative manner, assigning each data point to one of k clusters based on the given attributes. The main concept is to establish k centroids, representing each cluster, and allocate each data point to the centroid that is closest to it. This allocation is done in a way that minimizes the total squared distances between the data points and their respective centroids.
+The term "k-Means Clustering" refers to a method used in data analysis
+and machine learning to partition a set of data points into k distinct
+clusters. k-Means clustering is a highly popular and extensively
+utilized approach for clustering. The objective is to divide a dataset
+into k clusters, where k is a predetermined number of clusters. The
+method operates in an iterative manner, assigning each data point to one
+of k clusters based on the given attributes. The main concept is to
+establish k centroids, representing each cluster, and allocate each data
+point to the centroid that is closest to it. This allocation is done in
+a way that minimizes the total squared distances between the data points
+and their respective centroids.
 
-The k-means clustering algorithm can be analytically defined as an optimization problem. The objective is to divide a collection of n data points into k clusters in a manner that minimizes the sum of squares inside each cluster (WCSS). The process entails the following steps: Objective function (minimization of within-cluster variance). The goal of k-means is to minimize the total sum of squared distances between each data point and its corresponding cluster centroid. The **within-cluster sum of squares (WCSS)** represents this.
+K-means clustering can be applied to a wide variety of data, including
+bioinformatics, sociology, and in food markets. **Bioinformatics**
+refers to the usage of analytical techniques to interpret different
+types of biological data. These datasets can be large or small,
+containing information about genomic sequences, gene expression, and
+protein expression, among other biological characteristics. This
+information can then be used to draw conclusions about basic biological
+processes, disease states, and gene therapies, among other applications
+[@bayat_bioinformatics_2002]. K-means clustering is one type of data
+analysis technique that can be used to group differential gene/protein
+expression according to specific phenotypes, or physical presentations
+of biological traits. For instance, this can be used to assign cells to
+specific types based on single-cell RNA sequencing data, which measures
+the total gene expression for thousands of genes within a single cell.
+Yang et al., 2017 utilized k-means clustering to analyze the scRNA
+sequencing data of hundreds of cell types to develop a novel algorithm
+that identifies the optimal sets of genes to cluster single cells into
+distinct biological groups.
+
+Additionally, k-means clustering can be applied to population-level data
+to determine significant groupings related to **socioeconomic
+outcomes.** The factors related to socioeconomic mobility were evaluated
+in a 2023 study using longitudinal data from the Opportunity Atlas
+project. Here, k-means clustering revealed differences in socioeconomic
+mobility related to geographic location, income, and neighborhood
+factors such as poverty rate and incarceration rates
+[@zelasky_identifying_2023].
+
+In 2017, food market researchers used k-means clustering to segment the
+organic food market in Lebanon. By starting with 13 variables, they
+applied Principal Component Analysis (PCA) to reduce the number while
+retaining the explanatory power. The k-means algorithm was then
+employed, resulting in four distinct clusters of consumer opinions on
+organic food. Each cluster was labeled appropriately to facilitate
+understanding and application in research. The outcomes present relevant
+groups that can guide policy and initiatives in the organic food market
+in Lebanon [@tleis_segmenting_2017].
+
+Variations and enhancements of the k-means clustering algorithm have
+been thoroughly researched. The k-means algorithm was originally
+proposed in in the 1950s and due to its computational simplicity, it has
+many challenges (like having to select the number of clusters, or
+minimal local convergence because of the random initial centroids) many
+variants of k-means have been created to tackle those challenges and
+broaden the applicability of k-means [@ikotun_k-means_2023].
+
+One such issue is the selection of the number of clusters in k-means
+clustering. In a 2013 review, researcher Kodinariya explains how to
+estimate the number of clusters. Fields across the board use clustering
+so there is no one answer on how many clusters to use. Kodinariya
+explores six different ways on how to determine the best number of
+clusters. The six methods are: rule of thumb, elbow method, information
+criterion approach, information theoretic approach, Silhouette, and
+cross validation. Kodinariya explains how no size fits all and will
+depend on the context of the data. The elbow method is the oldest and
+most used method but information theoretic approach is more rigorous. It
+is best to use more than one method to estimate the best number of
+clusters [@kodinariya_review_2013].
+
+Yang et al propose a new method on selecting the optimal k value by
+addressing both application-specific and detector-specific factors. The
+authors proposed the KFC method which offers a parameter free solution
+with linear time complexity. Yang et al made the KFC method available at
+www.outliernet.com to an external site to facilitate reproducibility and
+provide opportunities for others to expand their research. Their
+research showed that the KFC method outperforms traditional methods and
+is much more versatile making it useful across many fields
+[@yang_outlier_2023].
+
+The article "K-means clustering with outlier removal" by Guojun Gan and
+Michael Kwok-Po Ng proposes to improve the k-means clustering algorithm
+by including outlier detection. The KMOR (k-means with outlier removal)
+algorithm broadens the classic k-means algorithm by proposing an
+additional cluster for outliers. The methodology comprises
+initialization, objective function optimization, iterative process
+updates, convergence, and parameter control. The KMOR algorithm was
+tested on synthetic and real datasets. It showed remarkable performance
+in overall clustering accuracy and outlier detection. Moreover, compared
+to other established algorithms such as ODC (Outlier Detection and
+clustering), k-means, and NEO-k-means algorithms, results have confirmed
+that KMOR algorithms not only outperformed them but also consistently
+cluster data and detect outliers with precision simultaneously. The KMOR
+algorithm's ability to seamlessly integrate clustering and outlier
+detection for both synthetic and real datasets showcased its dominance
+over current methods in terms of accuracy and efficiency.
+Futuristically, the goals are to investigate diverse ways to control
+outliers by refining parameter selection and broadening the algorithm
+for subspace clustering [@gan_k-means_2017].
+
+## Methods
+
+The k-means clustering algorithm can be analytically defined as an
+optimization problem. The objective is to divide a collection of n data
+points into k clusters in a manner that minimizes the sum of squares
+inside each cluster (WCSS). The process entails the following steps:
+Objective function (minimization of within-cluster variance). The goal
+of k-means is to minimize the total sum of squared distances between
+each data point and its corresponding cluster centroid. The
+**within-cluster sum of squares (WCSS)** represents this.
 
 $$\text{WCSS} = \sum_{j=1}^{k}\sum_{xi\in Cj}^{} \left\| x_{i} - \mu_{j} \right\|^2$$
 
-where: C~j~ is the set of data points assigned to cluster j, x~i~ is a data point, μ~j​~ is the centroid of cluster j, ∥x~i~−μ~j~∥ is the Euclidean distance between data point x~i~​ and centroid μ~j~​. Mathematical representation of the algorithm. Algorithm Steps in Mathematical Terms Initialization Randomly choose k initial centroids μ~1~,μ~2~,...,μ~k​~ from the dataset {x~1~,x~2~,...,x~n~}. Assignment Step Assign each data point x~i​~ to the nearest centroid μ~j~​. This can be mathematically expressed as: C~j~ = {x~i~ : ∥x~i~−μ~j~∥2 ≤ ∥x~i~−μ~l~∥2 for all l, 1 ≤ l ≤ k} Here, C~j​~ denotes the set of points assigned to centroid μ~j~​ [@hastie_elements_2009].
+where: C~j~ is the set of data points assigned to cluster j, x~i~ is a
+data point, μ~j​~ is the centroid of cluster j, ∥x~i~−μ~j~∥ is the
+Euclidean distance between data point x~i~​ and centroid μ~j~​.
+Mathematical representation of the algorithm. Algorithm Steps in
+Mathematical Terms Initialization Randomly choose k initial centroids
+μ~1~,μ~2~,...,μ~k​~ from the dataset {x~1~,x~2~,...,x~n~}. Assignment
+Step Assign each data point x~i​~ to the nearest centroid μ~j~​. This can
+be mathematically expressed as: C~j~ = {x~i~ : ∥x~i~−μ~j~∥2 ≤
+∥x~i~−μ~l~∥2 for all l, 1 ≤ l ≤ k} Here, C~j​~ denotes the set of points
+assigned to centroid μ~j~​ [@hastie_elements_2009].
 
-K-means clustering can be applied to a wide variety of data, including bioinformatics, sociology, and in food markets. **Bioinformatics** refers to the usage of analytical techniques to interpret different types of biological data. These datasets can be large or small, containing information about genomic sequences, gene expression, and protein expression, among other biological characteristics. This information can then be used to draw conclusions about basic biological processes, disease states, and gene therapies, among other applications [@bayat_bioinformatics_2002]. K-means clustering is one type of data analysis technique that can be used to group differential gene/protein expression according to specific phenotypes, or physical presentations of biological traits. For instance, this can be used to assign cells to specific types based on single-cell RNA sequencing data, which measures the total gene expression for thousands of genes within a single cell. Yang et al., 2017 utilized k-means clustering to analyze the scRNA sequencing data of hundreds of cell types to develop a novel algorithm that identifies the optimal sets of genes to cluster single cells into distinct biological groups.
+The k-means clustering algorithm is an iterative procedure that involves
+two steps: allocating data points to clusters and updating the cluster
+centroids. Below is a comprehensive breakdown of the sequential steps in
+the algorithm:
 
-Additionally, k-means clustering can be applied to population-level data to determine significant groupings related to **socioeconomic outcomes.** The factors related to socioeconomic mobility were evaluated in a 2023 study using longitudinal data from the Opportunity Atlas project. Here, k-means clustering revealed differences in socioeconomic mobility related to geographic location, income, and neighborhood factors such as poverty rate and incarceration rates [@zelasky_identifying_2023].
+Initialization of centroids. Random initialization selects 𝑘 initial
+centroids at random from the dataset. Every centroid corresponds to the
+original center of a cluster. The algorithm being referred to is called
+"k-means++" is a refined technique that distributes the initial
+centroids in order to enhance the performance of the algorithm. The
+initial centroid is selected at random, whereas the following centroids
+are chosen according to a probability that is directly proportionate to
+their distance from the nearest existing centroid. Assignment of data
+points to nearest centroids. Compute the distance from each data point
+to every centroid. Popular distance measurements include Euclidean
+distance, Manhattan distance, and cosine similarity. Allocate each data
+point to the cluster that has the closest centroid to it. This results
+in the formation of 𝑘 clusters, where each data point is assigned to a
+single cluster. Update of centroids. Determine the updated centroid of
+each cluster by computing the average of all data points assigned to
+that cluster. The updated centroid is calculated as the average position
+of the data points within the cluster. This update step recalibrates the
+position of the centroids to more accurately reflect the clusters
+produced in the assignment stage. Iteration until convergence. Iterate
+the assignment and update processes until the centroids exhibit minimal
+variation between iterations. Convergence is usually assessed by
+verifying if the positions of the centroids have reached a stable state
+within a predetermined tolerance threshold. Alternatively, the process
+can be halted after reaching a predetermined number of iterations if
+convergence is not attained prior to that.
 
-In 2017, food market researchers used k-means clustering to segment the organic food market in Lebanon. By starting with 13 variables, they applied Principal Component Analysis (PCA) to reduce the number while retaining the explanatory power. The k-means algorithm was then employed, resulting in four distinct clusters of consumer opinions on organic food. Each cluster was labeled appropriately to facilitate understanding and application in research. The outcomes present relevant groups that can guide policy and initiatives in the organic food market in Lebanon [@tleis_segmenting_2017].
+These are key concepts of k-Means clustering that are noted. The
+centroid of a cluster represents the average position of all the points
+within that cluster. Every cluster in the k-means algorithm is
+associated with a centroid, which serves as a central point that
+represents the cluster. The desired number of clusters and centroids to
+be generated. Randomly choose k initial centroids μ1,μ2,...,μk​ from the
+dataset {x1,x2,...,xn}. Optimal cluster selection is of utmost
+importance and can be facilitated by techniques such as the elbow
+approach or silhouette analysis. The initial positions of the centroids,
+which can be selected randomly or using more sophisticated
+initialization methods such as k-means++ to enhance the speed of
+convergence and the quality of the solution. Assign each data point xi​
+to the nearest centroid μj​. This can be mathematically expressed as: Cj
+= {xi : ∥xi−μj∥2 ≤ ∥xi−μl∥2 for all l, 1 ≤ l ≤ k} Here, Cj​ denotes the
+set of points assigned to centroid μj​. Update the centroids by
+calculating the mean of all data points assigned to each cluster. The
+new centroid μj for cluster Cj​ is given by:
 
-Variations and enhancements of the k-means clustering algorithm have been thoroughly researched. The k-means algorithm was originally proposed in in the 1950s and due to its computational simplicity, it has many challenges (like having to select the number of clusters, or minimal local convergence because of the random initial centroids) many variants of k-means have been created to tackle those challenges and broaden the applicability of k-means [@ikotun_k-means_2023].
+![](images/ime1.PNG)
 
-One such issue is the selection of the number of clusters in k-means clustering. In a 2013 review, researcher Kodinariya explains how to estimate the number of clusters. Fields across the board use clustering so there is no one answer on how many clusters to use. Kodinariya explores six different ways on how to determine the best number of clusters. The six methods are: rule of thumb, elbow method, information criterion approach, information theoretic approach, Silhouette, and cross validation. Kodinariya explains how no size fits all and will depend on the context of the data. The elbow method is the oldest and most used method but information theoretic approach is more rigorous. It is best to use more than one method to estimate the best number of clusters [@kodinariya_review_2013].
+where \|Cj\| is the number of data points in cluster Cj​.
 
-Yang et al propose a new method on selecting the optimal k value by addressing both application-specific and detector-specific factors. The authors proposed the KFC method which offers a parameter free solution with linear time complexity. Yang et al made the KFC method available at www.outliernet.com to an external site to facilitate reproducibility and provide opportunities for others to expand their research. Their research showed that the KFC method outperforms traditional methods and is much more versatile making it useful across many fields [@yang_outlier_2023].
+Inertia is referred to as within-cluster sum of squares, quantifying the
+effectiveness of cluster formation. Smaller inertia values suggest
+superior clustering performance.The k-means method continues to iterate
+until it reaches convergence, which is when the centroids stop changing
+considerably. This indicates that the clusters have become stable.
+Iterate the assignment and update stages until the centroids exhibit
+minimal changes, suggesting that the algorithm has reached convergence.
+Convergence is determined by setting a threshold ϵ to measure the change
+in centroids: \|\|μj(t+1)-μj(t)\|\|\<ϵ for all j, 1≤ j ≤ k where μj(t)
+and μj(t+1) are the centroids of cluster j at iterations t and t+1.
+Distance Metrics deals with the similarity of data points that is
+commonly assessed using a distance metric, such as Euclidean
+distance.The distance measure employed in k-means is the Euclidean
+distance, computed as:
 
-The article "K-means clustering with outlier removal" by Guojun Gan and Michael Kwok-Po Ng proposes to improve the k-means clustering algorithm by including outlier detection. The KMOR (k-means with outlier removal) algorithm broadens the classic k-means algorithm by proposing an additional cluster for outliers. The methodology comprises initialization, objective function optimization, iterative process updates, convergence, and parameter control. The KMOR algorithm was tested on synthetic and real datasets. It showed remarkable performance in overall clustering accuracy and outlier detection. Moreover, compared to other established algorithms such as ODC (Outlier Detection and clustering), k-means, and NEO-k-means algorithms, results have confirmed that KMOR algorithms not only outperformed them but also consistently cluster data and detect outliers with precision simultaneously. The KMOR algorithm's ability to seamlessly integrate clustering and outlier detection for both synthetic and real datasets showcased its dominance over current methods in terms of accuracy and efficiency. Futuristically, the goals are to investigate diverse ways to control outliers by refining parameter selection and broadening the algorithm for subspace clustering [@gan_k-means_2017].
+![](images/ime2.PNG)
 
-## Methodology
+where: 𝑥𝑖𝑑 is the 𝑑-th dimension of data point 𝑥𝑖, 𝜇𝑗𝑑 is the 𝑑-th
+dimension of centroid 𝜇𝑗, 𝐷 is the number of dimensions of the data
+points (Xu, R., & Wunsch, D., 2005). The algorithm of k-Means clustering
+includes the following steps. First initialization; select 𝑘 initial
+centroids either randomly or using a more advanced technique like
+k-means++. Then assignment Step; allocate each data point to the closest
+centroid using the selected distance metric. Compute the updated
+centroids by averaging all the data points allocated to each centroid.
+Repeatedly perform the assignment and update processes until either the
+centroids do not change appreciably (convergence) or a maximum number of
+iterations is reached. The highest number of iterations that the
+algorithm will execute if it has not achieved convergence before
+reaching this limit. The algorithm reaches convergence when there is no
+significant change in the centroids between iterations. The displacement
+of centroids can be quantified by employing a predetermined threshold ϵ:
 
-After importing the dataset, the expression for 77 proteins data are scaled and analyzed using Principle Component Analysis to reduce the number of dimensions. Then, the optimal number of clusters is determined using the elbow method, silhouette analysis, and gap statistic.The data are then analyzed using the k-means algorithm with the default euclidean distance metric. Differences are then considered using a contingency table and heat map to identify similar and dissimlar groups. These cluster assignments are then plotted against class to visually identify cluster characteristics.
+![](images/ime3.PNG)
+
+On the other hand, the method can be terminated after reaching a
+predetermined number of iterations, regardless of whether the centroids
+have fully stabilized (Xu, R., & Wunsch, D., 2005). A criterion used to
+establish when convergence has been achieved. The algorithm terminates
+if the difference between the centroids is below the specified
+tolerance.
+
+After importing the dataset, the expression for 77 proteins data are
+scaled and analyzed using Principle Component Analysis to reduce the
+number of dimensions. Then, the optimal number of clusters is determined
+using the elbow method, silhouette analysis, and gap statistic.The data
+are then analyzed using the k-means algorithm with the default euclidean
+distance metric. Differences are then considered using a contingency
+table and heat map to identify similar and dissimilar groups. These
+cluster assignments are then plotted against class to visually identify
+cluster characteristics.
 
 ## Data Analysis
 
-The data are sourced from a 2015 paper which evaluates the effect on protein expression of the Alzheimer's drug memantine in rescuing learning in Ts65Dn trisomic mice relative to control mice. Ts65Dn mice are genetically modified to be trisomic for 2/3 of the genes orthologous to human chromosome 21 (Hsa21), making them a suitable model organism to experimentally study Down's Syndrome (DS) (jax citation). It is suspected that memantine can be used to treat learning deficits in DS, and this rescue effect has been previously observed in the Ts65Dn model. This study evaluates the effect of these different factors on the expression of 77 different proteins involved in Alzheimer's, neuronal receptors, Hsa21 genes, and homeostatic genes. Therefore, it is expected that Ts65Dn mice treated with memantine in the learning condition will exhibit similar patterns of protein expression relative to the untreated control model in the learning condition. Protein expression data provided are normalized to total protein expression [@higuera_self-organizing_2015].
+The data are sourced from a 2015 paper which evaluates the effect on
+protein expression of the Alzheimer's drug memantine in rescuing
+learning in Ts65Dn trisomic mice relative to control mice. Ts65Dn mice
+are genetically modified to be trisomic for 2/3 of the genes orthologous
+to human chromosome 21 (Hsa21), making them a suitable model organism to
+experimentally study Down's Syndrome (DS) (jax citation). It is
+suspected that memantine can be used to treat learning deficits in DS,
+and this rescue effect has been previously observed in the Ts65Dn model.
+This study evaluates the effect of these different factors on the
+expression of 77 different proteins involved in Alzheimer's, neuronal
+receptors, Hsa21 genes, and homeostatic genes. Therefore, it is expected
+that Ts65Dn mice treated with memantine in the learning condition will
+exhibit similar patterns of protein expression relative to the untreated
+control model in the learning condition. Protein expression data
+provided are normalized to total protein expression
+[@higuera_self-organizing_2015].
 
 ### Load Necessary Libraries
 
@@ -203,4 +439,8 @@ ggplot(combined_data, aes(x = PC1, y = PC2, color = Behavior)) +
 
 ## Conclusions
 
-Our results indicate that the mice protein expression data set exhibits clusters which largely correspond to the learning and non-learning behavior groups.No such clustering is observed with regard to genotype or treatment group based on the considerations of class composition by cluster.
+Our results indicate that the mice protein expression data set exhibits
+clusters which largely correspond to the learning and non-learning
+behavior groups.No such clustering is observed with regard to genotype
+or treatment group based on the considerations of class composition by
+cluster.
