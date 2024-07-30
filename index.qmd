@@ -17,7 +17,7 @@ editor:
     wrap: 72
 ---
 
-[Presentation](slides.qmd)
+[Presentation](slides.html)
 
 ## Introduction
 
