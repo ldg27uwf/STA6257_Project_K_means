@@ -55,7 +55,9 @@ a way that minimizes the total squared distances between the data points
 and their respective centroids.
 
 K-means clustering can be applied to a wide variety of data, including
-bioinformatics, sociology, and in food markets. **Bioinformatics**
+bioinformatics, sociology, and in food markets. 
+
+**Bioinformatics**
 refers to the usage of analytical techniques to interpret different
 types of biological data. These datasets can be large or small,
 containing information about genomic sequences, gene expression, and
@@ -291,151 +293,681 @@ control model in the learning condition. Protein expression data
 provided are normalized to total protein expression
 [@higuera_self-organizing_2015].
 
-### Load Necessary Libraries
+---
+title: "kmeans"
+format: html
+editor: visual
+execute:
+  echo: false
+---
 
-```{r}
-#install.packages("NbClust")
-#install.packages("fpc")
-library(fpc)
-library(NbClust)
-library(cluster)
-
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(warning = FALSE, message = FALSE)
 ```
 
-```{r}
+### Load Necessary Libraries
+
+```{r, include =FALSE}
+#install.packages("NbClust")
+#install.packages("fpc")
 #install.packages("tidyverse")
 #install.packages("factoextra")
 #install.packages("cluster")
 #install.packages("pheatmap")
+#install.packages("plotly")
+#install.packages("caret")
+#install.packages("e1071")
+#install.packages("glmnet")
 
+library(fpc)
+library(NbClust)
+library(cluster)
 library(tidyverse)
 library(factoextra)
-library(cluster)
 library(pheatmap)
+library(dplyr)
+library(plotly)
+library(ggplot2)
+library(caret)
+library(e1071)
+library(glmnet)
 ```
 
-1.  **Load the data**:
-
-    ```{r}
-    data <- read.csv("mice_new_jonathan.csv")
-    ```
+### Load the data
 
 ```{r}
-# Selecting protein expression columns (2 to 78) and scaling the data
-protein_data <- data[, 2:78]
-protein_data_scaled <- scale(protein_data)
-```
-
-### Scale Data and PCA
-
-```{r}
-protein_data_scaled <- scale(protein_data)
-pca_result <- prcomp(protein_data_scaled, center = TRUE, scale. = TRUE)
-summary(pca_result)
-fviz_eig(pca_result)
-pca_data <- pca_result$x[, 1:2] 
-```
-
-### Explore Optimal Number of Clusters
-
-```{r}
-# Elbow Method
-fviz_nbclust(pca_data, kmeans, method = "wss")
-
-# Silhouette Analysis
-fviz_nbclust(pca_data, kmeans, method = "silhouette")
-
-# Gap Statistic
-
-gap_stat <- clusGap(pca_data, FUN = kmeans, nstart = 25, K.max = 20, B = 50)
-fviz_gap_stat(gap_stat)
-```
-
-### Perform K-means with Optimal Number of Clusters
-
-```{r}
-# Set optimal number of clusters, assuming we found 8 as optimal from previous step
-optimal_clusters <- 3
-
-kmeans_result <- kmeans(pca_data, centers = optimal_clusters, nstart = 25)
-
-# Visualize Clusters
-fviz_cluster(kmeans_result, data = pca_data, geom =c("point"))
-```
-
-### Evaluate Cluster Stability
-
-```{r}
-
-# Add the cluster assignments to the original data
-data$cluster <- as.factor(kmeans_result$cluster)
-
-# Create a table to compare original classes and clusters
-comparison_table <- table(data$class_short, data$cluster)
-print(comparison_table)
-
-# Create a contingency table 
-contingency_table <- table(data$class_short, data$cluster)
-
-
-# Plot the heatmap
-pheatmap(contingency_table, 
-         cluster_rows = FALSE, 
-         cluster_cols = FALSE, 
-         display_numbers = TRUE,
-         color = colorRampPalette(c("white", "blue"))(50),
-         main = "Heatmap of Original Classes vs Clusters")
-```
-
-```{r}
+data <- read.csv("mice_new_jonathan.csv")
+    
 color_palette <- c(
-  "c-CS-s" = "#4f9ed4",
-  "c-CS-m" = "#80bbdf",
-  "c-SC-s" = "#6fbf67",
-  "c-SC-m" = "#96d991",
-  "t-CS-s" = "#194e85",
+  "c-CS-s" = "#f54545",
+  "c-CS-m" = "#ff8787",
+  "c-SC-s" = "#ffa538",
+  "c-SC-m" = "#ffcf94",
+  "t-CS-s" = "#4f9ed4",
   "t-CS-m" = "#133a62",
-  "t-SC-s" = "#256a27",
+  "t-SC-s" = "#6fbf67",
   "t-SC-m" = "#1a501d"
 )
-
-# Plot cluster assignments against the original classes
-ggplot(data, aes(x = cluster, fill = class_short)) + 
-  geom_bar(position = "stack") +
-  scale_fill_manual(values = color_palette) +
-  theme(axis.text.x = element_text(angle = 90, hjust = 1)) +
-  labs(title = "Cluster Assignments by Class",
-       x = "Cluster",
-       y = "Count",
-       fill = "Class")
 ```
-
-### Plot Clusters with Color-Coding by Behavior
 
 ```{r}
 
-combined_data <- cbind(data, pca_data)
+# Load necessary libraries
+library(dplyr)
+library(tidyr)
+library(knitr)
+library(kableExtra)
 
-# Add cluster assignment to the combined data
-combined_data$cluster <- factor(kmeans_result$cluster)
 
-# Create convex hull plots for each cluster
-hulls <- combined_data %>%
-  group_by(cluster) %>%
-  slice(chull(PC1, PC2))
+# Select the first 6 columns and the last 6 columns
+selected_columns <- data %>%
+  select(1:6, (ncol(data)-5):ncol(data))
 
-# Plot PCA data with clusters colored by Behavior and shaded by clusters
-ggplot(combined_data, aes(x = PC1, y = PC2, color = Behavior)) +
-  geom_polygon(data = hulls, aes(x = PC1, y = PC2, fill = cluster), alpha = 0.2) +
-  geom_point(aes(shape = cluster), size = 2) +
-  labs(title = "PCA Plot with K-means Clusters (Shaded by Cluster and Color-Coded by Behavior)",
-       x = "Principal Component 1",
-       y = "Principal Component 2") +
-  scale_color_manual(values = c("CS" = "blue", "SC" = "red")) +  # Adjust colors according to your data
-  scale_fill_manual(values = rainbow(optimal_clusters)) +
-  theme_minimal() +
-  theme(plot.title = element_text(hjust = 0.5))
+# Display the first few rows of the dataset
+data_head <- head(selected_columns)
+
+# Print the head of the dataset table with styling
+data_head %>%
+  kable(caption = "First Few Rows of the Mice Data") %>%
+  kable_styling(bootstrap_options = c("striped", "hover", "condensed"), 
+                full_width = TRUE, 
+                position = "left") %>%
+  scroll_box(width = "1000px", height = "400px")
+
+# Count occurrences for class_short
+class_short_counts <- data %>%
+  count(class_short) %>%
+  rename(Count = n)
+
+# Print the class_short counts table with styling
+class_short_counts %>%
+  kable() %>%
+  kable_styling(bootstrap_options = c("striped", "hover", "condensed"), 
+                full_width = TRUE, 
+                position = "left") %>%
+  add_header_above(c("Class Short Counts" = 2))
+
+# Count occurrences for Behavior
+behavior_counts <- data %>%
+  count(Behavior) %>%
+  rename(Count = n)
+
+# Count occurrences for Genotype
+genotype_counts <- data %>%
+  count(Genotype) %>%
+  rename(Count = n)
+
+# Count occurrences for Treatment
+treatment_counts <- data %>%
+  count(Treatment) %>%
+  rename(Count = n)
+
+# Add a new column to each table to indicate the category
+behavior_counts <- behavior_counts %>%
+  mutate(Category = "Behavior")
+
+genotype_counts <- genotype_counts %>%
+  mutate(Category = "Genotype")
+
+treatment_counts <- treatment_counts %>%
+  mutate(Category = "Treatment")
+
+# Rename 'Behavior', 'Genotype', and 'Treatment' columns to a generic 'Type' column for uniformity
+behavior_counts <- behavior_counts %>%
+  rename(Type = Behavior)
+
+genotype_counts <- genotype_counts %>%
+  rename(Type = Genotype)
+
+treatment_counts <- treatment_counts %>%
+  rename(Type = Treatment)
+
+# Combine the three tables
+combined_counts <- bind_rows(behavior_counts, genotype_counts, treatment_counts)
+
+# Print the combined table
+combined_counts %>%
+  kable() %>%
+  kable_styling(bootstrap_options = c("striped", "hover", "condensed"), 
+                full_width = TRUE, 
+                position = "left")
+
+# Calculate summary statistics for Protein_33 by class_short
+summary_stats_protein_33 <- data %>%
+  group_by(class_short) %>%
+  summarise(
+    Mean = mean(Protein_33, na.rm = TRUE),
+    Median = median(Protein_33, na.rm = TRUE),
+    SD = sd(Protein_33, na.rm = TRUE)
+  )
+
+# Print the summary statistics table with styling
+summary_stats_protein_33 %>%
+  kable(caption = "Summary Statistics for Protein_33 by class_short") %>%
+  kable_styling(bootstrap_options = c("striped", "hover", "condensed"), 
+                full_width = TRUE, 
+                position = "left")
+
 ```
+
+### Functions
+
+## Feature Selection Functions
+
+```{r}
+
+### All Features
+feature_selection_all <- function(data) {
+  protein_data <- data[, 2:78]
+  protein_data_scaled <- scale(protein_data)
+  return(protein_data_scaled)
+}
+
+
+### Hand Selection
+feature_selection_hand <- function(data) {
+  protein_data <- data %>%  select(Protein_1, Protein_2, Protein_8, Protein_11, Protein_18, Protein_21, Protein_33, Protein_35, Protein_51, Protein_57, Protein_61, Protein_71, Protein_77)
+  protein_data_scaled <- scale(protein_data)
+  return(protein_data_scaled)
+}
+
+### Variance
+feature_selection_variance <- function(data, variance_threshold = 1) {
+  protein_data <- data[, 2:78]
+  protein_data_scaled <- scale(protein_data)
+  
+  # Calculate variance for each feature
+  variances <- apply(protein_data_scaled, 2, var)
+  
+  # Select features with variance above the threshold
+  selected_features <- names(variances[variances > variance_threshold])
+  protein_data_scaled <- protein_data_scaled[, selected_features]
+  return(protein_data_scaled)
+}
+
+### RFE
+feature_selection_rfe <- function(data) {
+  protein_data <- data[, 2:78]
+  class_labels <- as.factor(data$class_short)
+  
+  # Create control function for RFE
+  control <- rfeControl(functions = rfFuncs, method = "cv", number = 10)
+  
+  # Run RFE algorithm
+  set.seed(123)
+  rfe_result <- rfe(protein_data, class_labels, sizes = c(1:20), rfeControl = control)
+  
+  # Get the selected features
+  selected_features <- predictors(rfe_result)
+  protein_data_selected <- protein_data[, selected_features]
+  protein_data_scaled <- scale(protein_data_selected)
+  return(protein_data_scaled)
+}
+
+### Lasso
+feature_selection_lasso <- function(data) {
+  protein_data <- data[, 2:78]
+  protein_data_scaled <- scale(protein_data)
+  
+  # Define the feature matrix (X) and the response vector (y)
+  X <- as.matrix(protein_data_scaled)
+  
+  # Ensure the response variable is a factor
+  y <- as.factor(data$class_short)
+  
+  # Apply Lasso using glmnet
+  set.seed(123)  # For reproducibility
+  lasso_model <- cv.glmnet(X, y, alpha = 1, family = "multinomial")
+  
+  # Get the coefficients of the best model
+  coef_lasso <- coef(lasso_model, s = "lambda.min")
+  
+  # Extract the selected features (non-zero coefficients)
+  selected_features_matrix <- as.matrix(coef_lasso[[1]])
+  selected_features <- rownames(selected_features_matrix)[selected_features_matrix != 0]
+  selected_features <- selected_features[!(selected_features %in% "(Intercept)")]
+  
+  # Create a new dataframe with selected features
+  important_features <- protein_data[, selected_features]
+  
+  # Scale the important features data
+  protein_data_scaled <- scale(important_features)
+  return(protein_data_scaled)
+}
+```
+
+## PCA and K-Means Functions
+
+```{r}
+run_pca_kmeans <- function(data, pca_dimensions, number_of_clusters) {
+  pca_result <- prcomp(data, center = TRUE, scale. = TRUE)
+  pca_data <- pca_result$x[, 1:pca_dimensions]
+  
+  kmeans_result <- kmeans(pca_data, centers = number_of_clusters, nstart = 100)
+  
+  return(list(pca_data = pca_data, kmeans_result = kmeans_result))
+}
+```
+
+## Visualizations Functions
+
+```{r}
+visualizations <- function(data, selected_features, pca_data, kmeans_result, color_palette) {
+  # Add the cluster assignments to the original data
+  data$cluster <- as.factor(kmeans_result$cluster)
+  
+  # Create a data frame with PCA results and class information
+  pca_data2 <- data.frame(pca_data, class_short = data$class_short, cluster = data$cluster)
+  
+  # Visualize Clusters
+  cluster_plot <- fviz_cluster(kmeans_result, data = selected_features, ellipse.type="convex", geom = "point") + theme_minimal()
+  
+  # Plotting using ggplot2
+  pca_plot <- ggplot(pca_data2, aes(x = PC1, y = PC2, color = class_short)) + 
+    geom_point() +
+    stat_ellipse(aes(group = cluster), type = "norm") +  # Here you can use 'cluster' to draw ellipses around clusters
+    theme_minimal() +
+    scale_color_manual(values = color_palette) +  # Apply the custom color palette
+    labs(color = "Class")  # Customize legend title
+  
+  # Plot cluster assignments against the original classes
+  cluster_assignment_plot <- ggplot(data, aes(x = cluster, fill = class_short)) + 
+    geom_bar(position = "stack") +
+    scale_fill_manual(values = color_palette) +
+    theme(axis.text.x = element_text(angle = 90, hjust = 1)) +
+    labs(title = "Cluster Assignments by Class",
+         x = "Cluster",
+         y = "Count",
+         fill = "Class")
+  
+  return(list(cluster_plot = cluster_plot, pca_plot = pca_plot, cluster_assignment_plot = cluster_assignment_plot))
+}
+```
+
+# Comparison of parameters/methods
+
+## Feature Selection
+
+We are testing 4 methods: 1. No feature selection, use all data 2. Hand Selected most relevant features 3. By Variance Threshold 4. Lasso
+
+### all data - 2 dim - 6 clusters
+
+```{r}
+# Choose a feature selection method
+selected_features <- feature_selection_all(data)
+# selected_features <- feature_selection_hand(data)
+# selected_features <- feature_selection_variance(data, variance_threshold = 1)
+
+# selected_features <- feature_selection_lasso(data)
+
+# Run PCA and K-Means
+pca_dimensions <- 2
+number_of_clusters <- 6
+pca_kmeans_result <- run_pca_kmeans(selected_features, pca_dimensions, number_of_clusters)
+
+# Create visualizations
+plots <- visualizations(data, selected_features, pca_kmeans_result$pca_data, pca_kmeans_result$kmeans_result, color_palette)
+
+# Display plots
+plots$cluster_plot
+plots$pca_plot
+plots$cluster_assignment_plot
+```
+
+### hand selection - 2 dim - 6 clusters
+
+```{r}
+# Choose a feature selection method
+# selected_features <- feature_selection_all(data)
+ selected_features <- feature_selection_hand(data)
+# selected_features <- feature_selection_variance(data, variance_threshold = 1)
+# selected_features <- feature_selection_rfe(data)
+# selected_features <- feature_selection_lasso(data)
+
+# Run PCA and K-Means
+pca_dimensions <- 2
+number_of_clusters <- 6
+pca_kmeans_result <- run_pca_kmeans(selected_features, pca_dimensions, number_of_clusters)
+
+# Create visualizations
+plots <- visualizations(data, selected_features, pca_kmeans_result$pca_data, pca_kmeans_result$kmeans_result, color_palette)
+
+# Display plots
+plots$cluster_plot
+plots$pca_plot
+plots$cluster_assignment_plot
+```
+
+### variance - 2 dim - 6 clusters
+
+```{r}
+# Choose a feature selection method
+# selected_features <- feature_selection_all(data)
+# selected_features <- feature_selection_hand(data)
+ selected_features <- feature_selection_variance(data, variance_threshold = 1)
+# selected_features <- feature_selection_rfe(data)
+# selected_features <- feature_selection_lasso(data)
+
+# Run PCA and K-Means
+pca_dimensions <- 2
+number_of_clusters <- 6
+pca_kmeans_result <- run_pca_kmeans(selected_features, pca_dimensions, number_of_clusters)
+
+# Create visualizations
+plots <- visualizations(data, selected_features, pca_kmeans_result$pca_data, pca_kmeans_result$kmeans_result, color_palette)
+
+# Display plots
+plots$cluster_plot
+plots$pca_plot
+plots$cluster_assignment_plot
+```
+
+### lasso - 2 dim - 6 clusters
+
+```{r}
+# Choose a feature selection method
+# selected_features <- feature_selection_all(data)
+# selected_features <- feature_selection_hand(data)
+# selected_features <- feature_selection_variance(data, variance_threshold = 1)
+ selected_features <- feature_selection_lasso(data)
+
+# Run PCA and K-Means
+pca_dimensions <- 2
+number_of_clusters <- 6
+pca_kmeans_result <- run_pca_kmeans(selected_features, pca_dimensions, number_of_clusters)
+
+# Create visualizations
+plots <- visualizations(data, selected_features, pca_kmeans_result$pca_data, pca_kmeans_result$kmeans_result, color_palette)
+
+# Display plots
+plots$cluster_plot
+plots$pca_plot
+plots$cluster_assignment_plot
+```
+
+## PCA \# of dimensions
+
+### PCA graphs
+
+-   **Scree Plot**: Look for the elbow point where the plot starts to flatten out. This point often indicates the number of components to retain.
+-   **Cumulative Proportion of Variance Explained**: Choose the number of components that explain a satisfactory level of the total variance, like 80% or 90%.
+-   **Kaiser Criterion**: Retain components with eigenvalues greater than 1.
+
+```{r}
+selected_features <- feature_selection_hand(data)
+
+# Perform PCA
+pca_result <- prcomp(selected_features, center = TRUE, scale. = TRUE)
+
+# Scree plot
+library(factoextra)
+fviz_screeplot(pca_result, ncp = 30) + theme_minimal() +
+  ggtitle("Scree Plot")
+
+# Calculate the cumulative variance explained
+summary_pca <- summary(pca_result)
+cumulative_variance <- cumsum(summary_pca$importance[2,])
+
+# Plot cumulative variance
+plot(cumulative_variance, xlab = "Principal Components", ylab = "Cumulative Proportion of Variance Explained", type = "b", pch = 19, 
+     main = "Cumulative Variance Explained by PCA Components")
+abline(h = 0.8, col = "red", lty = 2)  # Line at 80% cumulative variance
+abline(h = 0.9, col = "blue", lty = 2)  # Line at 90% cumulative variance
+
+# Kaiser Criterion
+eigenvalues <- pca_result$sdev^2
+kaiser_criterion <- sum(eigenvalues > 1)
+
+# Display number of principal components with eigenvalues > 1
+kaiser_criterion
+```
+
+### hand selection - 2 dim - 6 clusters
+
+```{r}
+# Choose a feature selection method
+# selected_features <- feature_selection_all(data)
+ selected_features <- feature_selection_hand(data)
+# selected_features <- feature_selection_variance(data, variance_threshold = 1)
+# selected_features <- feature_selection_rfe(data)
+# selected_features <- feature_selection_lasso(data)
+
+# Run PCA and K-Means
+pca_dimensions <- 2
+number_of_clusters <- 6
+pca_kmeans_result <- run_pca_kmeans(selected_features, pca_dimensions, number_of_clusters)
+
+# Create visualizations
+plots <- visualizations(data, selected_features, pca_kmeans_result$pca_data, pca_kmeans_result$kmeans_result, color_palette)
+
+# Display plots
+plots$cluster_plot
+plots$pca_plot
+plots$cluster_assignment_plot
+```
+
+### hand selection - 3 dim - 6 clusters
+
+```{r}
+# Choose a feature selection method
+# selected_features <- feature_selection_all(data)
+ selected_features <- feature_selection_hand(data)
+# selected_features <- feature_selection_variance(data, variance_threshold = 1)
+# selected_features <- feature_selection_rfe(data)
+# selected_features <- feature_selection_lasso(data)
+
+# Run PCA and K-Means
+pca_dimensions <- 3
+number_of_clusters <- 6
+pca_kmeans_result <- run_pca_kmeans(selected_features, pca_dimensions, number_of_clusters)
+
+# Create visualizations
+plots <- visualizations(data, selected_features, pca_kmeans_result$pca_data, pca_kmeans_result$kmeans_result, color_palette)
+
+# Display plots
+plots$cluster_plot
+plots$pca_plot
+plots$cluster_assignment_plot
+```
+
+### hand selection - 4 dim - 6 clusters
+
+```{r}
+# Choose a feature selection method
+# selected_features <- feature_selection_all(data)
+ selected_features <- feature_selection_hand(data)
+# selected_features <- feature_selection_variance(data, variance_threshold = 1)
+# selected_features <- feature_selection_rfe(data)
+# selected_features <- feature_selection_lasso(data)
+
+# Run PCA and K-Means
+pca_dimensions <- 4
+number_of_clusters <- 6
+pca_kmeans_result <- run_pca_kmeans(selected_features, pca_dimensions, number_of_clusters)
+
+# Create visualizations
+plots <- visualizations(data, selected_features, pca_kmeans_result$pca_data, pca_kmeans_result$kmeans_result, color_palette)
+
+# Display plots
+plots$cluster_plot
+plots$pca_plot
+plots$cluster_assignment_plot
+```
+
+### hand selection - 6 dim - 6 clusters
+
+```{r}
+# Choose a feature selection method
+# selected_features <- feature_selection_all(data)
+ selected_features <- feature_selection_hand(data)
+# selected_features <- feature_selection_variance(data, variance_threshold = 1)
+# selected_features <- feature_selection_rfe(data)
+# selected_features <- feature_selection_lasso(data)
+
+# Run PCA and K-Means
+pca_dimensions <- 6
+number_of_clusters <- 6
+pca_kmeans_result <- run_pca_kmeans(selected_features, pca_dimensions, number_of_clusters)
+
+# Create visualizations
+plots <- visualizations(data, selected_features, pca_kmeans_result$pca_data, pca_kmeans_result$kmeans_result, color_palette)
+
+# Display plots
+plots$cluster_plot
+plots$pca_plot
+plots$cluster_assignment_plot
+```
+
+### hand selection - 10 dim - 6 clusters
+
+```{r}
+# Choose a feature selection method
+# selected_features <- feature_selection_all(data)
+ selected_features <- feature_selection_hand(data)
+# selected_features <- feature_selection_variance(data, variance_threshold = 1)
+# selected_features <- feature_selection_rfe(data)
+# selected_features <- feature_selection_lasso(data)
+
+# Run PCA and K-Means
+pca_dimensions <- 10
+number_of_clusters <- 6
+pca_kmeans_result <- run_pca_kmeans(selected_features, pca_dimensions, number_of_clusters)
+
+# Create visualizations
+plots <- visualizations(data, selected_features, pca_kmeans_result$pca_data, pca_kmeans_result$kmeans_result, color_palette)
+
+# Display plots
+plots$cluster_plot
+plots$pca_plot
+plots$cluster_assignment_plot
+```
+
+## Number of clusters
+
+### Study for \# of clusters
+
+-   **Elbow Method**: Look for the "elbow point" where the WSS starts to slow down.
+-   **Silhouette Method**: Choose the number of clusters that maximize the average silhouette width.
+-   **Gap Statistic**: Select the number of clusters where the gap statistic is maximized.
+
+```{r}
+selected_features <- feature_selection_hand(data)
+pca_result <- prcomp(selected_features, center = TRUE, scale. = TRUE)
+pca_data <- pca_result$x[, 1:2]
+
+# Elbow Method
+fviz_nbclust(pca_data, kmeans, method = "wss") +
+  geom_vline(xintercept = 6, linetype = 2) +  # Adjust the xintercept based on actual elbow
+  labs(subtitle = "Elbow method")
+
+# Silhouette Method
+set.seed(123)
+fviz_nbclust(pca_data, kmeans, method = "silhouette") +
+  labs(subtitle = "Silhouette method")
+
+# Gap Statistic Method
+set.seed(123)
+gap_stat <- clusGap(pca_data, FUN = kmeans, nstart = 25, K.max = 10, B = 50)
+fviz_gap_stat(gap_stat) +
+  labs(subtitle = "Gap Statistic method")
+```
+
+### hand selection - 2 dim - 2 clusters
+
+```{r}
+# Choose a feature selection method
+# selected_features <- feature_selection_all(data)
+ selected_features <- feature_selection_hand(data)
+# selected_features <- feature_selection_variance(data, variance_threshold = 1)
+# selected_features <- feature_selection_rfe(data)
+# selected_features <- feature_selection_lasso(data)
+
+# Run PCA and K-Means
+pca_dimensions <- 2
+number_of_clusters <- 2
+pca_kmeans_result <- run_pca_kmeans(selected_features, pca_dimensions, number_of_clusters)
+
+# Create visualizations
+plots <- visualizations(data, selected_features, pca_kmeans_result$pca_data, pca_kmeans_result$kmeans_result, color_palette)
+
+# Display plots
+plots$cluster_plot
+plots$pca_plot
+plots$cluster_assignment_plot
+```
+
+### hand selection - 2 dim - 4 clusters
+
+```{r}
+# Choose a feature selection method
+# selected_features <- feature_selection_all(data)
+ selected_features <- feature_selection_hand(data)
+# selected_features <- feature_selection_variance(data, variance_threshold = 1)
+# selected_features <- feature_selection_rfe(data)
+# selected_features <- feature_selection_lasso(data)
+
+# Run PCA and K-Means
+pca_dimensions <- 2
+number_of_clusters <- 4
+pca_kmeans_result <- run_pca_kmeans(selected_features, pca_dimensions, number_of_clusters)
+
+# Create visualizations
+plots <- visualizations(data, selected_features, pca_kmeans_result$pca_data, pca_kmeans_result$kmeans_result, color_palette)
+
+# Display plots
+plots$cluster_plot
+plots$pca_plot
+plots$cluster_assignment_plot
+```
+
+### hand selection - 2 dim - 6 clusters
+
+```{r}
+# Choose a feature selection method
+# selected_features <- feature_selection_all(data)
+ selected_features <- feature_selection_hand(data)
+# selected_features <- feature_selection_variance(data, variance_threshold = 1)
+# selected_features <- feature_selection_rfe(data)
+# selected_features <- feature_selection_lasso(data)
+
+# Run PCA and K-Means
+pca_dimensions <- 2
+number_of_clusters <- 6
+pca_kmeans_result <- run_pca_kmeans(selected_features, pca_dimensions, number_of_clusters)
+
+# Create visualizations
+plots <- visualizations(data, selected_features, pca_kmeans_result$pca_data, pca_kmeans_result$kmeans_result, color_palette)
+
+# Display plots
+plots$cluster_plot
+plots$pca_plot
+plots$cluster_assignment_plot
+```
+
+### hand selection - 2 dim - 8 clusters
+
+```{r}
+# Choose a feature selection method
+# selected_features <- feature_selection_all(data)
+ selected_features <- feature_selection_hand(data)
+# selected_features <- feature_selection_variance(data, variance_threshold = 1)
+# selected_features <- feature_selection_rfe(data)
+# selected_features <- feature_selection_lasso(data)
+
+# Run PCA and K-Means
+pca_dimensions <- 2
+number_of_clusters <- 8
+pca_kmeans_result <- run_pca_kmeans(selected_features, pca_dimensions, number_of_clusters)
+
+# Create visualizations
+plots <- visualizations(data, selected_features, pca_kmeans_result$pca_data, pca_kmeans_result$kmeans_result, color_palette)
+
+# Display plots
+plots$cluster_plot
+plots$pca_plot
+plots$cluster_assignment_plot
+```
+
 
 ## Conclusions
 
