@@ -2,7 +2,7 @@
 title: "K Means Application: Data Science Capstone"
 author: "Lindsay Guyette, Alondra Nunez, Chantal Ojurongbe, Jonathan Broada"
 date: '`r Sys.Date()`'
-format:
+format: 
   html:
     code-fold: true
 course: STA 6257 - Advanced Statistical Modeling

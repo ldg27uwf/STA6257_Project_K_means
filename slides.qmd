@@ -1,9 +1,18 @@
 ---
-title: "slides"
-format: 
-  revealjs:
-    theme: moon
-editor: visual
+title: "K Means Application : Data Science Capstone"
+author: "Lindsay Guyette, Alondra Nunez, Chantal Ojurongbe, Jonathan Broada"
+date: '`r Sys.Date()`'
+format: revealjs
+course: STA 6257 - Advanced Statistical Modeling
+bibliography: references.bib # file contains bibtex for references
+#always_allow_html: true # this allows to get PDF with HTML features
+self-contained: true
+execute: 
+  warning: false
+  message: false
+editor: 
+  markdown: 
+    wrap: 72
 ---
 
 ## Introduction 
