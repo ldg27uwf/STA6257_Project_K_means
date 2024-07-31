@@ -4,7 +4,6 @@ format:
   revealjs:
     theme: moon
 editor: visual
-echo:FALSE
 ---
 
 ## Introduction 
