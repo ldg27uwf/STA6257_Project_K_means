@@ -1,5 +1,5 @@
 ---
-title: "K Means Application- Data Science Capstone"
+title: "K Means Application: Data Science Capstone"
 author: "Lindsay Guyette, Alondra Nunez, Chantal Ojurongbe, Jonathan Broada"
 date: '`r Sys.Date()`'
 format:
