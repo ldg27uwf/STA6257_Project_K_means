@@ -7,8 +7,7 @@ format:
     width: 1600
     height: 900
     theme: moon
-    css: styles.css 
-bibliography: references.bib 
+    css: styles.css  
 editor: visual
 execute:
   echo: false
@@ -139,7 +138,7 @@ Random initialization selects 𝑘 initial centroids at random from the dataset.
 
 Compute the distance from each data point to every centroid. Popular distance measurements include Euclidean distance, Manhattan distance, and cosine similarity. Allocate each data point to the cluster that has the closest centroid to it. This results in the formation of 𝑘clusters, where each data point is assigned to a single cluster.
 
-## **Update of centroids** 
+## **Update of centroids**
 
 Determine the updated centroid of each cluster by computing the average of all data points assigned to that cluster. The updated centroid is calculated as the average position of the data points within the cluster. This update step recalibrates the position of the centroids to more accurately reflect the clusters produced in the assignment stage.
 
@@ -197,13 +196,13 @@ library(glmnet)
 data <- read.csv("mice_new_jonathan.csv")
     
 color_palette <- c(
-  "c-CS-s" = "#4f9ed4",
-  "c-CS-m" = "#80bbdf",
-  "c-SC-s" = "#6fbf67",
-  "c-SC-m" = "#96d991",
-  "t-CS-s" = "#194e85",
+  "c-CS-s" = "#f54545",
+  "c-CS-m" = "#ff8787",
+  "c-SC-s" = "#ffa538",
+  "c-SC-m" = "#ffcf94",
+  "t-CS-s" = "#4f9ed4",
   "t-CS-m" = "#133a62",
-  "t-SC-s" = "#256a27",
+  "t-SC-s" = "#6fbf67",
   "t-SC-m" = "#1a501d"
 )
 
@@ -367,7 +366,7 @@ evaluate_cluster_purity <- function(data, true_labels, cluster_assignments) {
 
 ## Data Description
 
--   500 mice
+-   552 mice
 
 -   3 categories (8 total combinations)
 
@@ -434,24 +433,156 @@ fs_purity_results <- data.frame(
 print(fs_purity_results)
 ```
 
+## Hand Selected Features
+
+```{r}
+# Load necessary libraries
+library(dplyr)
+library(tidyr)
+library(ggplot2)
+
+
+# Load the dataset
+mice_data <- read.csv("mice_new_jonathan.csv")
+mice_data_T <- mice_data %>%  select(Protein_8, Protein_21, Treatment)
+mice_data_G <- mice_data %>%  select(Protein_1, Protein_2, Protein_57, Genotype)
+mice_data_B <- mice_data %>%  select(Protein_11, Protein_18,Protein_33, Protein_35, Protein_61, Protein_71, Protein_77, Behavior)
+
+
+# Reshape the data for easier plotting
+mice_long <- mice_data %>%
+  pivot_longer(cols = starts_with("Protein"), 
+               names_to = "Protein", 
+               values_to = "Expression")
+
+mice_longT <- mice_data_T %>%
+  pivot_longer(cols = starts_with("Protein"), 
+               names_to = "Protein", 
+               values_to = "Expression")
+
+mice_longG <- mice_data_G %>%
+  pivot_longer(cols = starts_with("Protein"), 
+               names_to = "Protein", 
+               values_to = "Expression")
+
+mice_longB <- mice_data_B %>%
+  pivot_longer(cols = starts_with("Protein"), 
+               names_to = "Protein", 
+               values_to = "Expression")
+
+# Splitting the proteins into groups of 7
+protein_groupsG <- split(unique(mice_longG$Protein), ceiling(seq_along(unique(mice_longG$Protein))/7))
+protein_groupsB <- split(unique(mice_longB$Protein), ceiling(seq_along(unique(mice_longB$Protein))/7))
+protein_groupsT <- split(unique(mice_longT$Protein), ceiling(seq_along(unique(mice_longT$Protein))/7))
+
+# Function to plot boxplot for a subset of proteins
+plot_protein_group <- function(protein_subset) {
+  ggplot(filter(mice_long, Protein %in% protein_subset), aes(x = Treatment, y = Expression, fill = Treatment)) +
+    geom_boxplot() +
+    facet_wrap(~ Protein, scales = "free", nrow = 1) +
+    theme(axis.text.x = element_text(angle = 90, hjust = 1)) +
+    theme(
+      axis.title.x = element_blank(),
+      axis.text.x = element_blank(),
+      axis.ticks.x = element_blank(),
+      axis.title.y = element_blank(),
+      axis.text.y = element_blank(),
+      axis.ticks.y = element_blank()
+    ) +
+    labs(title = paste("Protein Expression Levels by Treatment\nProteins: ", paste(protein_subset, collapse = ", ")),
+         x = NULL,
+         y = NULL) +
+    theme(legend.position = "none")
+}
+
+
+
+# Function to plot boxplot for a subset of proteins
+plot_protein_group <- function(protein_subset) {
+  ggplot(filter(mice_long, Protein %in% protein_subset), aes(x = Genotype, y = Expression, fill = Genotype)) +
+    geom_boxplot() +
+    facet_wrap(~ Protein, scales = "free", nrow = 1) +
+    theme(axis.text.x = element_text(angle = 90, hjust = 1)) +
+    theme(
+      axis.title.x = element_blank(),
+      axis.text.x = element_blank(),
+      axis.ticks.x = element_blank(),
+      axis.title.y = element_blank(),
+      axis.text.y = element_blank(),
+      axis.ticks.y = element_blank()
+    ) +
+    labs(title = paste("Protein Expression Levels by Genotype\nProteins: ", paste(protein_subset, collapse = ", ")),
+         x = NULL,
+         y = NULL) +
+    theme(legend.position = "none")
+}
+
+
+
+# Function to plot boxplot for a subset of proteins
+plot_protein_group <- function(protein_subset) {
+  ggplot(filter(mice_long, Protein %in% protein_subset), aes(x = Behavior, y = Expression, fill = Behavior)) +
+    geom_boxplot() +
+    facet_wrap(~ Protein, scales = "free", nrow = 1) +
+    theme(axis.text.x = element_text(angle = 90, hjust = 1)) +
+    theme(
+      axis.title.x = element_blank(),
+      axis.text.x = element_blank(),
+      axis.ticks.x = element_blank(),
+      axis.title.y = element_blank(),
+      axis.text.y = element_blank(),
+      axis.ticks.y = element_blank()
+    ) +
+    labs(title = paste("Protein Expression Levels by Behavior\nProteins: ", paste(protein_subset, collapse = ", ")),
+         x = NULL,
+         y = NULL) +
+    theme(legend.position = "none")
+}
+```
+
+::: panel-tabset
+## Treatment
+
+```{r}
+# Plot each group of proteins
+for (i in seq_along(protein_groupsT)) {
+  print(plot_protein_group(protein_groupsT[[i]]))
+}
+```
+
+## Genotype
+
+```{r}
+# Plot each group of proteins
+for (i in seq_along(protein_groupsG)) {
+  print(plot_protein_group(protein_groupsG[[i]]))
+}
+```
+
+## Behavior
+
+```{r}
+# Plot each group of proteins
+for (i in seq_along(protein_groupsB)) {
+  print(plot_protein_group(protein_groupsB[[i]]))
+}
+```
+:::
+
 ## Clusters by feature selection method
 
-::: columns
-::: {.column width="50%"}
-All features
+::: panel-tabset
+## All features
 
 ```{r}
 fs_plots_all$pca_plot
 ```
-:::
 
-::: {.column width="50%"}
-Hand-selected features
+## Hand-selected features
 
 ```{r}
 fs_plots_hand$pca_plot
 ```
-:::
 :::
 
 ## PCA
@@ -505,9 +636,8 @@ pca_purity_results <- data.frame(
 #pca_plots_hand$cluster_assignment_plot
 ```
 
-::: columns
-::: {.column width="60%"}
-\% of Explained variance
+::: panel-tabset
+## % of Explained variance
 
 ```{r}
 selected_features <- feature_selection_hand(data)
@@ -520,36 +650,25 @@ library(factoextra)
 fviz_screeplot(pca_result, ncp = 30) + theme_minimal() +
   ggtitle("Scree Plot")
 ```
-:::
 
-::: {.column width="40%"}
-Purity
+## Purity
 
 ```{r}
 # Display the purities in a table
 print(pca_purity_results)
 ```
-:::
-:::
 
-## Clusters with 2 vs 3 Dimensions
-
-::: columns
-::: {.column width="50%"}
-2 dimensions
+## 2 dimensions
 
 ```{r}
 pca_plots_2$cluster_plot
 ```
-:::
 
-::: {.column width="50%"}
-3 dimensions
+## 3 dimensions
 
 ```{r}
 pca_plots_3$cluster_plot
 ```
-:::
 :::
 
 ## K-means
@@ -584,9 +703,8 @@ km_purity_results <- data.frame(
 )
 ```
 
-::: columns
-::: {.column width="60%"}
-Elbow Method
+::: panel-tabset
+## Elbow Method
 
 ```{r}
 selected_features <- feature_selection_hand(data)
@@ -599,16 +717,13 @@ fviz_nbclust(pca_data, kmeans, method = "wss") +
   labs(subtitle = "Elbow method")
 
 ```
-:::
 
-::: {.column width="40%"}
-Purity
+## Purity
 
 ```{r}
 # Display the purities in a table
 print(km_purity_results)
 ```
-:::
 :::
 
 ## Clusters by \# of clusters

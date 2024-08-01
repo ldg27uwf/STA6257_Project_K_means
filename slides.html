@@ -1,13 +1,13 @@
 <!DOCTYPE html>
 <html lang="en"><head>
-<script src="slides_files/libs/clipboard/clipboard.min.js"></script>
-<script src="slides_files/libs/quarto-html/tabby.min.js"></script>
-<script src="slides_files/libs/quarto-html/popper.min.js"></script>
-<script src="slides_files/libs/quarto-html/tippy.umd.min.js"></script>
-<link href="slides_files/libs/quarto-html/tippy.css" rel="stylesheet">
-<link href="slides_files/libs/quarto-html/light-border.css" rel="stylesheet">
-<link href="slides_files/libs/quarto-html/quarto-html.min.css" rel="stylesheet" data-mode="light">
-<link href="slides_files/libs/quarto-html/quarto-syntax-highlighting-dark.css" rel="stylesheet" id="quarto-text-highlighting-styles"><meta charset="utf-8">
+<script src="slides2_files/libs/clipboard/clipboard.min.js"></script>
+<script src="slides2_files/libs/quarto-html/tabby.min.js"></script>
+<script src="slides2_files/libs/quarto-html/popper.min.js"></script>
+<script src="slides2_files/libs/quarto-html/tippy.umd.min.js"></script>
+<link href="slides2_files/libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="slides2_files/libs/quarto-html/light-border.css" rel="stylesheet">
+<link href="slides2_files/libs/quarto-html/quarto-html.min.css" rel="stylesheet" data-mode="light">
+<link href="slides2_files/libs/quarto-html/quarto-syntax-highlighting-dark.css" rel="stylesheet" id="quarto-text-highlighting-styles"><meta charset="utf-8">
   <meta name="generator" content="quarto-1.3.353">
 
   <meta name="author" content="Jonathan Broada, Lindsay Guyette, Alondra Nunez, Chantal Ojurongbe">
@@ -15,8 +15,8 @@
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, minimal-ui">
-  <link rel="stylesheet" href="slides_files/libs/revealjs/dist/reset.css">
-  <link rel="stylesheet" href="slides_files/libs/revealjs/dist/reveal.css">
+  <link rel="stylesheet" href="slides2_files/libs/revealjs/dist/reset.css">
+  <link rel="stylesheet" href="slides2_files/libs/revealjs/dist/reveal.css">
   <style>
     code{white-space: pre-wrap;}
     span.smallcaps{font-variant: small-caps;}
@@ -30,12 +30,12 @@
       vertical-align: middle;
     }
   </style>
-  <link rel="stylesheet" href="slides_files/libs/revealjs/dist/theme/quarto.css">
+  <link rel="stylesheet" href="slides2_files/libs/revealjs/dist/theme/quarto.css">
   <link rel="stylesheet" href="styles.css">
-  <link href="slides_files/libs/revealjs/plugin/quarto-line-highlight/line-highlight.css" rel="stylesheet">
-  <link href="slides_files/libs/revealjs/plugin/reveal-menu/menu.css" rel="stylesheet">
-  <link href="slides_files/libs/revealjs/plugin/reveal-menu/quarto-menu.css" rel="stylesheet">
-  <link href="slides_files/libs/revealjs/plugin/quarto-support/footer.css" rel="stylesheet">
+  <link href="slides2_files/libs/revealjs/plugin/quarto-line-highlight/line-highlight.css" rel="stylesheet">
+  <link href="slides2_files/libs/revealjs/plugin/reveal-menu/menu.css" rel="stylesheet">
+  <link href="slides2_files/libs/revealjs/plugin/reveal-menu/quarto-menu.css" rel="stylesheet">
+  <link href="slides2_files/libs/revealjs/plugin/quarto-support/footer.css" rel="stylesheet">
   <style type="text/css">
 
   .callout {
@@ -509,7 +509,7 @@ Jonathan Broada, Lindsay Guyette, Alondra Nunez, Chantal Ojurongbe
 <section id="data-description-1" class="slide level2">
 <h2>Data Description</h2>
 <ul>
-<li><p>500 mice</p></li>
+<li><p>552 mice</p></li>
 <li><p>3 categories (8 total combinations)</p>
 <ul>
 <li>Genotype</li>
@@ -539,21 +539,52 @@ Jonathan Broada, Lindsay Guyette, Alondra Nunez, Chantal Ojurongbe
 </div>
 </div>
 </section>
+<section id="hand-selected-features" class="slide level2">
+<h2>Hand Selected Features</h2>
+<div class="panel-tabset">
+<ul id="tabset-3" class="panel-tabset-tabby"><li><a data-tabby-default="" href="#tabset-3-1">Treatment</a></li><li><a href="#tabset-3-2">Genotype</a></li><li><a href="#tabset-3-3">Behavior</a></li></ul>
+<div class="tab-content">
+<div id="tabset-3-1">
+<div class="cell">
+<div class="cell-output-display">
+<p><img data-src="slides2_files/figure-revealjs/unnamed-chunk-6-1.png" width="960"></p>
+</div>
+</div>
+</div>
+<div id="tabset-3-2">
+<div class="cell">
+<div class="cell-output-display">
+<p><img data-src="slides2_files/figure-revealjs/unnamed-chunk-7-1.png" width="960"></p>
+</div>
+</div>
+</div>
+<div id="tabset-3-3">
+<div class="cell">
+<div class="cell-output-display">
+<p><img data-src="slides2_files/figure-revealjs/unnamed-chunk-8-1.png" width="960"></p>
+</div>
+</div>
+</div>
+</div>
+</div>
+</section>
 <section id="clusters-by-feature-selection-method" class="slide level2">
 <h2>Clusters by feature selection method</h2>
-<div class="columns">
-<div class="column" style="width:50%;">
-<p>All features</p>
+<div class="panel-tabset">
+<ul id="tabset-4" class="panel-tabset-tabby"><li><a data-tabby-default="" href="#tabset-4-1">All features</a></li><li><a href="#tabset-4-2">Hand-selected features</a></li></ul>
+<div class="tab-content">
+<div id="tabset-4-1">
 <div class="cell">
 <div class="cell-output-display">
-<p><img data-src="slides_files/figure-revealjs/unnamed-chunk-5-1.png" width="960"></p>
+<p><img data-src="slides2_files/figure-revealjs/unnamed-chunk-9-1.png" width="960"></p>
 </div>
 </div>
-</div><div class="column" style="width:50%;">
-<p>Hand-selected features</p>
+</div>
+<div id="tabset-4-2">
 <div class="cell">
 <div class="cell-output-display">
-<p><img data-src="slides_files/figure-revealjs/unnamed-chunk-6-1.png" width="960"></p>
+<p><img data-src="slides2_files/figure-revealjs/unnamed-chunk-10-1.png" width="960"></p>
+</div>
 </div>
 </div>
 </div>
@@ -566,16 +597,17 @@ Jonathan Broada, Lindsay Guyette, Alondra Nunez, Chantal Ojurongbe
 <li><p>We tested how many principal components were ideal.</p></li>
 <li><p>3 dimensions yield the best clusters but 2 dimensions are easier to interpret in a 2D graph</p></li>
 </ul>
-<div class="columns">
-<div class="column" style="width:60%;">
-<p>% of Explained variance</p>
+<div class="panel-tabset">
+<ul id="tabset-5" class="panel-tabset-tabby"><li><a data-tabby-default="" href="#tabset-5-1">% of Explained variance</a></li><li><a href="#tabset-5-2">Purity</a></li><li><a href="#tabset-5-3">2 dimensions</a></li><li><a href="#tabset-5-4">3 dimensions</a></li></ul>
+<div class="tab-content">
+<div id="tabset-5-1">
 <div class="cell">
 <div class="cell-output-display">
-<p><img data-src="slides_files/figure-revealjs/unnamed-chunk-8-1.png" width="960"></p>
+<p><img data-src="slides2_files/figure-revealjs/unnamed-chunk-12-1.png" width="960"></p>
 </div>
 </div>
-</div><div class="column" style="width:40%;">
-<p>Purity</p>
+</div>
+<div id="tabset-5-2">
 <div class="cell">
 <div class="cell-output cell-output-stdout">
 <pre><code>  Method    Purity
@@ -588,23 +620,18 @@ Jonathan Broada, Lindsay Guyette, Alondra Nunez, Chantal Ojurongbe
 </div>
 </div>
 </div>
-</div>
-</section>
-<section id="clusters-with-2-vs-3-dimensions" class="slide level2">
-<h2>Clusters with 2 vs 3 Dimensions</h2>
-<div class="columns">
-<div class="column" style="width:50%;">
-<p>2 dimensions</p>
+<div id="tabset-5-3">
 <div class="cell">
 <div class="cell-output-display">
-<p><img data-src="slides_files/figure-revealjs/unnamed-chunk-10-1.png" width="960"></p>
+<p><img data-src="slides2_files/figure-revealjs/unnamed-chunk-14-1.png" width="960"></p>
 </div>
 </div>
-</div><div class="column" style="width:50%;">
-<p>3 dimensions</p>
+</div>
+<div id="tabset-5-4">
 <div class="cell">
 <div class="cell-output-display">
-<p><img data-src="slides_files/figure-revealjs/unnamed-chunk-11-1.png" width="960"></p>
+<p><img data-src="slides2_files/figure-revealjs/unnamed-chunk-15-1.png" width="960"></p>
+</div>
 </div>
 </div>
 </div>
@@ -616,16 +643,17 @@ Jonathan Broada, Lindsay Guyette, Alondra Nunez, Chantal Ojurongbe
 <li><p>After preparing our data we can finally perform k-means.</p></li>
 <li><p>We tested how many clusters yielded the best results.</p></li>
 </ul>
-<div class="columns">
-<div class="column" style="width:60%;">
-<p>Elbow Method</p>
+<div class="panel-tabset">
+<ul id="tabset-6" class="panel-tabset-tabby"><li><a data-tabby-default="" href="#tabset-6-1">Elbow Method</a></li><li><a href="#tabset-6-2">Purity</a></li></ul>
+<div class="tab-content">
+<div id="tabset-6-1">
 <div class="cell">
 <div class="cell-output-display">
-<p><img data-src="slides_files/figure-revealjs/unnamed-chunk-13-1.png" width="960"></p>
+<p><img data-src="slides2_files/figure-revealjs/unnamed-chunk-17-1.png" width="960"></p>
 </div>
 </div>
-</div><div class="column" style="width:40%;">
-<p>Purity</p>
+</div>
+<div id="tabset-6-2">
 <div class="cell">
 <div class="cell-output cell-output-stdout">
 <pre><code>  Method    Purity
@@ -633,6 +661,7 @@ Jonathan Broada, Lindsay Guyette, Alondra Nunez, Chantal Ojurongbe
 2      4 0.4528986
 3      6 0.5398551
 4      8 0.5398551</code></pre>
+</div>
 </div>
 </div>
 </div>
@@ -645,26 +674,26 @@ Jonathan Broada, Lindsay Guyette, Alondra Nunez, Chantal Ojurongbe
 <p>2 clusters</p>
 <div class="cell">
 <div class="cell-output-display">
-<p><img data-src="slides_files/figure-revealjs/unnamed-chunk-15-1.png" width="960"></p>
+<p><img data-src="slides2_files/figure-revealjs/unnamed-chunk-19-1.png" width="960"></p>
 </div>
 </div>
 <p>6 Clusters</p>
 <div class="cell">
 <div class="cell-output-display">
-<p><img data-src="slides_files/figure-revealjs/unnamed-chunk-16-1.png" width="960"></p>
+<p><img data-src="slides2_files/figure-revealjs/unnamed-chunk-20-1.png" width="960"></p>
 </div>
 </div>
 </div><div class="column" style="width:40%;">
 <p>4 clusters</p>
 <div class="cell">
 <div class="cell-output-display">
-<p><img data-src="slides_files/figure-revealjs/unnamed-chunk-17-1.png" width="960"></p>
+<p><img data-src="slides2_files/figure-revealjs/unnamed-chunk-21-1.png" width="960"></p>
 </div>
 </div>
 <p>8 Clusters</p>
 <div class="cell">
 <div class="cell-output-display">
-<p><img data-src="slides_files/figure-revealjs/unnamed-chunk-18-1.png" width="960"></p>
+<p><img data-src="slides2_files/figure-revealjs/unnamed-chunk-22-1.png" width="960"></p>
 </div>
 </div>
 </div>
@@ -682,7 +711,7 @@ Jonathan Broada, Lindsay Guyette, Alondra Nunez, Chantal Ojurongbe
 </div><div class="column" style="width:60%;">
 <div class="cell">
 <div class="cell-output-display">
-<p><img data-src="slides_files/figure-revealjs/unnamed-chunk-19-1.png" width="960"></p>
+<p><img data-src="slides2_files/figure-revealjs/unnamed-chunk-23-1.png" width="960"></p>
 </div>
 </div>
 </div>
@@ -695,19 +724,19 @@ Jonathan Broada, Lindsay Guyette, Alondra Nunez, Chantal Ojurongbe
   </div>
 
   <script>window.backupDefine = window.define; window.define = undefined;</script>
-  <script src="slides_files/libs/revealjs/dist/reveal.js"></script>
+  <script src="slides2_files/libs/revealjs/dist/reveal.js"></script>
   <!-- reveal.js plugins -->
-  <script src="slides_files/libs/revealjs/plugin/quarto-line-highlight/line-highlight.js"></script>
-  <script src="slides_files/libs/revealjs/plugin/pdf-export/pdfexport.js"></script>
-  <script src="slides_files/libs/revealjs/plugin/reveal-menu/menu.js"></script>
-  <script src="slides_files/libs/revealjs/plugin/reveal-menu/quarto-menu.js"></script>
-  <script src="slides_files/libs/revealjs/plugin/quarto-support/support.js"></script>
+  <script src="slides2_files/libs/revealjs/plugin/quarto-line-highlight/line-highlight.js"></script>
+  <script src="slides2_files/libs/revealjs/plugin/pdf-export/pdfexport.js"></script>
+  <script src="slides2_files/libs/revealjs/plugin/reveal-menu/menu.js"></script>
+  <script src="slides2_files/libs/revealjs/plugin/reveal-menu/quarto-menu.js"></script>
+  <script src="slides2_files/libs/revealjs/plugin/quarto-support/support.js"></script>
   
 
-  <script src="slides_files/libs/revealjs/plugin/notes/notes.js"></script>
-  <script src="slides_files/libs/revealjs/plugin/search/search.js"></script>
-  <script src="slides_files/libs/revealjs/plugin/zoom/zoom.js"></script>
-  <script src="slides_files/libs/revealjs/plugin/math/math.js"></script>
+  <script src="slides2_files/libs/revealjs/plugin/notes/notes.js"></script>
+  <script src="slides2_files/libs/revealjs/plugin/search/search.js"></script>
+  <script src="slides2_files/libs/revealjs/plugin/zoom/zoom.js"></script>
+  <script src="slides2_files/libs/revealjs/plugin/math/math.js"></script>
   <script>window.define = window.backupDefine; window.backupDefine = undefined;</script>
 
   <script>
