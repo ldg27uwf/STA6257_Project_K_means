@@ -1,0 +1,679 @@
+---
+title: "k-Means Clustering Application"
+author: "Jonathan Broada, Lindsay Guyette, Alondra Nunez, Chantal Ojurongbe"
+format:
+  revealjs:
+    slide-number: c/t
+    width: 1600
+    height: 900
+    theme: moon
+    css: styles.css 
+bibliography: references.bib 
+editor: visual
+execute:
+  echo: false
+---
+
+## Introduction: k-Means Clustering
+
+-   The goal is to create groupings, or clusters, where objects within the same cluster are more alike to each other than to objects in other clusters.
+
+-   Unsupervised Learning used in data mining and machine learning to categorize a collection of items based on their similarity.
+
+-   **Clustering**: process of grouping similar objects or data points together based on their characteristics or attributes
+
+## k-Means Clustering
+
+1.  Establish k centroids, representing each cluster
+2.  Assigns each data point to one of the k clusters
+3.  Allocates each data point to the centroid that is closest to it. This allocation is done in a way that minimizes the total squared distances between the data points and their respective centroids
+
+# Where is k-Means useful?
+
+::: panel-tabset
+## Bioinformatics
+
+-   Can be used to group differential gene/protein expression according to specific phenotype, or physical presentations of biological traits.
+
+-   Can be used to assign cells to specific types based on single-cell RNA sequencing data
+
+-   Yang et al., 2017 utilized k-means clustering to analyze the scRNA sequencing data of hundreds of cell types to develop a novel algorithm that identifies the optimal sets of genes to cluster single cells into distinct groups
+
+## Image 1
+
+![Visualization by Nameirakpam Dhanachandra et al](bloodcells.JPG)
+
+## Sociology {.scrollable-panel}
+
+-   Can be applied to population-level data to determine significant groupings related to **socioeconomic outcomes**
+
+-   Factors related to socioeconomic mobility were evaluated in a 2023 study using longitudinal data from the Opportunity Atlas project
+
+-   Outcome: revealed differences in socioeconomic mobility related to:
+
+    -   Geographic location
+    -   Income
+    -   Neighborhood factors: poverty rate and incarceration rates
+
+## Image 2
+
+![Visualization by Sarah Zelasky et al.](mobility.jpg)
+
+## Economics {.scrollable-panel}
+
+-   In 2017, food market researchers used k-means clustering to segment the organic food market in Lebanon
+
+-   By starting with 13 variables, they applied Principal Component Analysis (PCA) to reduce the number while retaining the explanatory power
+
+-   The k-means algorithm was then employed, resulting in four distinct clusters of consumer opinions on organic food
+
+-   Outcome: Improvements in policy and initiatives in the organic food market in Lebanon
+
+## Image 3
+
+![Visualization by Malak Tleis et al.](lebanon.JPG)
+:::
+
+## Challenges and Improvements of k-Means
+
+The k-means algorithm was originally proposed in in the 1950s and it is widely used due to its computational simplicity
+
+::: columns
+::: {.column width="50%"}
+### Challenges {.scrollable-panel}
+
+-   Preselecting number of clusters
+-   Minimal local convergence because of the random initial centroids
+-   Sensitivity to outliers
+:::
+
+::: {.column width="50%"}
+### Improvements {.scrollable-panel}
+
+-   Avoiding poor clustering due to random initialization
+-   Researchers propose new method by addressing application and detector specific factors
+    -   KFC method: offers parameter free solution with linear time complexity
+-   KMOR (k-means with outlier removal) algorithm broadens the classic k-means algorithm by proposing an additional cluster for outliers
+:::
+:::
+
+# Methods
+
+k-Means can be analytically defined as an optimization problem. The objective is to divide a collection of n data points into k clusters in a manner that minimizes the sum of squares inside each cluster (WCSS). The goal of k-means is to minimize the total sum of squared distances between each data point and its corresponding cluster centroid.
+
+The **within-cluster sum of squares (WCSS)** represents this.
+
+## Methods
+
+$$\text{WCSS} = \sum_{j=1}^{k}\sum_{xi\in Cj}^{} \left\| x_{i} - \mu_{j} \right\|^2$$
+
+-   Cj​ is the set of data points assigned to cluster j
+
+-   xi is a data point
+
+-   μj​ is the centroid of cluster j
+
+-   ∥xi−μj∥ is the Euclidean distance between data point xi​ and centroid μj
+
+## Methods: Algorithm Steps in Mathematical Terms
+
+-   Initialization: Randomly choose k initial centroids μ~1~,μ~2~,...,μ~k​~ from the dataset {x~1~,x~2~,...,x~n~}
+-   Assignment Step:
+    -   Assign each data point x~i​~ to the nearest centroid μ~j~​
+    -   Mathematically expressed as: $$C_j = \left\{ x_i \mid \| x_i - \mu_j \|^2 \leq \| x_i - \mu_l \|^2 \text{ for all } l, 1 \leq l \leq k \right\}$$
+-   Here, C~j​~ denotes the set of points assigned to centroid μ~j~​
+
+## Methods
+
+The k-means algorithm is an iterative procedure that involves 2 steps:
+
+-   allocating data points to clusters
+-   updating the cluster centroids
+
+::: panel-tabset
+## **Initialization of centroids**
+
+Random initialization selects 𝑘 initial centroids at random from the dataset. Every centroid corresponds to the original center of a cluster. The algorithm being referred to is called "k-means++" is a refined technique that distributes the initial centroids in order to enhance the performance of the algorithm. The initial centroid is selected at random, whereas the following centroids are chosen according to a probability that is directly proportionate to their distance from the nearest existing centroid.
+
+## **Assignment of data points to nearest centroids**
+
+Compute the distance from each data point to every centroid. Popular distance measurements include Euclidean distance, Manhattan distance, and cosine similarity. Allocate each data point to the cluster that has the closest centroid to it. This results in the formation of 𝑘clusters, where each data point is assigned to a single cluster.
+
+## **Update of centroids** 
+
+Determine the updated centroid of each cluster by computing the average of all data points assigned to that cluster. The updated centroid is calculated as the average position of the data points within the cluster. This update step recalibrates the position of the centroids to more accurately reflect the clusters produced in the assignment stage.
+
+## **Iteration until convergence.**
+
+Iterate the assignment and update processes until the centroids exhibit minimal variation between iterations. Convergence is usually assessed by verifying if the positions of the centroids have reached a stable state within a predetermined tolerance threshold. Alternatively, the process can be halted after reaching a predetermined number of iterations if convergence is not attained prior to that.
+:::
+
+# Data Analysis
+
+# Data Description
+
+-   The data is sourced from a 2015 paper which evaluates the effect on protein expression of the Alzheimer's drug memantine in rescuing learning in Ts65Dn trisomic mice relative to control mice.
+
+-   Ts65Dn mice are genetically modified to be trisomic for 2/3 of the genes orthologous to human chromosome 21 (Hsa21), making them a suitable model organism to experimentally study Down's Syndrome (DS).
+
+-   It is suspected that memantine can be used to treat learning deficits in DS, and this rescue effect has been previously observed in the Ts65Dn model.
+
+-   This study evaluates the effect of these different factors on the expression of 77 different proteins involved in Alzheimer's, neuronal receptors, Hsa21 genes, and homeostatic genes.
+
+-   It is expected that Ts65Dn mice treated with memantine in the learning condition will exhibit similar patterns of protein expression relative to the untreated control model in the learning condition.
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(warning = FALSE, message = FALSE)
+```
+
+```{r, include =FALSE}
+#install.packages("NbClust")
+#install.packages("fpc")
+#install.packages("tidyverse")
+#install.packages("factoextra")
+#install.packages("cluster")
+#install.packages("pheatmap")
+#install.packages("plotly")
+#install.packages("caret")
+#install.packages("e1071")
+#install.packages("glmnet")
+
+library(fpc)
+library(NbClust)
+library(cluster)
+library(tidyverse)
+library(factoextra)
+library(pheatmap)
+library(dplyr)
+library(plotly)
+library(ggplot2)
+library(caret)
+library(e1071)
+library(glmnet)
+```
+
+```{r}
+### Load the data
+data <- read.csv("mice_new_jonathan.csv")
+    
+color_palette <- c(
+  "c-CS-s" = "#4f9ed4",
+  "c-CS-m" = "#80bbdf",
+  "c-SC-s" = "#6fbf67",
+  "c-SC-m" = "#96d991",
+  "t-CS-s" = "#194e85",
+  "t-CS-m" = "#133a62",
+  "t-SC-s" = "#256a27",
+  "t-SC-m" = "#1a501d"
+)
+
+# Functions
+
+## Feature Selection Functions
+### All Features
+feature_selection_all <- function(data) {
+  protein_data <- data[, 2:78]
+  protein_data_scaled <- scale(protein_data)
+  return(protein_data_scaled)
+}
+
+
+### Hand Selection
+feature_selection_hand <- function(data) {
+  protein_data <- data %>%  select(Protein_1, Protein_2, Protein_8, Protein_11, Protein_18, Protein_21, Protein_33, Protein_35, Protein_51, Protein_57, Protein_61, Protein_71, Protein_77)
+  protein_data_scaled <- scale(protein_data)
+  return(protein_data_scaled)
+}
+
+### Variance
+feature_selection_variance <- function(data, variance_threshold = 1) {
+  protein_data <- data[, 2:78]
+  protein_data_scaled <- scale(protein_data)
+  
+  # Calculate variance for each feature
+  variances <- apply(protein_data_scaled, 2, var)
+  
+  # Select features with variance above the threshold
+  selected_features <- names(variances[variances > variance_threshold])
+  protein_data_scaled <- protein_data_scaled[, selected_features]
+  return(protein_data_scaled)
+}
+
+### RFE
+feature_selection_rfe <- function(data) {
+  protein_data <- data[, 2:78]
+  class_labels <- as.factor(data$class_short)
+  
+  # Create control function for RFE
+  control <- rfeControl(functions = rfFuncs, method = "cv", number = 10)
+  
+  # Run RFE algorithm
+  set.seed(123)
+  rfe_result <- rfe(protein_data, class_labels, sizes = c(1:20), rfeControl = control)
+  
+  # Get the selected features
+  selected_features <- predictors(rfe_result)
+  protein_data_selected <- protein_data[, selected_features]
+  protein_data_scaled <- scale(protein_data_selected)
+  return(protein_data_scaled)
+}
+
+### Lasso
+feature_selection_lasso <- function(data) {
+  protein_data <- data[, 2:78]
+  protein_data_scaled <- scale(protein_data)
+  
+  # Define the feature matrix (X) and the response vector (y)
+  X <- as.matrix(protein_data_scaled)
+  
+  # Ensure the response variable is a factor
+  y <- as.factor(data$class_short)
+  
+  # Apply Lasso using glmnet
+  set.seed(123)  # For reproducibility
+  lasso_model <- cv.glmnet(X, y, alpha = 1, family = "multinomial")
+  
+  # Get the coefficients of the best model
+  coef_lasso <- coef(lasso_model, s = "lambda.min")
+  
+  # Extract the selected features (non-zero coefficients)
+  selected_features_matrix <- as.matrix(coef_lasso[[1]])
+  selected_features <- rownames(selected_features_matrix)[selected_features_matrix != 0]
+  selected_features <- selected_features[!(selected_features %in% "(Intercept)")]
+  
+  # Create a new dataframe with selected features
+  important_features <- protein_data[, selected_features]
+  
+  # Scale the important features data
+  protein_data_scaled <- scale(important_features)
+  return(protein_data_scaled)
+}
+
+
+## PCA and K-Means Functions
+
+run_pca_kmeans <- function(data, pca_dimensions, number_of_clusters) {
+  pca_result <- prcomp(data, center = TRUE, scale. = TRUE)
+  pca_data <- pca_result$x[, 1:pca_dimensions]
+  
+  kmeans_result <- kmeans(pca_data, centers = number_of_clusters, nstart = 100)
+  
+  return(list(pca_data = pca_data, kmeans_result = kmeans_result))
+}
+
+
+## Visualizations Functions
+
+visualizations <- function(data, selected_features, pca_data, kmeans_result, color_palette) {
+  # Add the cluster assignments to the original data
+  data$cluster <- as.factor(kmeans_result$cluster)
+  
+  # Create a data frame with PCA results and class information
+  pca_data2 <- data.frame(pca_data, class_short = data$class_short, cluster = data$cluster)
+  
+  # Visualize Clusters
+  cluster_plot <- fviz_cluster(kmeans_result, data = selected_features, ellipse.type="convex", geom = "point") + theme_minimal()
+  
+  # Plotting using ggplot2
+  pca_plot <- ggplot(pca_data2, aes(x = PC1, y = PC2, color = class_short)) + 
+    geom_point() +
+    stat_ellipse(aes(group = cluster), type = "norm") +  # Here you can use 'cluster' to draw ellipses around clusters
+    theme_minimal() +
+    scale_color_manual(values = color_palette) +  # Apply the custom color palette
+    labs(color = "Class")  # Customize legend title
+  
+  # Plot cluster assignments against the original classes
+  cluster_assignment_plot <- ggplot(data, aes(x = cluster, fill = class_short)) + 
+    geom_bar(position = "stack") +
+    scale_fill_manual(values = color_palette) +
+    theme(axis.text.x = element_text(angle = 90, hjust = 1)) +
+    labs(title = "Cluster Assignments by Class",
+         x = "Cluster",
+         y = "Count",
+         fill = "Class")
+  
+  return(list(cluster_plot = cluster_plot, pca_plot = pca_plot, cluster_assignment_plot = cluster_assignment_plot))
+}
+
+evaluate_cluster_purity <- function(data, true_labels, cluster_assignments) {
+  # Create a data frame with true labels and cluster assignments
+  df <- data.frame(TrueLabel = true_labels, Cluster = cluster_assignments)
+  
+  # Get unique clusters and classes
+  unique_clusters <- unique(df$Cluster)
+  unique_classes <- unique(df$TrueLabel)
+  
+  # Initialize purity
+  total_purity <- 0
+  
+  # Go through each cluster
+  for (cluster in unique_clusters) {
+    # Subset data to the current cluster
+    subset_df <- df[df$Cluster == cluster, ]
+    
+    # Calculate the number of maximum count of true labels in this cluster
+    max_count <- max(table(subset_df$TrueLabel))
+    
+    # Update total purity
+    total_purity <- total_purity + max_count
+  }
+  
+  # Normalize to get the purity measure
+  purity <- total_purity / nrow(df)
+  
+  return(purity)
+}
+```
+
+## Data Description
+
+-   500 mice
+
+-   3 categories (8 total combinations)
+
+    -   Genotype
+    -   Behavior
+    -   Treatment
+
+-   77 numerical values of protein expressions
+
+## Feature Selection
+
+-   Too many variables (77), many of which are expected to be noise/random
+
+-   We tested 4 different feature selection methods
+
+-   Hand selecting the measures by relevance to the categories yielded the best results.
+
+```{r}
+# Choose a feature selection method
+selected_features_all <- feature_selection_all(data)
+selected_features_hand <- feature_selection_hand(data)
+selected_features_var <- feature_selection_variance(data, variance_threshold = 1)
+selected_features_lasso <- feature_selection_lasso(data)
+
+fs_result_all <- run_pca_kmeans(selected_features_all, 2, 8)
+fs_result_var <- run_pca_kmeans(selected_features_var, 2, 8)
+fs_result_lasso <- run_pca_kmeans(selected_features_lasso, 2, 8)
+fs_result_hand <- run_pca_kmeans(selected_features_hand, 2, 8)
+
+fs_plots_all <- visualizations(data, selected_features_all, fs_result_all$pca_data, fs_result_all$kmeans_result, color_palette)
+fs_plots_var <- visualizations(data, selected_features_var, fs_result_var$pca_data, fs_result_var$kmeans_result, color_palette)
+fs_plots_lasso <- visualizations(data, selected_features_lasso, fs_result_lasso$pca_data, fs_result_lasso$kmeans_result, color_palette)
+fs_plots_hand <- visualizations(data, selected_features_hand, fs_result_hand$pca_data, fs_result_hand$kmeans_result, color_palette)
+
+fs_purity_all <- evaluate_cluster_purity(data, data$class_short, fs_result_all$kmeans_result$cluster)
+fs_purity_var <- evaluate_cluster_purity(data, data$class_short, fs_result_var$kmeans_result$cluster)
+fs_purity_lasso <- evaluate_cluster_purity(data, data$class_short, fs_result_lasso$kmeans_result$cluster)
+fs_purity_hand <- evaluate_cluster_purity(data, data$class_short, fs_result_hand$kmeans_result$cluster)
+
+
+
+# Create a data frame for the purities
+fs_purity_results <- data.frame(
+  Method = c("All Features", "Variance", "Lasso", "Hand Selected"),
+  Purity = c(fs_purity_all, fs_purity_var, fs_purity_lasso, fs_purity_hand)
+)
+
+
+
+# Display plots
+#fs_plots_all$cluster_plot
+#fs_plots_all$pca_plot
+#fs_plots_all$cluster_assignment_plot
+
+#fs_plots_hand$cluster_plot
+#fs_plots_hand$pca_plot
+#fs_plots_hand$cluster_assignment_plot
+```
+
+-   Purity:
+
+```{r}
+# Display the purities in a table
+print(fs_purity_results)
+```
+
+## Clusters by feature selection method
+
+::: columns
+::: {.column width="50%"}
+All features
+
+```{r}
+fs_plots_all$pca_plot
+```
+:::
+
+::: {.column width="50%"}
+Hand-selected features
+
+```{r}
+fs_plots_hand$pca_plot
+```
+:::
+:::
+
+## PCA
+
+-   We can improve the relevance of the dimensions even further by using PCA.
+
+-   We tested how many principal components were ideal.
+
+-   3 dimensions yield the best clusters but 2 dimensions are easier to interpret in a 2D graph
+
+```{r}
+# Choose a feature selection method
+selected_features_hand <- feature_selection_hand(data)
+
+pca_result_2 <- run_pca_kmeans(selected_features_hand, 2, 8)
+pca_result_3 <- run_pca_kmeans(selected_features_hand, 3, 8)
+pca_result_4 <- run_pca_kmeans(selected_features_hand, 4, 8)
+pca_result_6 <- run_pca_kmeans(selected_features_hand, 6, 8)
+pca_result_10 <- run_pca_kmeans(selected_features_hand, 10, 8)
+pca_result_13 <- run_pca_kmeans(selected_features_hand, 10, 8)
+
+pca_plots_2 <- visualizations(data, selected_features_hand, pca_result_2$pca_data, pca_result_2$kmeans_result, color_palette)
+pca_plots_3 <- visualizations(data, selected_features_hand, pca_result_3$pca_data, pca_result_3$kmeans_result, color_palette)
+pca_plots_4 <- visualizations(data, selected_features_hand, pca_result_4$pca_data, pca_result_4$kmeans_result, color_palette)
+pca_plots_6 <- visualizations(data, selected_features_hand, pca_result_6$pca_data, pca_result_6$kmeans_result, color_palette)
+pca_plots_10 <- visualizations(data, selected_features_hand, pca_result_10$pca_data, pca_result_10$kmeans_result, color_palette)
+pca_plots_13 <- visualizations(data, selected_features_hand, pca_result_13$pca_data, pca_result_13$kmeans_result, color_palette)
+
+
+pca_purity_2 <- evaluate_cluster_purity(data, data$class_short, pca_result_2$kmeans_result$cluster)
+pca_purity_3 <- evaluate_cluster_purity(data, data$class_short, pca_result_3$kmeans_result$cluster)
+pca_purity_4 <- evaluate_cluster_purity(data, data$class_short, pca_result_4$kmeans_result$cluster)
+pca_purity_6 <- evaluate_cluster_purity(data, data$class_short, pca_result_6$kmeans_result$cluster)
+pca_purity_10 <- evaluate_cluster_purity(data, data$class_short, pca_result_10$kmeans_result$cluster)
+pca_purity_13 <- evaluate_cluster_purity(data, data$class_short, pca_result_13$kmeans_result$cluster)
+
+
+# Create a data frame for the purities
+pca_purity_results <- data.frame(
+  Method = c("2", "3", "4", "6", "10", "13"),
+  Purity = c(pca_purity_2, pca_purity_3, pca_purity_4, pca_purity_6, pca_purity_10, pca_purity_13)
+)
+
+# Display plots
+#pca_plots_all$cluster_plot
+#pca_plots_all$pca_plot
+#pca_plots_all$cluster_assignment_plot
+
+#pca_plots_hand$cluster_plot
+#pca_plots_hand$pca_plot
+#pca_plots_hand$cluster_assignment_plot
+```
+
+::: columns
+::: {.column width="60%"}
+\% of Explained variance
+
+```{r}
+selected_features <- feature_selection_hand(data)
+
+# Perform PCA
+pca_result <- prcomp(selected_features, center = TRUE, scale. = TRUE)
+
+# Scree plot
+library(factoextra)
+fviz_screeplot(pca_result, ncp = 30) + theme_minimal() +
+  ggtitle("Scree Plot")
+```
+:::
+
+::: {.column width="40%"}
+Purity
+
+```{r}
+# Display the purities in a table
+print(pca_purity_results)
+```
+:::
+:::
+
+## Clusters with 2 vs 3 Dimensions
+
+::: columns
+::: {.column width="50%"}
+2 dimensions
+
+```{r}
+pca_plots_2$cluster_plot
+```
+:::
+
+::: {.column width="50%"}
+3 dimensions
+
+```{r}
+pca_plots_3$cluster_plot
+```
+:::
+:::
+
+## K-means
+
+-   After preparing our data we can finally perform k-means.
+
+-   We tested how many clusters yielded the best results.
+
+```{r}
+# Choose a feature selection method
+selected_features_hand <- feature_selection_hand(data)
+
+km_result_2 <- run_pca_kmeans(selected_features_hand, 2, 2)
+km_result_4 <- run_pca_kmeans(selected_features_hand, 2, 4)
+km_result_6 <- run_pca_kmeans(selected_features_hand, 2, 6)
+km_result_8 <- run_pca_kmeans(selected_features_hand, 2, 8)
+
+km_plots_2 <- visualizations(data, selected_features_hand, km_result_2$pca_data, km_result_2$kmeans_result, color_palette)
+km_plots_4 <- visualizations(data, selected_features_hand, km_result_4$pca_data, km_result_4$kmeans_result, color_palette)
+km_plots_6 <- visualizations(data, selected_features_hand, km_result_6$pca_data, km_result_6$kmeans_result, color_palette)
+km_plots_8 <- visualizations(data, selected_features_hand, km_result_8$pca_data, km_result_8$kmeans_result, color_palette)
+
+km_purity_2 <- evaluate_cluster_purity(data, data$class_short, km_result_2$kmeans_result$cluster)
+km_purity_4 <- evaluate_cluster_purity(data, data$class_short, km_result_4$kmeans_result$cluster)
+km_purity_6 <- evaluate_cluster_purity(data, data$class_short, km_result_6$kmeans_result$cluster)
+km_purity_8 <- evaluate_cluster_purity(data, data$class_short, km_result_8$kmeans_result$cluster)
+
+# Create a data frame for the purities
+km_purity_results <- data.frame(
+  Method = c("2", "4", "6", "8"),
+  Purity = c(km_purity_2, km_purity_4, km_purity_6, km_purity_8)
+)
+```
+
+::: columns
+::: {.column width="60%"}
+Elbow Method
+
+```{r}
+selected_features <- feature_selection_hand(data)
+pca_result <- prcomp(selected_features, center = TRUE, scale. = TRUE)
+pca_data <- pca_result$x[, 1:2]
+
+# Elbow Method
+fviz_nbclust(pca_data, kmeans, method = "wss") +
+  #geom_vline(xintercept = 6, linetype = 2) +  # Adjust the xintercept based on actual elbow
+  labs(subtitle = "Elbow method")
+
+```
+:::
+
+::: {.column width="40%"}
+Purity
+
+```{r}
+# Display the purities in a table
+print(km_purity_results)
+```
+:::
+:::
+
+## Clusters by \# of clusters
+
+::: columns
+::: {.column width="40%"}
+2 clusters
+
+```{r}
+km_plots_2$cluster_assignment_plot
+```
+
+6 Clusters
+
+```{r}
+km_plots_6$cluster_assignment_plot
+```
+:::
+
+::: {.column width="40%"}
+4 clusters
+
+```{r}
+km_plots_4$cluster_assignment_plot
+```
+
+8 Clusters
+
+```{r}
+km_plots_8$cluster_assignment_plot
+```
+:::
+:::
+
+# Conclusions
+
+::: columns
+::: {.column width="40%"}
+-   Our results indicate that the mice protein expression data set exhibits clusters which largely correspond to the learning and non-learning behavior groups.
+
+-   Additionally, our results suggest that control mice in the learning condition exhibit similar protein expression independent of treatment with memantine.
+
+-   Down Syndrome mice in the learning condition exhibit distinct protein expression dependent upon treatment with memantine or saline.
+:::
+
+::: {.column width="60%"}
+```{r}
+# Choose a feature selection method
+selected_features_hand <- feature_selection_hand(data)
+
+km_result_2_6 <- run_pca_kmeans(selected_features_hand, 2, 6)
+#km_result_3_6 <- run_pca_kmeans(selected_features_hand, 3, 6)
+
+
+km_plots_2_6 <- visualizations(data, selected_features_hand, km_result_2_6$pca_data, km_result_2_6$kmeans_result, color_palette)
+#km_plots_3_6 <- visualizations(data, selected_features_hand, km_result_3_6$pca_data, km_result_3_6$kmeans_result, color_palette)
+
+#km_plots_2_6$cluster_plot
+km_plots_2_6$pca_plot
+#km_plots_2_6$cluster_assignment_plot
+
+#km_plots_3_6$cluster_plot
+#km_plots_3_6$pca_plot
+#km_plots_3_6$cluster_assignment_plot
+
+```
+:::
+:::

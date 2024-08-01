@@ -1,21 +1,22 @@
 <!DOCTYPE html>
 <html lang="en"><head>
-<script src="slides_files/libs/clipboard/clipboard.min.js"></script>
-<script src="slides_files/libs/quarto-html/tabby.min.js"></script>
-<script src="slides_files/libs/quarto-html/popper.min.js"></script>
-<script src="slides_files/libs/quarto-html/tippy.umd.min.js"></script>
-<link href="slides_files/libs/quarto-html/tippy.css" rel="stylesheet">
-<link href="slides_files/libs/quarto-html/light-border.css" rel="stylesheet">
-<link href="slides_files/libs/quarto-html/quarto-html.min.css" rel="stylesheet" data-mode="light">
-<link href="slides_files/libs/quarto-html/quarto-syntax-highlighting-dark.css" rel="stylesheet" id="quarto-text-highlighting-styles"><meta charset="utf-8">
+<script src="updatedslides2(1)_files/libs/clipboard/clipboard.min.js"></script>
+<script src="updatedslides2(1)_files/libs/quarto-html/tabby.min.js"></script>
+<script src="updatedslides2(1)_files/libs/quarto-html/popper.min.js"></script>
+<script src="updatedslides2(1)_files/libs/quarto-html/tippy.umd.min.js"></script>
+<link href="updatedslides2(1)_files/libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="updatedslides2(1)_files/libs/quarto-html/light-border.css" rel="stylesheet">
+<link href="updatedslides2(1)_files/libs/quarto-html/quarto-html.min.css" rel="stylesheet" data-mode="light">
+<link href="updatedslides2(1)_files/libs/quarto-html/quarto-syntax-highlighting-dark.css" rel="stylesheet" id="quarto-text-highlighting-styles"><meta charset="utf-8">
   <meta name="generator" content="quarto-1.3.353">
 
-  <title>slides</title>
+  <meta name="author" content="Jonathan Broada, Lindsay Guyette, Alondra Nunez, Chantal Ojurongbe">
+  <title>k-Means Clustering Application</title>
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, minimal-ui">
-  <link rel="stylesheet" href="slides_files/libs/revealjs/dist/reset.css">
-  <link rel="stylesheet" href="slides_files/libs/revealjs/dist/reveal.css">
+  <link rel="stylesheet" href="updatedslides2(1)_files/libs/revealjs/dist/reset.css">
+  <link rel="stylesheet" href="updatedslides2(1)_files/libs/revealjs/dist/reveal.css">
   <style>
     code{white-space: pre-wrap;}
     span.smallcaps{font-variant: small-caps;}
@@ -29,11 +30,12 @@
       vertical-align: middle;
     }
   </style>
-  <link rel="stylesheet" href="slides_files/libs/revealjs/dist/theme/quarto.css">
-  <link href="slides_files/libs/revealjs/plugin/quarto-line-highlight/line-highlight.css" rel="stylesheet">
-  <link href="slides_files/libs/revealjs/plugin/reveal-menu/menu.css" rel="stylesheet">
-  <link href="slides_files/libs/revealjs/plugin/reveal-menu/quarto-menu.css" rel="stylesheet">
-  <link href="slides_files/libs/revealjs/plugin/quarto-support/footer.css" rel="stylesheet">
+  <link rel="stylesheet" href="updatedslides2(1)_files/libs/revealjs/dist/theme/quarto.css">
+  <link rel="stylesheet" href="styles.css">
+  <link href="updatedslides2(1)_files/libs/revealjs/plugin/quarto-line-highlight/line-highlight.css" rel="stylesheet">
+  <link href="updatedslides2(1)_files/libs/revealjs/plugin/reveal-menu/menu.css" rel="stylesheet">
+  <link href="updatedslides2(1)_files/libs/revealjs/plugin/reveal-menu/quarto-menu.css" rel="stylesheet">
+  <link href="updatedslides2(1)_files/libs/revealjs/plugin/quarto-support/footer.css" rel="stylesheet">
   <style type="text/css">
 
   .callout {
@@ -324,87 +326,367 @@
     <div class="slides">
 
 <section id="title-slide" class="quarto-title-block center">
-  <h1 class="title">slides</h1>
+  <h1 class="title">k-Means Clustering Application</h1>
 
 <div class="quarto-title-authors">
+<div class="quarto-title-author">
+<div class="quarto-title-author-name">
+Jonathan Broada, Lindsay Guyette, Alondra Nunez, Chantal Ojurongbe 
+</div>
+</div>
 </div>
 
 </section>
-<section id="introduction" class="slide level2">
-<h2>Introduction</h2>
-<p><strong>Clustering</strong> is the process of grouping similar objects or data points together based on their characteristics or attributes. Clustering aims to identify inherent clusters in a dataset where the data points within each cluster exhibit a strong resemblance, yet the clusters themselves are clearly dissimilar from one another.</p>
+<section id="introduction-k-means-clustering" class="slide level2">
+<h2>Introduction: k-Means Clustering</h2>
+<ul>
+<li><p>The goal is to create groupings, or clusters, where objects within the same cluster are more alike to each other than to objects in other clusters.</p></li>
+<li><p>Unsupervised Learning used in data mining and machine learning to categorize a collection of items based on their similarity.</p></li>
+<li><p><strong>Clustering</strong>: process of grouping similar objects or data points together based on their characteristics or attributes</p></li>
+</ul>
 </section>
 <section id="k-means-clustering" class="slide level2">
-<h2>K-means Clustering</h2>
-<p>The term “k-Means Clustering” refers to a method used in data analysis and machine learning to partition a set of data points into k distinct clusters.The method operates in an iterative manner, assigning each data point to one of k clusters based on the given attributes. The main concept is to establish k centroids, representing each cluster, and allocate each data point to the centroid that is closest to it. This allocation is done in a way that minimizes the total squared distances between the data points and their respective centroids.</p>
-<p>K-means clustering can be applied to a wide variety of data, including bioinformatics, sociology, and in economics.</p>
+<h2>k-Means Clustering</h2>
+<ol type="1">
+<li>Establish k centroids, representing each cluster</li>
+<li>Assigns each data point to one of the k clusters</li>
+<li>Allocates each data point to the centroid that is closest to it. This allocation is done in a way that minimizes the total squared distances between the data points and their respective centroids</li>
+</ol>
 </section>
-<section id="bioinformatics" class="slide level2">
-<h2>Bioinformatics</h2>
-<p>K-means clustering is one type of data analysis technique that can be used to group differential gene/protein expression according to specific phenotypes, or physical presentations of biological traits. For instance, this can be used to assign cells to specific types based on single-cell RNA sequencing data, which measures the total gene expression for thousands of genes within a single cell. Yang et al., 2017 utilized k-means clustering to analyze the scRNA sequencing data of hundreds of cell types to develop a novel algorithm that identifies the optimal sets of genes to cluster single cells into distinct biological groups.</p>
+<section>
+<section id="where-is-k-means-useful" class="title-slide slide level1 center">
+<h1>Where is k-Means useful?</h1>
+<div class="panel-tabset">
+<ul id="tabset-1" class="panel-tabset-tabby"><li><a data-tabby-default="" href="#tabset-1-1">Bioinformatics</a></li><li><a href="#tabset-1-2">Image 1</a></li><li><a href="#tabset-1-3">Sociology</a></li><li><a href="#tabset-1-4">Image 2</a></li><li><a href="#tabset-1-5">Economics</a></li><li><a href="#tabset-1-6">Image 3</a></li></ul>
+<div class="tab-content">
+<div id="tabset-1-1">
+<ul>
+<li><p>Can be used to group differential gene/protein expression according to specific phenotype, or physical presentations of biological traits.</p></li>
+<li><p>Can be used to assign cells to specific types based on single-cell RNA sequencing data</p></li>
+<li><p>Yang et al., 2017 utilized k-means clustering to analyze the scRNA sequencing data of hundreds of cell types to develop a novel algorithm that identifies the optimal sets of genes to cluster single cells into distinct groups</p></li>
+</ul>
+</div>
+<div id="tabset-1-2">
+<div class="quarto-figure quarto-figure-center">
+<figure>
+<p><img data-src="bloodcells.JPG"></p>
+<figcaption>Visualization by Nameirakpam Dhanachandra et al</figcaption>
+</figure>
+</div>
+</div>
+<div id="tabset-1-3">
+<ul>
+<li><p>Can be applied to population-level data to determine significant groupings related to <strong>socioeconomic outcomes</strong></p></li>
+<li><p>Factors related to socioeconomic mobility were evaluated in a 2023 study using longitudinal data from the Opportunity Atlas project</p></li>
+<li><p>Outcome: revealed differences in socioeconomic mobility related to:</p>
+<ul>
+<li>Geographic location</li>
+<li>Income</li>
+<li>Neighborhood factors: poverty rate and incarceration rates</li>
+</ul></li>
+</ul>
+</div>
+<div id="tabset-1-4">
+<div class="quarto-figure quarto-figure-center">
+<figure>
+<p><img data-src="mobility.jpg"></p>
+<figcaption>Visualization by Sarah Zelasky et al.</figcaption>
+</figure>
+</div>
+</div>
+<div id="tabset-1-5">
+<ul>
+<li><p>In 2017, food market researchers used k-means clustering to segment the organic food market in Lebanon</p></li>
+<li><p>By starting with 13 variables, they applied Principal Component Analysis (PCA) to reduce the number while retaining the explanatory power</p></li>
+<li><p>The k-means algorithm was then employed, resulting in four distinct clusters of consumer opinions on organic food</p></li>
+<li><p>Outcome: Improvements in policy and initiatives in the organic food market in Lebanon</p></li>
+</ul>
+</div>
+<div id="tabset-1-6">
+<div class="quarto-figure quarto-figure-center">
+<figure>
+<p><img data-src="lebanon.JPG"></p>
+<figcaption>Visualization by Malak Tleis et al.</figcaption>
+</figure>
+</div>
+</div>
+</div>
+</div>
 </section>
-<section id="sociology" class="slide level2">
-<h2>Sociology</h2>
-<p>Additionally, k-means clustering can be applied to population-level data to determine significant groupings related to <strong>socioeconomic outcomes.</strong> The factors related to socioeconomic mobility were evaluated in a 2023 study using longitudinal data from the Opportunity Atlas project. Here, k-means clustering revealed differences in socioeconomic mobility related to geographic location, income, and neighborhood factors such as poverty rate and incarceration rates <span class="citation" data-cites="zelasky_identifying_2023">[@zelasky_identifying_2023]</span>.</p>
+<section id="challenges-and-improvements-of-k-means" class="slide level2">
+<h2>Challenges and Improvements of k-Means</h2>
+<p>The k-means algorithm was originally proposed in in the 1950s and it is widely used due to its computational simplicity</p>
+<div class="columns">
+<div class="column" style="width:50%;">
+<h3 class="scrollable-panel" id="challenges">Challenges</h3>
+<ul>
+<li>Preselecting number of clusters</li>
+<li>Minimal local convergence because of the random initial centroids</li>
+<li>Sensitivity to outliers</li>
+</ul>
+</div><div class="column" style="width:50%;">
+<h3 class="scrollable-panel" id="improvements">Improvements</h3>
+<ul>
+<li>Avoiding poor clustering due to random initialization</li>
+<li>Researchers propose new method by addressing application and detector specific factors
+<ul>
+<li>KFC method: offers parameter free solution with linear time complexity</li>
+</ul></li>
+<li>KMOR (k-means with outlier removal) algorithm broadens the classic k-means algorithm by proposing an additional cluster for outliers</li>
+</ul>
+</div>
+</div>
+</section></section>
+<section>
+<section id="methods" class="title-slide slide level1 center">
+<h1>Methods</h1>
+<p>k-Means can be analytically defined as an optimization problem. The objective is to divide a collection of n data points into k clusters in a manner that minimizes the sum of squares inside each cluster (WCSS). The goal of k-means is to minimize the total sum of squared distances between each data point and its corresponding cluster centroid.</p>
+<p>The <strong>within-cluster sum of squares (WCSS)</strong> represents this.</p>
 </section>
-<section id="economics" class="slide level2">
-<h2>Economics</h2>
-<p>In 2017, food market researchers used k-means clustering to segment the organic food market in Lebanon. By starting with 13 variables, they applied Principal Component Analysis (PCA) to reduce the number while retaining the explanatory power. The k-means algorithm was then employed, resulting in four distinct clusters of consumer opinions on organic food. Each cluster was labeled appropriately to facilitate understanding and application in research. The outcomes present relevant groups that can guide policy and initiatives in the organic food market in Lebanon <span class="citation" data-cites="tleis_segmenting_2017">[@tleis_segmenting_2017]</span>.</p>
-</section>
-<section id="modifications-of-k-means" class="slide level2">
-<h2>Modifications of K-means</h2>
-<p>Variations and enhancements of the k-means clustering algorithm have been thoroughly researched. The k-means algorithm was originally proposed in in the 1950s and due to its computational simplicity, it has many challenges (like having to select the number of clusters, or minimal local convergence because of the random initial centroids) many variants of k-means have been created to tackle those challenges and broaden the applicability of k-means <span class="citation" data-cites="ikotun_k-means_2023">[@ikotun_k-means_2023]</span>.</p>
-</section>
-<section id="modification-of-k-means" class="slide level2">
-<h2>Modification of K-means</h2>
-<p>Variations and enhancements of the k-means clustering algorithm have been thoroughly researched. The k-means algorithm was originally proposed in in the 1950s and due to its computational simplicity, it has many challenges (like having to select the number of clusters, or minimal local convergence because of the random initial centroids) many variants of k-means have been created to tackle those challenges and broaden the applicability of k-means <span class="citation" data-cites="ikotun_k-means_2023">[@ikotun_k-means_2023]</span>.</p>
-</section>
-<section id="modification-of-k-means-1" class="slide level2">
-<h2>Modification of k-means</h2>
-<p>Yang et al propose a new method on selecting the optimal k value by addressing both application-specific and detector-specific factors. The authors proposed the KFC method which offers a parameter free solution with linear time complexity. Yang et al made the KFC method available at www.outliernet.com to an external site to facilitate reproducibility and provide opportunities for others to expand their research. Their research showed that the KFC method outperforms traditional methods and is much more versatile making it useful across many fields <span class="citation" data-cites="yang_outlier_2023">[@yang_outlier_2023]</span>.</p>
-</section>
-<section id="methods" class="slide level2">
-<h2>Methods</h2>
-<p>The k-means clustering algorithm can be analytically defined as an optimization problem. The objective is to divide a collection of n data points into k clusters in a manner that minimizes the sum of squares inside each cluster (WCSS). The goal of k-means is to minimize the total sum of squared distances between each data point and its corresponding cluster centroid. The <strong>within-cluster sum of squares (WCSS)</strong> represents this.</p>
-</section>
-<section id="methods-1" class="slide level2 smaller">
+<section id="methods-1" class="slide level2">
 <h2>Methods</h2>
 <p><span class="math display">\[\text{WCSS} = \sum_{j=1}^{k}\sum_{xi\in Cj}^{} \left\| x_{i} - \mu_{j} \right\|^2\]</span></p>
-<p>where: C<sub>j</sub> is the set of data points assigned to cluster j, x<sub>i</sub> is a data point, μ<sub>j​</sub> is the centroid of cluster j, ∥x<sub>i</sub>−μ<sub>j</sub>∥ is the Euclidean distance between data point x<sub>i</sub>​ and centroid μ<sub>j</sub>​. Mathematical representation of the algorithm. Algorithm Steps in Mathematical Terms Initialization Randomly choose k initial centroids μ<sub>1</sub>,μ<sub>2</sub>,…,μ<sub>k​</sub> from the dataset {x<sub>1</sub>,x<sub>2</sub>,…,x<sub>n</sub>}. Assignment Step Assign each data point x<sub>i​</sub> to the nearest centroid μ<sub>j</sub>​. This can be mathematically expressed as: C<sub>j</sub> = {x<sub>i</sub> : ∥x<sub>i</sub>−μ<sub>j</sub>∥2 ≤ ∥x<sub>i</sub>−μ<sub>l</sub>∥2 for all l, 1 ≤ l ≤ k} Here, C<sub>j​</sub> denotes the set of points assigned to centroid μ<sub>j</sub>​ <span class="citation" data-cites="hastie_elements_2009">[@hastie_elements_2009]</span>.</p>
-</section>
-<section id="methods-2" class="slide level2 smaller">
-<h2>Methods</h2>
-<p>The k-means clustering algorithm is an iterative procedure that involves two steps: allocating data points to clusters and updating the cluster centroids. Below is a comprehensive breakdown of the sequential steps in the algorithm:</p>
 <ul>
-<li><p><strong>Initialization of centroids</strong>. Random initialization selects 𝑘 initial centroids at random from the dataset. Every centroid corresponds to the original center of a cluster. The algorithm being referred to is called “k-means++” is a refined technique that distributes the initial centroids in order to enhance the performance of the algorithm. The initial centroid is selected at random, whereas the following centroids are chosen according to a probability that is directly proportionate to their distance from the nearest existing centroid.</p></li>
-<li><p><strong>Assignment of data points to nearest centroids.</strong> Compute the distance from each data point to every centroid. Popular distance measurements include Euclidean distance, Manhattan distance, and cosine similarity. Allocate each data point to the cluster that has the closest centroid to it. This results in the formation of 𝑘clusters, where each data point is assigned to a single cluster.</p></li>
+<li><p>Cj​ is the set of data points assigned to cluster j</p></li>
+<li><p>xi is a data point</p></li>
+<li><p>μj​ is the centroid of cluster j</p></li>
+<li><p>∥xi−μj∥ is the Euclidean distance between data point xi​ and centroid μj</p></li>
 </ul>
 </section>
-<section id="methods-3" class="slide level2 smaller">
-<h2>Methods</h2>
+<section id="methods-algorithm-steps-in-mathematical-terms" class="slide level2">
+<h2>Methods: Algorithm Steps in Mathematical Terms</h2>
 <ul>
-<li><p><strong>Update of centroids.</strong> Determine the updated centroid of each cluster by computing the average of all data points assigned to that cluster. The updated centroid is calculated as the average position of the data points within the cluster. This update step recalibrates the position of the centroids to more accurately reflect the clusters produced in the assignment stage.</p></li>
-<li><p><strong>Iteration until convergence.</strong> Iterate the assignment and update processes until the centroids exhibit minimal variation between iterations. Convergence is usually assessed by verifying if the positions of the centroids have reached a stable state within a predetermined tolerance threshold. Alternatively, the process can be halted after reaching a predetermined number of iterations if convergence is not attained prior to that.</p></li>
+<li>Initialization: Randomly choose k initial centroids μ<sub>1</sub>,μ<sub>2</sub>,…,μ<sub>k​</sub> from the dataset {x<sub>1</sub>,x<sub>2</sub>,…,x<sub>n</sub>}</li>
+<li>Assignment Step:
+<ul>
+<li>Assign each data point x<sub>i​</sub> to the nearest centroid μ<sub>j</sub>​</li>
+<li>Mathematically expressed as: <span class="math display">\[C_j = \left\{ x_i \mid \| x_i - \mu_j \|^2 \leq \| x_i - \mu_l \|^2 \text{ for all } l, 1 \leq l \leq k \right\}\]</span></li>
+</ul></li>
+<li>Here, C<sub>j​</sub> denotes the set of points assigned to centroid μ<sub>j</sub>​</li>
 </ul>
 </section>
-<section id="methods-4" class="slide level2 smaller">
+<section id="methods-2" class="slide level2">
 <h2>Methods</h2>
-<p>After importing the dataset, the expression for 77 proteins data are scaled and analyzed using Principle Component Analysis to reduce the number of dimensions. Then, the optimal number of clusters is determined using the elbow method, silhouette analysis, and gap statistic.The data are then analyzed using the k-means algorithm with the default euclidean distance metric. Differences are then considered using a contingency table and heat map to identify similar and dissimilar groups. These cluster assignments are then plotted against class to visually identify cluster characteristics.</p>
+<p>The k-means algorithm is an iterative procedure that involves 2 steps:</p>
+<ul>
+<li>allocating data points to clusters</li>
+<li>updating the cluster centroids</li>
+</ul>
+<div class="panel-tabset">
+<ul id="tabset-2" class="panel-tabset-tabby"><li><a data-tabby-default="" href="#tabset-2-1"><strong>Initialization of centroids</strong></a></li><li><a href="#tabset-2-2"><strong>Assignment of data points to nearest centroids</strong></a></li><li><a href="#tabset-2-3"><strong>Update of centroids</strong></a></li><li><a href="#tabset-2-4"><strong>Iteration until convergence.</strong></a></li></ul>
+<div class="tab-content">
+<div id="tabset-2-1">
+<p>Random initialization selects 𝑘 initial centroids at random from the dataset. Every centroid corresponds to the original center of a cluster. The algorithm being referred to is called “k-means++” is a refined technique that distributes the initial centroids in order to enhance the performance of the algorithm. The initial centroid is selected at random, whereas the following centroids are chosen according to a probability that is directly proportionate to their distance from the nearest existing centroid.</p>
+</div>
+<div id="tabset-2-2">
+<p>Compute the distance from each data point to every centroid. Popular distance measurements include Euclidean distance, Manhattan distance, and cosine similarity. Allocate each data point to the cluster that has the closest centroid to it. This results in the formation of 𝑘clusters, where each data point is assigned to a single cluster.</p>
+</div>
+<div id="tabset-2-3">
+<p>Determine the updated centroid of each cluster by computing the average of all data points assigned to that cluster. The updated centroid is calculated as the average position of the data points within the cluster. This update step recalibrates the position of the centroids to more accurately reflect the clusters produced in the assignment stage.</p>
+</div>
+<div id="tabset-2-4">
+<p>Iterate the assignment and update processes until the centroids exhibit minimal variation between iterations. Convergence is usually assessed by verifying if the positions of the centroids have reached a stable state within a predetermined tolerance threshold. Alternatively, the process can be halted after reaching a predetermined number of iterations if convergence is not attained prior to that.</p>
+</div>
+</div>
+</div>
+</section></section>
+<section id="data-analysis" class="title-slide slide level1 center">
+<h1>Data Analysis</h1>
+
 </section>
-<section id="data-description" class="slide level2">
-<h2>Data Description</h2>
-<p>The data are sourced from a 2015 paper which evaluates the effect on protein expression of the Alzheimer’s drug memantine in rescuing learning in Ts65Dn trisomic mice relative to control mice. Ts65Dn mice are genetically modified to be trisomic for 2/3 of the genes orthologous to human chromosome 21 (Hsa21), making them a suitable model organism to experimentally study Down’s Syndrome (DS) (jax citation).</p>
+
+<section>
+<section id="data-description" class="title-slide slide level1 center">
+<h1>Data Description</h1>
+<ul>
+<li><p>The data is sourced from a 2015 paper which evaluates the effect on protein expression of the Alzheimer’s drug memantine in rescuing learning in Ts65Dn trisomic mice relative to control mice.</p></li>
+<li><p>Ts65Dn mice are genetically modified to be trisomic for 2/3 of the genes orthologous to human chromosome 21 (Hsa21), making them a suitable model organism to experimentally study Down’s Syndrome (DS).</p></li>
+<li><p>It is suspected that memantine can be used to treat learning deficits in DS, and this rescue effect has been previously observed in the Ts65Dn model.</p></li>
+<li><p>This study evaluates the effect of these different factors on the expression of 77 different proteins involved in Alzheimer’s, neuronal receptors, Hsa21 genes, and homeostatic genes.</p></li>
+<li><p>It is expected that Ts65Dn mice treated with memantine in the learning condition will exhibit similar patterns of protein expression relative to the untreated control model in the learning condition.</p></li>
+</ul>
 </section>
 <section id="data-description-1" class="slide level2">
 <h2>Data Description</h2>
-<p>It is suspected that memantine can be used to treat learning deficits in DS, and this rescue effect has been previously observed in the Ts65Dn model. This study evaluates the effect of these different factors on the expression of 77 different proteins involved in Alzheimer’s, neuronal receptors, Hsa21 genes, and homeostatic genes. Therefore, it is expected that Ts65Dn mice treated with memantine in the learning condition will exhibit similar patterns of protein expression relative to the untreated control model in the learning condition. Protein expression data provided are normalized to total protein expression <span class="citation" data-cites="higuera_self-organizing_2015">[@higuera_self-organizing_2015]</span>.</p>
+<ul>
+<li><p>500 mice</p></li>
+<li><p>3 categories (8 total combinations)</p>
+<ul>
+<li>Genotype</li>
+<li>Behavior</li>
+<li>Treatment</li>
+</ul></li>
+<li><p>77 numerical values of protein expressions</p></li>
+</ul>
 </section>
-<section id="data-analysis" class="slide level2">
-<h2>Data Analysis</h2>
+<section id="feature-selection" class="slide level2">
+<h2>Feature Selection</h2>
+<ul>
+<li><p>Too many variables (77), many of which are expected to be noise/random</p></li>
+<li><p>We tested 4 different feature selection methods</p></li>
+<li><p>Hand selecting the measures by relevance to the categories yielded the best results.</p></li>
+</ul>
+<ul>
+<li>Purity:</li>
+</ul>
+<div class="cell">
+<div class="cell-output cell-output-stdout">
+<pre><code>         Method    Purity
+1  All Features 0.3333333
+2      Variance 0.3278986
+3         Lasso 0.3315217
+4 Hand Selected 0.5398551</code></pre>
+</div>
+</div>
 </section>
-<section id="conclusions" class="slide level2">
-<h2>Conclusions</h2>
-<p>Our results indicate that the mice protein expression data set exhibits clusters which largely correspond to the learning and non-learning behavior groups.Additionally, our results suggest that control mice in the learning condition exhibit similar protein expression independent of treatment with memantine. DS-model mice in the learning condition exhibit distinct protein expression dependent upon treatment with memantine or saline.</p>
+<section id="clusters-by-feature-selection-method" class="slide level2">
+<h2>Clusters by feature selection method</h2>
+<div class="columns">
+<div class="column" style="width:50%;">
+<p>All features</p>
+<div class="cell">
+<div class="cell-output-display">
+<p><img data-src="updatedslides2-1-_files/figure-revealjs/unnamed-chunk-5-1.png" width="960"></p>
+</div>
+</div>
+</div><div class="column" style="width:50%;">
+<p>Hand-selected features</p>
+<div class="cell">
+<div class="cell-output-display">
+<p><img data-src="updatedslides2-1-_files/figure-revealjs/unnamed-chunk-6-1.png" width="960"></p>
+</div>
+</div>
+</div>
+</div>
+</section>
+<section id="pca" class="slide level2">
+<h2>PCA</h2>
+<ul>
+<li><p>We can improve the relevance of the dimensions even further by using PCA.</p></li>
+<li><p>We tested how many principal components were ideal.</p></li>
+<li><p>3 dimensions yield the best clusters but 2 dimensions are easier to interpret in a 2D graph</p></li>
+</ul>
+<div class="columns">
+<div class="column" style="width:60%;">
+<p>% of Explained variance</p>
+<div class="cell">
+<div class="cell-output-display">
+<p><img data-src="updatedslides2-1-_files/figure-revealjs/unnamed-chunk-8-1.png" width="960"></p>
+</div>
+</div>
+</div><div class="column" style="width:40%;">
+<p>Purity</p>
+<div class="cell">
+<div class="cell-output cell-output-stdout">
+<pre><code>  Method    Purity
+1      2 0.5398551
+2      3 0.5742754
+3      4 0.5326087
+4      6 0.5434783
+5     10 0.5434783
+6     13 0.5452899</code></pre>
+</div>
+</div>
+</div>
+</div>
+</section>
+<section id="clusters-with-2-vs-3-dimensions" class="slide level2">
+<h2>Clusters with 2 vs 3 Dimensions</h2>
+<div class="columns">
+<div class="column" style="width:50%;">
+<p>2 dimensions</p>
+<div class="cell">
+<div class="cell-output-display">
+<p><img data-src="updatedslides2-1-_files/figure-revealjs/unnamed-chunk-10-1.png" width="960"></p>
+</div>
+</div>
+</div><div class="column" style="width:50%;">
+<p>3 dimensions</p>
+<div class="cell">
+<div class="cell-output-display">
+<p><img data-src="updatedslides2-1-_files/figure-revealjs/unnamed-chunk-11-1.png" width="960"></p>
+</div>
+</div>
+</div>
+</div>
+</section>
+<section id="k-means" class="slide level2">
+<h2>K-means</h2>
+<ul>
+<li><p>After preparing our data we can finally perform k-means.</p></li>
+<li><p>We tested how many clusters yielded the best results.</p></li>
+</ul>
+<div class="columns">
+<div class="column" style="width:60%;">
+<p>Elbow Method</p>
+<div class="cell">
+<div class="cell-output-display">
+<p><img data-src="updatedslides2-1-_files/figure-revealjs/unnamed-chunk-13-1.png" width="960"></p>
+</div>
+</div>
+</div><div class="column" style="width:40%;">
+<p>Purity</p>
+<div class="cell">
+<div class="cell-output cell-output-stdout">
+<pre><code>  Method    Purity
+1      2 0.2989130
+2      4 0.4528986
+3      6 0.5398551
+4      8 0.5398551</code></pre>
+</div>
+</div>
+</div>
+</div>
+</section>
+<section id="clusters-by-of-clusters" class="slide level2">
+<h2>Clusters by # of clusters</h2>
+<div class="columns">
+<div class="column" style="width:40%;">
+<p>2 clusters</p>
+<div class="cell">
+<div class="cell-output-display">
+<p><img data-src="updatedslides2-1-_files/figure-revealjs/unnamed-chunk-15-1.png" width="960"></p>
+</div>
+</div>
+<p>6 Clusters</p>
+<div class="cell">
+<div class="cell-output-display">
+<p><img data-src="updatedslides2-1-_files/figure-revealjs/unnamed-chunk-16-1.png" width="960"></p>
+</div>
+</div>
+</div><div class="column" style="width:40%;">
+<p>4 clusters</p>
+<div class="cell">
+<div class="cell-output-display">
+<p><img data-src="updatedslides2-1-_files/figure-revealjs/unnamed-chunk-17-1.png" width="960"></p>
+</div>
+</div>
+<p>8 Clusters</p>
+<div class="cell">
+<div class="cell-output-display">
+<p><img data-src="updatedslides2-1-_files/figure-revealjs/unnamed-chunk-18-1.png" width="960"></p>
+</div>
+</div>
+</div>
+</div>
+</section></section>
+<section id="conclusions" class="title-slide slide level1 center">
+<h1>Conclusions</h1>
+<div class="columns">
+<div class="column" style="width:40%;">
+<ul>
+<li><p>Our results indicate that the mice protein expression data set exhibits clusters which largely correspond to the learning and non-learning behavior groups.</p></li>
+<li><p>Additionally, our results suggest that control mice in the learning condition exhibit similar protein expression independent of treatment with memantine.</p></li>
+<li><p>Down Syndrome mice in the learning condition exhibit distinct protein expression dependent upon treatment with memantine or saline.</p></li>
+</ul>
+</div><div class="column" style="width:60%;">
+<div class="cell">
+<div class="cell-output-display">
+<p><img data-src="updatedslides2-1-_files/figure-revealjs/unnamed-chunk-19-1.png" width="960"></p>
+</div>
+</div>
+</div>
+</div>
 <div class="footer footer-default">
 
 </div>
@@ -413,19 +695,19 @@
   </div>
 
   <script>window.backupDefine = window.define; window.define = undefined;</script>
-  <script src="slides_files/libs/revealjs/dist/reveal.js"></script>
+  <script src="updatedslides2(1)_files/libs/revealjs/dist/reveal.js"></script>
   <!-- reveal.js plugins -->
-  <script src="slides_files/libs/revealjs/plugin/quarto-line-highlight/line-highlight.js"></script>
-  <script src="slides_files/libs/revealjs/plugin/pdf-export/pdfexport.js"></script>
-  <script src="slides_files/libs/revealjs/plugin/reveal-menu/menu.js"></script>
-  <script src="slides_files/libs/revealjs/plugin/reveal-menu/quarto-menu.js"></script>
-  <script src="slides_files/libs/revealjs/plugin/quarto-support/support.js"></script>
+  <script src="updatedslides2(1)_files/libs/revealjs/plugin/quarto-line-highlight/line-highlight.js"></script>
+  <script src="updatedslides2(1)_files/libs/revealjs/plugin/pdf-export/pdfexport.js"></script>
+  <script src="updatedslides2(1)_files/libs/revealjs/plugin/reveal-menu/menu.js"></script>
+  <script src="updatedslides2(1)_files/libs/revealjs/plugin/reveal-menu/quarto-menu.js"></script>
+  <script src="updatedslides2(1)_files/libs/revealjs/plugin/quarto-support/support.js"></script>
   
 
-  <script src="slides_files/libs/revealjs/plugin/notes/notes.js"></script>
-  <script src="slides_files/libs/revealjs/plugin/search/search.js"></script>
-  <script src="slides_files/libs/revealjs/plugin/zoom/zoom.js"></script>
-  <script src="slides_files/libs/revealjs/plugin/math/math.js"></script>
+  <script src="updatedslides2(1)_files/libs/revealjs/plugin/notes/notes.js"></script>
+  <script src="updatedslides2(1)_files/libs/revealjs/plugin/search/search.js"></script>
+  <script src="updatedslides2(1)_files/libs/revealjs/plugin/zoom/zoom.js"></script>
+  <script src="updatedslides2(1)_files/libs/revealjs/plugin/math/math.js"></script>
   <script>window.define = window.backupDefine; window.backupDefine = undefined;</script>
 
   <script>
@@ -461,7 +743,7 @@
         progress: true,
 
         // Display the page number of the current slide
-        slideNumber: false,
+        slideNumber: 'c/t',
 
         // 'all', 'print', or 'speaker'
         showSlideNumber: 'all',
@@ -586,9 +868,9 @@
         // The "normal" size of the presentation, aspect ratio will be preserved
         // when the presentation is scaled to fit different resolutions. Can be
         // specified using percentage units.
-        width: 1050,
+        width: 1600,
 
-        height: 700,
+        height: 900,
 
         // Factor of the display size that should remain empty around the content
         margin: 0.1,
@@ -620,6 +902,44 @@
         ]
       });
     </script>
+    
+    <script>
+      // htmlwidgets need to know to resize themselves when slides are shown/hidden.
+      // Fire the "slideenter" event (handled by htmlwidgets.js) when the current
+      // slide changes (different for each slide format).
+      (function () {
+        // dispatch for htmlwidgets
+        function fireSlideEnter() {
+          const event = window.document.createEvent("Event");
+          event.initEvent("slideenter", true, true);
+          window.document.dispatchEvent(event);
+        }
+
+        function fireSlideChanged(previousSlide, currentSlide) {
+          fireSlideEnter();
+
+          // dispatch for shiny
+          if (window.jQuery) {
+            if (previousSlide) {
+              window.jQuery(previousSlide).trigger("hidden");
+            }
+            if (currentSlide) {
+              window.jQuery(currentSlide).trigger("shown");
+            }
+          }
+        }
+
+        // hookup for slidy
+        if (window.w3c_slidy) {
+          window.w3c_slidy.add_observer(function (slide_num) {
+            // slide_num starts at position 1
+            fireSlideChanged(null, w3c_slidy.slides[slide_num - 1]);
+          });
+        }
+
+      })();
+    </script>
+
     <script id="quarto-html-after-body" type="application/javascript">
     window.document.addEventListener("DOMContentLoaded", function (event) {
       const toggleBodyColorMode = (bsSheetEl) => {
