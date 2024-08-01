@@ -1,6 +1,6 @@
 ---
 title: "k-Means Clustering Application"
-author: "Jonathan Broada, Lindsay Guyette, Alondra Nunez, Chantal Ojurongbe"
+author: "Jonathan Boada, Lindsay Guyette, Alondra Nunez, Chantal Ojurongbe"
 format:
   revealjs:
     slide-number: c/t
