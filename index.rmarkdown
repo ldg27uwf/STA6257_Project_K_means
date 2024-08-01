@@ -1,0 +1,1024 @@
+---
+title: "K Means Application: Data Science Capstone"
+author: "Lindsay Guyette, Alondra Nunez, Chantal Ojurongbe, Jonathan Broada"
+date: '`r Sys.Date()`'
+format: 
+  html:
+    code-fold: true
+course: STA 6257 - Advanced Statistical Modeling
+bibliography: references.bib # file contains bibtex for references
+#always_allow_html: true # this allows to get PDF with HTML features
+self-contained: true
+execute: 
+  warning: false
+  message: false
+editor: 
+  markdown: 
+    wrap: 72
+---
+
+
+[Presentation](slides.html)
+
+## Introduction
+
+The objectives of this review are threefold: to provide a comprehensive
+overview of K-means clustering, to discuss its methodology,
+applications, and advancements, and to identify the challenges and
+future research directions. In this literature review, we aim to give an
+in-depth analysis of K-means clustering, examine its various aspects and
+practical uses, and highlight the current challenges along with
+potential areas for future research.
+
+Clustering is the process of grouping similar objects or data points
+together based on their characteristics or attributes. Clustering is an
+unsupervised learning technique employed in data mining and machine
+learning to categorize a collection of items based on their similarity.
+The goal is to create groupings, or clusters, where objects within the
+same cluster are more alike to each other than to objects in other
+clusters. Clustering aims to identify inherent clusters in a dataset
+where the data points within each cluster exhibit a strong resemblance,
+yet the clusters themselves are clearly dissimilar from one another.
+
+The similarity of data points is commonly assessed using a distance
+metric, such as Euclidean distance, Manhattan distance, or cosine
+similarity. The choice of metric depends on the characteristics of the
+data and the specific clustering technique employed [@Berkhin2006].
+
+The term "k-Means Clustering" refers to a method used in data analysis
+and machine learning to partition a set of data points into k distinct
+clusters. k-Means clustering is a highly popular and extensively
+utilized approach for clustering. The objective is to divide a dataset
+into k clusters, where k is a predetermined number of clusters. The
+method operates in an iterative manner, assigning each data point to one
+of k clusters based on the given attributes. The main concept is to
+establish k centroids, representing each cluster, and allocate each data
+point to the centroid that is closest to it. This allocation is done in
+a way that minimizes the total squared distances between the data points
+and their respective centroids.
+
+K-means clustering can be applied to a wide variety of data, including
+bioinformatics, sociology, and in food markets. 
+
+**Bioinformatics**
+refers to the usage of analytical techniques to interpret different
+types of biological data. These datasets can be large or small,
+containing information about genomic sequences, gene expression, and
+protein expression, among other biological characteristics. This
+information can then be used to draw conclusions about basic biological
+processes, disease states, and gene therapies, among other applications
+[@bayat_bioinformatics_2002]. K-means clustering is one type of data
+analysis technique that can be used to group differential gene/protein
+expression according to specific phenotypes, or physical presentations
+of biological traits. For instance, this can be used to assign cells to
+specific types based on single-cell RNA sequencing data, which measures
+the total gene expression for thousands of genes within a single cell.
+Yang et al., 2017 utilized k-means clustering to analyze the scRNA
+sequencing data of hundreds of cell types to develop a novel algorithm
+that identifies the optimal sets of genes to cluster single cells into
+distinct biological groups.
+
+Additionally, k-means clustering can be applied to population-level data
+to determine significant groupings related to **socioeconomic
+outcomes.** The factors related to socioeconomic mobility were evaluated
+in a 2023 study using longitudinal data from the Opportunity Atlas
+project. Here, k-means clustering revealed differences in socioeconomic
+mobility related to geographic location, income, and neighborhood
+factors such as poverty rate and incarceration rates
+[@zelasky_identifying_2023].
+
+In 2017, food market researchers used k-means clustering to segment the
+organic food market in Lebanon. By starting with 13 variables, they
+applied Principal Component Analysis (PCA) to reduce the number while
+retaining the explanatory power. The k-means algorithm was then
+employed, resulting in four distinct clusters of consumer opinions on
+organic food. Each cluster was labeled appropriately to facilitate
+understanding and application in research. The outcomes present relevant
+groups that can guide policy and initiatives in the organic food market
+in Lebanon [@tleis_segmenting_2017].
+
+Variations and enhancements of the k-means clustering algorithm have
+been thoroughly researched. The k-means algorithm was originally
+proposed in in the 1950s and due to its computational simplicity, it has
+many challenges (like having to select the number of clusters, or
+minimal local convergence because of the random initial centroids) many
+variants of k-means have been created to tackle those challenges and
+broaden the applicability of k-means [@ikotun_k-means_2023].
+
+One such issue is the selection of the number of clusters in k-means
+clustering. In a 2013 review, researcher Kodinariya explains how to
+estimate the number of clusters. Fields across the board use clustering
+so there is no one answer on how many clusters to use. Kodinariya
+explores six different ways on how to determine the best number of
+clusters. The six methods are: rule of thumb, elbow method, information
+criterion approach, information theoretic approach, Silhouette, and
+cross validation. Kodinariya explains how no size fits all and will
+depend on the context of the data. The elbow method is the oldest and
+most used method but information theoretic approach is more rigorous. It
+is best to use more than one method to estimate the best number of
+clusters [@kodinariya_review_2013].
+
+Yang et al propose a new method on selecting the optimal k value by
+addressing both application-specific and detector-specific factors. The
+authors proposed the KFC method which offers a parameter free solution
+with linear time complexity. Yang et al made the KFC method available at
+www.outliernet.com to an external site to facilitate reproducibility and
+provide opportunities for others to expand their research. Their
+research showed that the KFC method outperforms traditional methods and
+is much more versatile making it useful across many fields
+[@yang_outlier_2023].
+
+The article "K-means clustering with outlier removal" by Guojun Gan and
+Michael Kwok-Po Ng proposes to improve the k-means clustering algorithm
+by including outlier detection. The KMOR (k-means with outlier removal)
+algorithm broadens the classic k-means algorithm by proposing an
+additional cluster for outliers. The methodology comprises
+initialization, objective function optimization, iterative process
+updates, convergence, and parameter control. The KMOR algorithm was
+tested on synthetic and real datasets. It showed remarkable performance
+in overall clustering accuracy and outlier detection. Moreover, compared
+to other established algorithms such as ODC (Outlier Detection and
+clustering), k-means, and NEO-k-means algorithms, results have confirmed
+that KMOR algorithms not only outperformed them but also consistently
+cluster data and detect outliers with precision simultaneously. The KMOR
+algorithm's ability to seamlessly integrate clustering and outlier
+detection for both synthetic and real datasets showcased its dominance
+over current methods in terms of accuracy and efficiency.
+Futuristically, the goals are to investigate diverse ways to control
+outliers by refining parameter selection and broadening the algorithm
+for subspace clustering [@gan_k-means_2017].
+
+## Methods
+
+The k-means clustering algorithm can be analytically defined as an
+optimization problem. The objective is to divide a collection of n data
+points into k clusters in a manner that minimizes the sum of squares
+inside each cluster (WCSS). The process entails the following steps:
+Objective function (minimization of within-cluster variance). The goal
+of k-means is to minimize the total sum of squared distances between
+each data point and its corresponding cluster centroid. The
+**within-cluster sum of squares (WCSS)** represents this.
+
+$$\text{WCSS} = \sum_{j=1}^{k}\sum_{xi\in Cj}^{} \left\| x_{i} - \mu_{j} \right\|^2$$
+
+where: C~j~ is the set of data points assigned to cluster j, x~i~ is a
+data point, μ~j​~ is the centroid of cluster j, ∥x~i~−μ~j~∥ is the
+Euclidean distance between data point x~i~​ and centroid μ~j~​.
+Mathematical representation of the algorithm. Algorithm Steps in
+Mathematical Terms Initialization Randomly choose k initial centroids
+μ~1~,μ~2~,...,μ~k​~ from the dataset {x~1~,x~2~,...,x~n~}. Assignment
+Step Assign each data point x~i​~ to the nearest centroid μ~j~​. This can
+be mathematically expressed as: C~j~ = {x~i~ : ∥x~i~−μ~j~∥2 ≤
+∥x~i~−μ~l~∥2 for all l, 1 ≤ l ≤ k} Here, C~j​~ denotes the set of points
+assigned to centroid μ~j~​ [@hastie_elements_2009].
+
+The k-means clustering algorithm is an iterative procedure that involves
+two steps: allocating data points to clusters and updating the cluster
+centroids. Below is a comprehensive breakdown of the sequential steps in
+the algorithm:
+
+Initialization of centroids. Random initialization selects 𝑘 initial
+centroids at random from the dataset. Every centroid corresponds to the
+original center of a cluster. The algorithm being referred to is called
+"k-means++" is a refined technique that distributes the initial
+centroids in order to enhance the performance of the algorithm. The
+initial centroid is selected at random, whereas the following centroids
+are chosen according to a probability that is directly proportionate to
+their distance from the nearest existing centroid. Assignment of data
+points to nearest centroids. Compute the distance from each data point
+to every centroid. Popular distance measurements include Euclidean
+distance, Manhattan distance, and cosine similarity. Allocate each data
+point to the cluster that has the closest centroid to it. This results
+in the formation of 𝑘 clusters, where each data point is assigned to a
+single cluster. Update of centroids. Determine the updated centroid of
+each cluster by computing the average of all data points assigned to
+that cluster. The updated centroid is calculated as the average position
+of the data points within the cluster. This update step recalibrates the
+position of the centroids to more accurately reflect the clusters
+produced in the assignment stage. Iteration until convergence. Iterate
+the assignment and update processes until the centroids exhibit minimal
+variation between iterations. Convergence is usually assessed by
+verifying if the positions of the centroids have reached a stable state
+within a predetermined tolerance threshold. Alternatively, the process
+can be halted after reaching a predetermined number of iterations if
+convergence is not attained prior to that.
+
+These are key concepts of k-Means clustering that are noted. The
+centroid of a cluster represents the average position of all the points
+within that cluster. Every cluster in the k-means algorithm is
+associated with a centroid, which serves as a central point that
+represents the cluster. The desired number of clusters and centroids to
+be generated. Randomly choose k initial centroids μ1,μ2,...,μk​ from the
+dataset {x1,x2,...,xn}. Optimal cluster selection is of utmost
+importance and can be facilitated by techniques such as the elbow
+approach or silhouette analysis. The initial positions of the centroids,
+which can be selected randomly or using more sophisticated
+initialization methods such as k-means++ to enhance the speed of
+convergence and the quality of the solution. Assign each data point xi​
+to the nearest centroid μj​. This can be mathematically expressed as: Cj
+= {xi : ∥xi−μj∥2 ≤ ∥xi−μl∥2 for all l, 1 ≤ l ≤ k} Here, Cj​ denotes the
+set of points assigned to centroid μj​. Update the centroids by
+calculating the mean of all data points assigned to each cluster. The
+new centroid μj for cluster Cj​ is given by:
+
+![](images/ime1.PNG)
+
+where \|Cj\| is the number of data points in cluster Cj​.
+
+Inertia is referred to as within-cluster sum of squares, quantifying the
+effectiveness of cluster formation. Smaller inertia values suggest
+superior clustering performance.The k-means method continues to iterate
+until it reaches convergence, which is when the centroids stop changing
+considerably. This indicates that the clusters have become stable.
+Iterate the assignment and update stages until the centroids exhibit
+minimal changes, suggesting that the algorithm has reached convergence.
+Convergence is determined by setting a threshold ϵ to measure the change
+in centroids: \|\|μj(t+1)-μj(t)\|\|\<ϵ for all j, 1≤ j ≤ k where μj(t)
+and μj(t+1) are the centroids of cluster j at iterations t and t+1.
+Distance Metrics deals with the similarity of data points that is
+commonly assessed using a distance metric, such as Euclidean
+distance.The distance measure employed in k-means is the Euclidean
+distance, computed as:
+
+![](images/ime2.PNG)
+
+where: 𝑥𝑖𝑑 is the 𝑑-th dimension of data point 𝑥𝑖, 𝜇𝑗𝑑 is the 𝑑-th
+dimension of centroid 𝜇𝑗, 𝐷 is the number of dimensions of the data
+points (Xu, R., & Wunsch, D., 2005). The algorithm of k-Means clustering
+includes the following steps. First initialization; select 𝑘 initial
+centroids either randomly or using a more advanced technique like
+k-means++. Then assignment Step; allocate each data point to the closest
+centroid using the selected distance metric. Compute the updated
+centroids by averaging all the data points allocated to each centroid.
+Repeatedly perform the assignment and update processes until either the
+centroids do not change appreciably (convergence) or a maximum number of
+iterations is reached. The highest number of iterations that the
+algorithm will execute if it has not achieved convergence before
+reaching this limit. The algorithm reaches convergence when there is no
+significant change in the centroids between iterations. The displacement
+of centroids can be quantified by employing a predetermined threshold ϵ:
+
+![](images/ime3.PNG)
+
+On the other hand, the method can be terminated after reaching a
+predetermined number of iterations, regardless of whether the centroids
+have fully stabilized (Xu, R., & Wunsch, D., 2005). A criterion used to
+establish when convergence has been achieved. The algorithm terminates
+if the difference between the centroids is below the specified
+tolerance.
+
+After importing the dataset, the expression for 77 proteins data are
+scaled and analyzed using Principle Component Analysis to reduce the
+number of dimensions. Then, the optimal number of clusters is determined
+using the elbow method, silhouette analysis, and gap statistic.The data
+are then analyzed using the k-means algorithm with the default euclidean
+distance metric. Differences are then considered using a contingency
+table and heat map to identify similar and dissimilar groups. These
+cluster assignments are then plotted against class to visually identify
+cluster characteristics.
+
+## Data Analysis
+
+The data are sourced from a 2015 paper which evaluates the effect on
+protein expression of the Alzheimer's drug memantine in rescuing
+learning in Ts65Dn trisomic mice relative to control mice. Ts65Dn mice
+are genetically modified to be trisomic for 2/3 of the genes orthologous
+to human chromosome 21 (Hsa21), making them a suitable model organism to
+experimentally study Down's Syndrome (DS) (jax citation). It is
+suspected that memantine can be used to treat learning deficits in DS,
+and this rescue effect has been previously observed in the Ts65Dn model.
+This study evaluates the effect of these different factors on the
+expression of 77 different proteins involved in Alzheimer's, neuronal
+receptors, Hsa21 genes, and homeostatic genes. Therefore, it is expected
+that Ts65Dn mice treated with memantine in the learning condition will
+exhibit similar patterns of protein expression relative to the untreated
+control model in the learning condition. Protein expression data
+provided are normalized to total protein expression
+[@higuera_self-organizing_2015].
+
+
+---
+title: "kmeans"
+format: html
+editor: visual
+execute:
+  echo: false
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(warning = FALSE, message = FALSE)
+```
+
+
+### Load Necessary Libraries
+
+
+```{r, include =FALSE}
+#install.packages("NbClust")
+#install.packages("fpc")
+#install.packages("tidyverse")
+#install.packages("factoextra")
+#install.packages("cluster")
+#install.packages("pheatmap")
+#install.packages("plotly")
+#install.packages("caret")
+#install.packages("e1071")
+#install.packages("glmnet")
+
+library(fpc)
+library(NbClust)
+library(cluster)
+library(tidyverse)
+library(factoextra)
+library(pheatmap)
+library(dplyr)
+library(plotly)
+library(ggplot2)
+library(caret)
+library(e1071)
+library(glmnet)
+```
+
+
+### Load the data
+
+
+```{r}
+data <- read.csv("mice_new_jonathan.csv")
+    
+color_palette <- c(
+  "c-CS-s" = "#f54545",
+  "c-CS-m" = "#ff8787",
+  "c-SC-s" = "#ffa538",
+  "c-SC-m" = "#ffcf94",
+  "t-CS-s" = "#4f9ed4",
+  "t-CS-m" = "#133a62",
+  "t-SC-s" = "#6fbf67",
+  "t-SC-m" = "#1a501d"
+)
+```
+
+```{r}
+
+# Load necessary libraries
+library(dplyr)
+library(tidyr)
+library(knitr)
+library(kableExtra)
+
+
+# Select the first 6 columns and the last 6 columns
+selected_columns <- data %>%
+  select(1:6, (ncol(data)-5):ncol(data))
+
+# Display the first few rows of the dataset
+data_head <- head(selected_columns)
+
+# Print the head of the dataset table with styling
+data_head %>%
+  kable(caption = "First Few Rows of the Mice Data") %>%
+  kable_styling(bootstrap_options = c("striped", "hover", "condensed"), 
+                full_width = TRUE, 
+                position = "left") %>%
+  scroll_box(width = "1000px", height = "400px")
+
+# Count occurrences for class_short
+class_short_counts <- data %>%
+  count(class_short) %>%
+  rename(Count = n)
+
+# Print the class_short counts table with styling
+class_short_counts %>%
+  kable() %>%
+  kable_styling(bootstrap_options = c("striped", "hover", "condensed"), 
+                full_width = TRUE, 
+                position = "left") %>%
+  add_header_above(c("Class Short Counts" = 2))
+
+# Count occurrences for Behavior
+behavior_counts <- data %>%
+  count(Behavior) %>%
+  rename(Count = n)
+
+# Count occurrences for Genotype
+genotype_counts <- data %>%
+  count(Genotype) %>%
+  rename(Count = n)
+
+# Count occurrences for Treatment
+treatment_counts <- data %>%
+  count(Treatment) %>%
+  rename(Count = n)
+
+# Add a new column to each table to indicate the category
+behavior_counts <- behavior_counts %>%
+  mutate(Category = "Behavior")
+
+genotype_counts <- genotype_counts %>%
+  mutate(Category = "Genotype")
+
+treatment_counts <- treatment_counts %>%
+  mutate(Category = "Treatment")
+
+# Rename 'Behavior', 'Genotype', and 'Treatment' columns to a generic 'Type' column for uniformity
+behavior_counts <- behavior_counts %>%
+  rename(Type = Behavior)
+
+genotype_counts <- genotype_counts %>%
+  rename(Type = Genotype)
+
+treatment_counts <- treatment_counts %>%
+  rename(Type = Treatment)
+
+# Combine the three tables
+combined_counts <- bind_rows(behavior_counts, genotype_counts, treatment_counts)
+
+# Print the combined table
+combined_counts %>%
+  kable() %>%
+  kable_styling(bootstrap_options = c("striped", "hover", "condensed"), 
+                full_width = TRUE, 
+                position = "left")
+
+# Calculate summary statistics for Protein_33 by class_short
+summary_stats_protein_33 <- data %>%
+  group_by(class_short) %>%
+  summarise(
+    Mean = mean(Protein_33, na.rm = TRUE),
+    Median = median(Protein_33, na.rm = TRUE),
+    SD = sd(Protein_33, na.rm = TRUE)
+  )
+
+# Print the summary statistics table with styling
+summary_stats_protein_33 %>%
+  kable(caption = "Summary Statistics for Protein_33 by class_short") %>%
+  kable_styling(bootstrap_options = c("striped", "hover", "condensed"), 
+                full_width = TRUE, 
+                position = "left")
+
+```
+
+
+### Functions
+
+## Feature Selection Functions
+
+
+```{r}
+
+### All Features
+feature_selection_all <- function(data) {
+  protein_data <- data[, 2:78]
+  protein_data_scaled <- scale(protein_data)
+  return(protein_data_scaled)
+}
+
+
+### Hand Selection
+feature_selection_hand <- function(data) {
+  protein_data <- data %>%  select(Protein_1, Protein_2, Protein_8, Protein_11, Protein_18, Protein_21, Protein_33, Protein_35, Protein_51, Protein_57, Protein_61, Protein_71, Protein_77)
+  protein_data_scaled <- scale(protein_data)
+  return(protein_data_scaled)
+}
+
+### Variance
+feature_selection_variance <- function(data, variance_threshold = 1) {
+  protein_data <- data[, 2:78]
+  protein_data_scaled <- scale(protein_data)
+  
+  # Calculate variance for each feature
+  variances <- apply(protein_data_scaled, 2, var)
+  
+  # Select features with variance above the threshold
+  selected_features <- names(variances[variances > variance_threshold])
+  protein_data_scaled <- protein_data_scaled[, selected_features]
+  return(protein_data_scaled)
+}
+
+### RFE
+feature_selection_rfe <- function(data) {
+  protein_data <- data[, 2:78]
+  class_labels <- as.factor(data$class_short)
+  
+  # Create control function for RFE
+  control <- rfeControl(functions = rfFuncs, method = "cv", number = 10)
+  
+  # Run RFE algorithm
+  set.seed(123)
+  rfe_result <- rfe(protein_data, class_labels, sizes = c(1:20), rfeControl = control)
+  
+  # Get the selected features
+  selected_features <- predictors(rfe_result)
+  protein_data_selected <- protein_data[, selected_features]
+  protein_data_scaled <- scale(protein_data_selected)
+  return(protein_data_scaled)
+}
+
+### Lasso
+feature_selection_lasso <- function(data) {
+  protein_data <- data[, 2:78]
+  protein_data_scaled <- scale(protein_data)
+  
+  # Define the feature matrix (X) and the response vector (y)
+  X <- as.matrix(protein_data_scaled)
+  
+  # Ensure the response variable is a factor
+  y <- as.factor(data$class_short)
+  
+  # Apply Lasso using glmnet
+  set.seed(123)  # For reproducibility
+  lasso_model <- cv.glmnet(X, y, alpha = 1, family = "multinomial")
+  
+  # Get the coefficients of the best model
+  coef_lasso <- coef(lasso_model, s = "lambda.min")
+  
+  # Extract the selected features (non-zero coefficients)
+  selected_features_matrix <- as.matrix(coef_lasso[[1]])
+  selected_features <- rownames(selected_features_matrix)[selected_features_matrix != 0]
+  selected_features <- selected_features[!(selected_features %in% "(Intercept)")]
+  
+  # Create a new dataframe with selected features
+  important_features <- protein_data[, selected_features]
+  
+  # Scale the important features data
+  protein_data_scaled <- scale(important_features)
+  return(protein_data_scaled)
+}
+```
+
+
+## PCA and K-Means Functions
+
+
+```{r}
+run_pca_kmeans <- function(data, pca_dimensions, number_of_clusters) {
+  pca_result <- prcomp(data, center = TRUE, scale. = TRUE)
+  pca_data <- pca_result$x[, 1:pca_dimensions]
+  
+  kmeans_result <- kmeans(pca_data, centers = number_of_clusters, nstart = 100)
+  
+  return(list(pca_data = pca_data, kmeans_result = kmeans_result))
+}
+```
+
+
+## Visualizations Functions
+
+
+```{r}
+visualizations <- function(data, selected_features, pca_data, kmeans_result, color_palette) {
+  # Add the cluster assignments to the original data
+  data$cluster <- as.factor(kmeans_result$cluster)
+  
+  # Create a data frame with PCA results and class information
+  pca_data2 <- data.frame(pca_data, class_short = data$class_short, cluster = data$cluster)
+  
+  # Visualize Clusters
+  cluster_plot <- fviz_cluster(kmeans_result, data = selected_features, ellipse.type="convex", geom = "point") + theme_minimal()
+  
+  # Plotting using ggplot2
+  pca_plot <- ggplot(pca_data2, aes(x = PC1, y = PC2, color = class_short)) + 
+    geom_point() +
+    stat_ellipse(aes(group = cluster), type = "norm") +  # Here you can use 'cluster' to draw ellipses around clusters
+    theme_minimal() +
+    scale_color_manual(values = color_palette) +  # Apply the custom color palette
+    labs(color = "Class")  # Customize legend title
+  
+  # Plot cluster assignments against the original classes
+  cluster_assignment_plot <- ggplot(data, aes(x = cluster, fill = class_short)) + 
+    geom_bar(position = "stack") +
+    scale_fill_manual(values = color_palette) +
+    theme(axis.text.x = element_text(angle = 90, hjust = 1)) +
+    labs(title = "Cluster Assignments by Class",
+         x = "Cluster",
+         y = "Count",
+         fill = "Class")
+  
+  return(list(cluster_plot = cluster_plot, pca_plot = pca_plot, cluster_assignment_plot = cluster_assignment_plot))
+}
+```
+
+
+# Comparison of parameters/methods
+
+## Feature Selection
+
+We are testing 4 methods: 1. No feature selection, use all data 2. Hand Selected most relevant features 3. By Variance Threshold 4. Lasso
+
+### all data - 2 dim - 6 clusters
+
+
+```{r}
+# Choose a feature selection method
+selected_features <- feature_selection_all(data)
+# selected_features <- feature_selection_hand(data)
+# selected_features <- feature_selection_variance(data, variance_threshold = 1)
+
+# selected_features <- feature_selection_lasso(data)
+
+# Run PCA and K-Means
+pca_dimensions <- 2
+number_of_clusters <- 6
+pca_kmeans_result <- run_pca_kmeans(selected_features, pca_dimensions, number_of_clusters)
+
+# Create visualizations
+plots <- visualizations(data, selected_features, pca_kmeans_result$pca_data, pca_kmeans_result$kmeans_result, color_palette)
+
+# Display plots
+plots$cluster_plot
+plots$pca_plot
+plots$cluster_assignment_plot
+```
+
+
+### hand selection - 2 dim - 6 clusters
+
+
+```{r}
+# Choose a feature selection method
+# selected_features <- feature_selection_all(data)
+ selected_features <- feature_selection_hand(data)
+# selected_features <- feature_selection_variance(data, variance_threshold = 1)
+# selected_features <- feature_selection_rfe(data)
+# selected_features <- feature_selection_lasso(data)
+
+# Run PCA and K-Means
+pca_dimensions <- 2
+number_of_clusters <- 6
+pca_kmeans_result <- run_pca_kmeans(selected_features, pca_dimensions, number_of_clusters)
+
+# Create visualizations
+plots <- visualizations(data, selected_features, pca_kmeans_result$pca_data, pca_kmeans_result$kmeans_result, color_palette)
+
+# Display plots
+plots$cluster_plot
+plots$pca_plot
+plots$cluster_assignment_plot
+```
+
+
+### variance - 2 dim - 6 clusters
+
+
+```{r}
+# Choose a feature selection method
+# selected_features <- feature_selection_all(data)
+# selected_features <- feature_selection_hand(data)
+ selected_features <- feature_selection_variance(data, variance_threshold = 1)
+# selected_features <- feature_selection_rfe(data)
+# selected_features <- feature_selection_lasso(data)
+
+# Run PCA and K-Means
+pca_dimensions <- 2
+number_of_clusters <- 6
+pca_kmeans_result <- run_pca_kmeans(selected_features, pca_dimensions, number_of_clusters)
+
+# Create visualizations
+plots <- visualizations(data, selected_features, pca_kmeans_result$pca_data, pca_kmeans_result$kmeans_result, color_palette)
+
+# Display plots
+plots$cluster_plot
+plots$pca_plot
+plots$cluster_assignment_plot
+```
+
+
+### lasso - 2 dim - 6 clusters
+
+
+```{r}
+# Choose a feature selection method
+# selected_features <- feature_selection_all(data)
+# selected_features <- feature_selection_hand(data)
+# selected_features <- feature_selection_variance(data, variance_threshold = 1)
+ selected_features <- feature_selection_lasso(data)
+
+# Run PCA and K-Means
+pca_dimensions <- 2
+number_of_clusters <- 6
+pca_kmeans_result <- run_pca_kmeans(selected_features, pca_dimensions, number_of_clusters)
+
+# Create visualizations
+plots <- visualizations(data, selected_features, pca_kmeans_result$pca_data, pca_kmeans_result$kmeans_result, color_palette)
+
+# Display plots
+plots$cluster_plot
+plots$pca_plot
+plots$cluster_assignment_plot
+```
+
+
+## PCA \# of dimensions
+
+### PCA graphs
+
+-   **Scree Plot**: Look for the elbow point where the plot starts to flatten out. This point often indicates the number of components to retain.
+-   **Cumulative Proportion of Variance Explained**: Choose the number of components that explain a satisfactory level of the total variance, like 80% or 90%.
+-   **Kaiser Criterion**: Retain components with eigenvalues greater than 1.
+
+
+```{r}
+selected_features <- feature_selection_hand(data)
+
+# Perform PCA
+pca_result <- prcomp(selected_features, center = TRUE, scale. = TRUE)
+
+# Scree plot
+library(factoextra)
+fviz_screeplot(pca_result, ncp = 30) + theme_minimal() +
+  ggtitle("Scree Plot")
+
+# Calculate the cumulative variance explained
+summary_pca <- summary(pca_result)
+cumulative_variance <- cumsum(summary_pca$importance[2,])
+
+# Plot cumulative variance
+plot(cumulative_variance, xlab = "Principal Components", ylab = "Cumulative Proportion of Variance Explained", type = "b", pch = 19, 
+     main = "Cumulative Variance Explained by PCA Components")
+abline(h = 0.8, col = "red", lty = 2)  # Line at 80% cumulative variance
+abline(h = 0.9, col = "blue", lty = 2)  # Line at 90% cumulative variance
+
+# Kaiser Criterion
+eigenvalues <- pca_result$sdev^2
+kaiser_criterion <- sum(eigenvalues > 1)
+
+# Display number of principal components with eigenvalues > 1
+kaiser_criterion
+```
+
+
+### hand selection - 2 dim - 6 clusters
+
+
+```{r}
+# Choose a feature selection method
+# selected_features <- feature_selection_all(data)
+ selected_features <- feature_selection_hand(data)
+# selected_features <- feature_selection_variance(data, variance_threshold = 1)
+# selected_features <- feature_selection_rfe(data)
+# selected_features <- feature_selection_lasso(data)
+
+# Run PCA and K-Means
+pca_dimensions <- 2
+number_of_clusters <- 6
+pca_kmeans_result <- run_pca_kmeans(selected_features, pca_dimensions, number_of_clusters)
+
+# Create visualizations
+plots <- visualizations(data, selected_features, pca_kmeans_result$pca_data, pca_kmeans_result$kmeans_result, color_palette)
+
+# Display plots
+plots$cluster_plot
+plots$pca_plot
+plots$cluster_assignment_plot
+```
+
+
+### hand selection - 3 dim - 6 clusters
+
+
+```{r}
+# Choose a feature selection method
+# selected_features <- feature_selection_all(data)
+ selected_features <- feature_selection_hand(data)
+# selected_features <- feature_selection_variance(data, variance_threshold = 1)
+# selected_features <- feature_selection_rfe(data)
+# selected_features <- feature_selection_lasso(data)
+
+# Run PCA and K-Means
+pca_dimensions <- 3
+number_of_clusters <- 6
+pca_kmeans_result <- run_pca_kmeans(selected_features, pca_dimensions, number_of_clusters)
+
+# Create visualizations
+plots <- visualizations(data, selected_features, pca_kmeans_result$pca_data, pca_kmeans_result$kmeans_result, color_palette)
+
+# Display plots
+plots$cluster_plot
+plots$pca_plot
+plots$cluster_assignment_plot
+```
+
+
+### hand selection - 4 dim - 6 clusters
+
+
+```{r}
+# Choose a feature selection method
+# selected_features <- feature_selection_all(data)
+ selected_features <- feature_selection_hand(data)
+# selected_features <- feature_selection_variance(data, variance_threshold = 1)
+# selected_features <- feature_selection_rfe(data)
+# selected_features <- feature_selection_lasso(data)
+
+# Run PCA and K-Means
+pca_dimensions <- 4
+number_of_clusters <- 6
+pca_kmeans_result <- run_pca_kmeans(selected_features, pca_dimensions, number_of_clusters)
+
+# Create visualizations
+plots <- visualizations(data, selected_features, pca_kmeans_result$pca_data, pca_kmeans_result$kmeans_result, color_palette)
+
+# Display plots
+plots$cluster_plot
+plots$pca_plot
+plots$cluster_assignment_plot
+```
+
+
+### hand selection - 6 dim - 6 clusters
+
+
+```{r}
+# Choose a feature selection method
+# selected_features <- feature_selection_all(data)
+ selected_features <- feature_selection_hand(data)
+# selected_features <- feature_selection_variance(data, variance_threshold = 1)
+# selected_features <- feature_selection_rfe(data)
+# selected_features <- feature_selection_lasso(data)
+
+# Run PCA and K-Means
+pca_dimensions <- 6
+number_of_clusters <- 6
+pca_kmeans_result <- run_pca_kmeans(selected_features, pca_dimensions, number_of_clusters)
+
+# Create visualizations
+plots <- visualizations(data, selected_features, pca_kmeans_result$pca_data, pca_kmeans_result$kmeans_result, color_palette)
+
+# Display plots
+plots$cluster_plot
+plots$pca_plot
+plots$cluster_assignment_plot
+```
+
+
+### hand selection - 10 dim - 6 clusters
+
+
+```{r}
+# Choose a feature selection method
+# selected_features <- feature_selection_all(data)
+ selected_features <- feature_selection_hand(data)
+# selected_features <- feature_selection_variance(data, variance_threshold = 1)
+# selected_features <- feature_selection_rfe(data)
+# selected_features <- feature_selection_lasso(data)
+
+# Run PCA and K-Means
+pca_dimensions <- 10
+number_of_clusters <- 6
+pca_kmeans_result <- run_pca_kmeans(selected_features, pca_dimensions, number_of_clusters)
+
+# Create visualizations
+plots <- visualizations(data, selected_features, pca_kmeans_result$pca_data, pca_kmeans_result$kmeans_result, color_palette)
+
+# Display plots
+plots$cluster_plot
+plots$pca_plot
+plots$cluster_assignment_plot
+```
+
+
+## Number of clusters
+
+### Study for \# of clusters
+
+-   **Elbow Method**: Look for the "elbow point" where the WSS starts to slow down.
+-   **Silhouette Method**: Choose the number of clusters that maximize the average silhouette width.
+-   **Gap Statistic**: Select the number of clusters where the gap statistic is maximized.
+
+
+```{r}
+selected_features <- feature_selection_hand(data)
+pca_result <- prcomp(selected_features, center = TRUE, scale. = TRUE)
+pca_data <- pca_result$x[, 1:2]
+
+# Elbow Method
+fviz_nbclust(pca_data, kmeans, method = "wss") +
+  geom_vline(xintercept = 6, linetype = 2) +  # Adjust the xintercept based on actual elbow
+  labs(subtitle = "Elbow method")
+
+# Silhouette Method
+set.seed(123)
+fviz_nbclust(pca_data, kmeans, method = "silhouette") +
+  labs(subtitle = "Silhouette method")
+
+# Gap Statistic Method
+set.seed(123)
+gap_stat <- clusGap(pca_data, FUN = kmeans, nstart = 25, K.max = 10, B = 50)
+fviz_gap_stat(gap_stat) +
+  labs(subtitle = "Gap Statistic method")
+```
+
+
+### hand selection - 2 dim - 2 clusters
+
+
+```{r}
+# Choose a feature selection method
+# selected_features <- feature_selection_all(data)
+ selected_features <- feature_selection_hand(data)
+# selected_features <- feature_selection_variance(data, variance_threshold = 1)
+# selected_features <- feature_selection_rfe(data)
+# selected_features <- feature_selection_lasso(data)
+
+# Run PCA and K-Means
+pca_dimensions <- 2
+number_of_clusters <- 2
+pca_kmeans_result <- run_pca_kmeans(selected_features, pca_dimensions, number_of_clusters)
+
+# Create visualizations
+plots <- visualizations(data, selected_features, pca_kmeans_result$pca_data, pca_kmeans_result$kmeans_result, color_palette)
+
+# Display plots
+plots$cluster_plot
+plots$pca_plot
+plots$cluster_assignment_plot
+```
+
+
+### hand selection - 2 dim - 4 clusters
+
+
+```{r}
+# Choose a feature selection method
+# selected_features <- feature_selection_all(data)
+ selected_features <- feature_selection_hand(data)
+# selected_features <- feature_selection_variance(data, variance_threshold = 1)
+# selected_features <- feature_selection_rfe(data)
+# selected_features <- feature_selection_lasso(data)
+
+# Run PCA and K-Means
+pca_dimensions <- 2
+number_of_clusters <- 4
+pca_kmeans_result <- run_pca_kmeans(selected_features, pca_dimensions, number_of_clusters)
+
+# Create visualizations
+plots <- visualizations(data, selected_features, pca_kmeans_result$pca_data, pca_kmeans_result$kmeans_result, color_palette)
+
+# Display plots
+plots$cluster_plot
+plots$pca_plot
+plots$cluster_assignment_plot
+```
+
+
+### hand selection - 2 dim - 6 clusters
+
+
+```{r}
+# Choose a feature selection method
+# selected_features <- feature_selection_all(data)
+ selected_features <- feature_selection_hand(data)
+# selected_features <- feature_selection_variance(data, variance_threshold = 1)
+# selected_features <- feature_selection_rfe(data)
+# selected_features <- feature_selection_lasso(data)
+
+# Run PCA and K-Means
+pca_dimensions <- 2
+number_of_clusters <- 6
+pca_kmeans_result <- run_pca_kmeans(selected_features, pca_dimensions, number_of_clusters)
+
+# Create visualizations
+plots <- visualizations(data, selected_features, pca_kmeans_result$pca_data, pca_kmeans_result$kmeans_result, color_palette)
+
+# Display plots
+plots$cluster_plot
+plots$pca_plot
+plots$cluster_assignment_plot
+```
+
+
+### hand selection - 2 dim - 8 clusters
+
+
+```{r}
+# Choose a feature selection method
+# selected_features <- feature_selection_all(data)
+ selected_features <- feature_selection_hand(data)
+# selected_features <- feature_selection_variance(data, variance_threshold = 1)
+# selected_features <- feature_selection_rfe(data)
+# selected_features <- feature_selection_lasso(data)
+
+# Run PCA and K-Means
+pca_dimensions <- 2
+number_of_clusters <- 8
+pca_kmeans_result <- run_pca_kmeans(selected_features, pca_dimensions, number_of_clusters)
+
+# Create visualizations
+plots <- visualizations(data, selected_features, pca_kmeans_result$pca_data, pca_kmeans_result$kmeans_result, color_palette)
+
+# Display plots
+plots$cluster_plot
+plots$pca_plot
+plots$cluster_assignment_plot
+```
+
+
+
+## Conclusions
+
+Our results indicate that the mice protein expression data set exhibits
+clusters which largely correspond to the learning and non-learning
+behavior groups.No such clustering is observed with regard to genotype
+or treatment group based on the considerations of class composition by
+cluster.
+
