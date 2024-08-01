@@ -17,7 +17,7 @@ editor:
     wrap: 72
 ---
 
-[Presentation](slides.html)
+[Presentation](https://ldg27uwf.github.io/STA6257_Project_K_means/slides.html#/title-slide)
 
 ## Introduction
 
