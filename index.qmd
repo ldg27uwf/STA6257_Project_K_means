@@ -42,7 +42,7 @@ yet the clusters themselves are clearly dissimilar from one another.
 The similarity of data points is commonly assessed using a distance
 metric, such as Euclidean distance, Manhattan distance, or cosine
 similarity. The choice of metric depends on the characteristics of the
-data and the specific clustering technique employed [@Berkhin2006].
+data and the specific clustering technique employed [@berkhin_survey_2006].
 
 The term "k-Means Clustering" refers to a method used in data analysis
 and machine learning to partition a set of data points into k distinct
@@ -57,25 +57,25 @@ a way that minimizes the total squared distances between the data points
 and their respective centroids.
 
 K-means clustering can be applied to a wide variety of data, including
-bioinformatics, sociology, and in food markets. 
+bioinformatics, sociology, and in food markets.
 
-**Bioinformatics**
-refers to the usage of analytical techniques to interpret different
-types of biological data. These datasets can be large or small,
-containing information about genomic sequences, gene expression, and
-protein expression, among other biological characteristics. This
-information can then be used to draw conclusions about basic biological
-processes, disease states, and gene therapies, among other applications
-[@bayat_bioinformatics_2002]. K-means clustering is one type of data
-analysis technique that can be used to group differential gene/protein
-expression according to specific phenotypes, or physical presentations
-of biological traits. For instance, this can be used to assign cells to
-specific types based on single-cell RNA sequencing data, which measures
-the total gene expression for thousands of genes within a single cell.
-Yang et al., 2017 utilized k-means clustering to analyze the scRNA
-sequencing data of hundreds of cell types to develop a novel algorithm
-that identifies the optimal sets of genes to cluster single cells into
-distinct biological groups.
+**Bioinformatics** refers to the usage of analytical techniques to
+interpret different types of biological data. These datasets can be
+large or small, containing information about genomic sequences, gene
+expression, and protein expression, among other biological
+characteristics. This information can then be used to draw conclusions
+about basic biological processes, disease states, and gene therapies,
+among other applications [@bayat_bioinformatics_2002]. K-means
+clustering is one type of data analysis technique that can be used to
+group differential gene/protein expression according to specific
+phenotypes, or physical presentations of biological traits. For
+instance, this can be used to assign cells to specific types based on
+single-cell RNA sequencing data, which measures the total gene
+expression for thousands of genes within a single cell. Yang et al.,
+2017 utilized k-means clustering to analyze the scRNA sequencing data of
+hundreds of cell types to develop a novel algorithm that identifies the
+optimal sets of genes to cluster single cells into distinct biological
+groups.
 
 Additionally, k-means clustering can be applied to population-level data
 to determine significant groupings related to **socioeconomic
@@ -295,13 +295,6 @@ control model in the learning condition. Protein expression data
 provided are normalized to total protein expression
 [@higuera_self-organizing_2015].
 
----
-title: "kmeans"
-format: html
-editor: visual
-execute:
-  echo: false
----
 
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(warning = FALSE, message = FALSE)
@@ -309,7 +302,7 @@ knitr::opts_chunk$set(warning = FALSE, message = FALSE)
 
 ### Load Necessary Libraries
 
-```{r, include =FALSE}
+```{r}
 #install.packages("NbClust")
 #install.packages("fpc")
 #install.packages("tidyverse")
@@ -540,6 +533,7 @@ feature_selection_lasso <- function(data) {
 
 ## PCA and K-Means Functions
 
+
 ```{r}
 run_pca_kmeans <- function(data, pca_dimensions, number_of_clusters) {
   pca_result <- prcomp(data, center = TRUE, scale. = TRUE)
@@ -590,7 +584,11 @@ visualizations <- function(data, selected_features, pca_data, kmeans_result, col
 
 ## Feature Selection
 
-We are testing 4 methods: 1. No feature selection, use all data 2. Hand Selected most relevant features 3. By Variance Threshold 4. Lasso
+We are testing 4 methods: 
+1. No feature selection, use all data 
+2. Hand Selected most relevant features 
+3. By Variance Threshold 
+4. Lasso
 
 ### all data - 2 dim - 6 clusters
 
@@ -691,9 +689,14 @@ plots$cluster_assignment_plot
 
 ### PCA graphs
 
--   **Scree Plot**: Look for the elbow point where the plot starts to flatten out. This point often indicates the number of components to retain.
--   **Cumulative Proportion of Variance Explained**: Choose the number of components that explain a satisfactory level of the total variance, like 80% or 90%.
--   **Kaiser Criterion**: Retain components with eigenvalues greater than 1.
+-   **Scree Plot**: Look for the elbow point where the plot starts to
+    flatten out. This point often indicates the number of components to
+    retain.
+-   **Cumulative Proportion of Variance Explained**: Choose the number
+    of components that explain a satisfactory level of the total
+    variance, like 80% or 90%.
+-   **Kaiser Criterion**: Retain components with eigenvalues greater
+    than 1.
 
 ```{r}
 selected_features <- feature_selection_hand(data)
@@ -848,9 +851,12 @@ plots$cluster_assignment_plot
 
 ### Study for \# of clusters
 
--   **Elbow Method**: Look for the "elbow point" where the WSS starts to slow down.
--   **Silhouette Method**: Choose the number of clusters that maximize the average silhouette width.
--   **Gap Statistic**: Select the number of clusters where the gap statistic is maximized.
+-   **Elbow Method**: Look for the "elbow point" where the WSS starts to
+    slow down.
+-   **Silhouette Method**: Choose the number of clusters that maximize
+    the average silhouette width.
+-   **Gap Statistic**: Select the number of clusters where the gap
+    statistic is maximized.
 
 ```{r}
 selected_features <- feature_selection_hand(data)
@@ -970,7 +976,6 @@ plots$pca_plot
 plots$cluster_assignment_plot
 ```
 
-
 ## Conclusions
 
 Our results indicate that the mice protein expression data set exhibits
@@ -978,3 +983,10 @@ clusters which largely correspond to the learning and non-learning
 behavior groups.No such clustering is observed with regard to genotype
 or treatment group based on the considerations of class composition by
 cluster.
+Clustering is a vital data mining process that assists in data analysis by revealing patterns, trends and data associations within a large dataset by forming clusters of similar data points. This technique is used extensively in both research and business to facilitate decisions and address outcomes. By creating group clusters, it simplifies the data interpretation process and allows the detection of anomalies or outliers. Despite its limitations, such as the need of predetermining the number of clusters and the potential to converge to local optima, k-means is still widely used due to its simplicity and versatility. 
+
+Techniques and modifications continue to evolve to make k-means even more effective. Researchers are addressing these challenges by enhancing the algorithm’s scalability and robustness. These limitations are being addressed by researchers like Arthur, D et al, by improving the first step of k-means to avoid poor clustering due to random initialization. Yang et al propose a new method on selecting the optimal k value by addressing both application-specific and detector-specific factors. The authors proposed the KFC method which offers a parameter free solution with linear time complexity. Yang et al made the KFC method available at www.outliernet.com to an external site to facilitate reproducibility and provide opportunities for others to expand their research. Their research showed that the KFC method outperforms traditional methods and is much more versatile making it useful across many fields. 
+Guojun Gan and Michael Kwok-Po Ng propose to improve the k-means clustering algorithm by including outlier detection. The KMOR (k-means with outlier removal) algorithm broadens the classic k-means algorithm by proposing an additional cluster for outliers. The methodology comprises initialization, objective function optimization, iterative process updates, convergence, and parameter control. . The KMOR algorithm’s ability to seamlessly integrate clustering and outlier detection for both synthetic and real datasets showcased its dominance over current methods in terms of accuracy and efficiency. Futuristically, the goals are to investigate diverse ways to control outliers by refining parameter selection and broadening the algorithm for subspace clustering [@gan_k-means_2017].
+
+As future improvements are applied, k-means clustering will continue to enhance its utility across various disciplines. It finds extensive applications across multiple domains including data mining, image processing, bioinformatics, public health, market research, anomaly detection and pattern recognition. Each of these applications demonstrates the ability to provide valuable insights and decision making across a wide range of`fields.
+
